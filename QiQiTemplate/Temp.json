@@ -1,0 +1,26 @@
+{
+	"people": [{
+		"name": "wyl",
+		"age": 22,
+		"sex": "男",
+		"tel": ["xxx",
+		"xxx",
+		"xxx"]
+	},
+	{
+		"name": "wyl",
+		"age": 22,
+		"sex": "男",
+		"tel": ["xxx",
+		"xxx",
+		"xxx"]
+	},
+	{
+		"name": "wyl",
+		"age": 22,
+		"sex": "男",
+		"tel": ["xxx",
+		"xxx",
+		"xxx"]
+	}]
+}

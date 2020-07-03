@@ -1,0 +1,7 @@
+{{#each _data.people val idx}}
+    {{idx}}name: {{val.name}}
+    {{idx}}age: {{val.age}}
+    {{#each val.tel valx idxx}}
+        tel: {{valx}} idxx: {{idxx}}
+    {{#/each}}
+{{#/each}}

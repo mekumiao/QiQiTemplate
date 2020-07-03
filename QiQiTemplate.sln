@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QiQiTemplate", "QiQiTemplate\QiQiTemplate.csproj", "{8ADE9D8C-C13C-4662-99B8-090DB8B918D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{1E400B0F-4487-43C3-9F6D-8442F97DFFD9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8ADE9D8C-C13C-4662-99B8-090DB8B918D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADE9D8C-C13C-4662-99B8-090DB8B918D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADE9D8C-C13C-4662-99B8-090DB8B918D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADE9D8C-C13C-4662-99B8-090DB8B918D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E400B0F-4487-43C3-9F6D-8442F97DFFD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E400B0F-4487-43C3-9F6D-8442F97DFFD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E400B0F-4487-43C3-9F6D-8442F97DFFD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E400B0F-4487-43C3-9F6D-8442F97DFFD9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {022728EC-0145-425F-9F3A-A27011E3F4E7}
+	EndGlobalSection
+EndGlobal
