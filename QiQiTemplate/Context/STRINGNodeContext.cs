@@ -8,15 +8,15 @@ namespace QiQiTemplate.Context
 {
     public class STRINGNodeContext : NodeContext
     {
-        public STRINGNodeContext(string code, NodeBlockContext parent) :
-            base(code, parent)
+        public STRINGNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder) :
+            base(code, parent, coder)
         {
             this.NdType = NodeType.STRING;
         }
 
         public override void ConvertToExpression()
         {
-            this.NdExpression = this.CorderProvide.ExpressionPrintLine(Expression.Constant(this.CodeString));
+            this.NdExpression = this.CoderProvide.ExpressionPrintLine(Expression.Constant(this.CodeString));
         }
     }
 }

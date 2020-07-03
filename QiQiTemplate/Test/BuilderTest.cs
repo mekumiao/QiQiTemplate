@@ -34,7 +34,7 @@ namespace QiQiTemplate
             LabelTarget label = Expression.Label();
             MemberExpression count = Expression.Property(root, "Count");
 
-            CorderExpressionProvide coder = new CorderExpressionProvide();
+            CoderExpressionProvide coder = new CoderExpressionProvide();
             MethodCallExpression print1 = coder.ExpressionPrintLine(Expression.Constant("using "));
             MethodCallExpression print2 = coder.ExpressionPrint(val);
             MethodCallExpression print3 = coder.ExpressionPrint(Expression.Constant(";"));

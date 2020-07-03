@@ -16,8 +16,8 @@ namespace QiQiTemplate
 
         public EachModel Model { get; private set; }
 
-        public EACHNodeContext(string code, NodeBlockContext parent)
-            : base(code, parent)
+        public EACHNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
+            : base(code, parent, coder)
         {
             ParsingModel();
             this.NdType = NodeType.EACH;

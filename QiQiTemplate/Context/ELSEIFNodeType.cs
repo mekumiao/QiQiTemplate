@@ -14,8 +14,8 @@ namespace QiQiTemplate
 
         public IFModel Model { get; private set; }
 
-        public ELSEIFNodeContext(string code, NodeBlockContext parent)
-            : base(code, parent)
+        public ELSEIFNodeContext(string code, NodeBlockContext parent,CoderExpressionProvide coder)
+            : base(code, parent, coder)
         {
             ParsingModel();
             this.NdType = NodeType.ELSEIF;

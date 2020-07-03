@@ -13,8 +13,8 @@ namespace QiQiTemplate
 
         public List<PrintModel> Model { get; private set; }
 
-        public PRINTNodeContext(string code, NodeBlockContext parent)
-            : base(code, parent)
+        public PRINTNodeContext(string code, NodeBlockContext parent,CoderExpressionProvide coder)
+            : base(code, parent, coder)
         {
             ParsingModel();
             this.NdType = NodeType.PRINT;
@@ -70,13 +70,13 @@ namespace QiQiTemplate
                 switch (item.PtType)
                 {
                     case PrintType.String:
-                        MethodCallExpression print = this.CorderProvide.ExpressionPrint(Expression.Constant(item.SourcePath));
+                        MethodCallExpression print = this.CoderProvide.ExpressionPrint(Expression.Constant(item.SourcePath));
                         exps.Add(print);
                         break;
                     case PrintType.Variable:
                         ParameterExpression param = Expression.Variable(typeof(FieldDynamicModel));
                         BlockExpression path = this.SearchPath(param, item.SourcePath);
-                        print = this.CorderProvide.ExpressionPrint(param);
+                        print = this.CoderProvide.ExpressionPrint(param);
                         pars.Add(param);
                         exps.Add(path);
                         exps.Add(print);
@@ -85,7 +85,7 @@ namespace QiQiTemplate
                         break;
                 }
             }
-            MethodCallExpression printLine = this.CorderProvide.ExpressionPrintLine();
+            MethodCallExpression printLine = this.CoderProvide.ExpressionPrintLine();
             exps.Add(printLine);
             this.NdExpression = Expression.Block(pars, exps);
         }

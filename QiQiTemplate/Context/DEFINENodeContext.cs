@@ -12,8 +12,8 @@ namespace QiQiTemplate
 
         public DeFineModel Model { get; private set; }
 
-        public DEFINENodeContext(string code, NodeBlockContext parent)
-            : base(code, parent)
+        public DEFINENodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
+            : base(code, parent, coder)
         {
             ParsingModel();
             this.NdType = NodeType.DEFINE;

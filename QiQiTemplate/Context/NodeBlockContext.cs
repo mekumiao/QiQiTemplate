@@ -14,8 +14,8 @@ namespace QiQiTemplate
 
         public List<NodeContext> Nodes { get; set; }
 
-        public NodeBlockContext(string code, NodeBlockContext parent)
-            : base(code, parent)
+        public NodeBlockContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
+            : base(code, parent, coder)
         {
             this.Scope = new Dictionary<string, Expression>(10);
             this.Nodes = new List<NodeContext>(10);

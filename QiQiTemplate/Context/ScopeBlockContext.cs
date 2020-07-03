@@ -19,7 +19,7 @@ namespace QiQiTemplate
         }
 
         public ScopeBlockContext() :
-            base("_data", null)
+            base("_data", null, null)
         {
             this.Scope.Add("_data", Expression.Parameter(typeof(FieldDynamicModel), "_data"));
         }

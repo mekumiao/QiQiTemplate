@@ -17,7 +17,7 @@ namespace QiQiTemplate
         protected static readonly Regex IsPRINTRegex = new Regex("({{[^{](((?!{{|}}).)+)}})+", RegexOptions.Compiled);//针对print的匹配
         protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s+[\w]+[\s\S]+}}\s*$", RegexOptions.Compiled);//针对define的匹配
 
-        protected CorderExpressionProvide CorderProvide;
+        public CoderExpressionProvide CoderProvide { get; }
 
         public string NodeId { get; }
 
@@ -29,9 +29,9 @@ namespace QiQiTemplate
 
         public NodeBlockContext ParentNode { get; }
 
-        public NodeContext(string code, NodeBlockContext parent)
+        public NodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
         {
-            this.CorderProvide = new CorderExpressionProvide();
+            this.CoderProvide = coder;
             this.NodeId = Guid.NewGuid().ToString("N");
             this.CodeString = code;
             this.ParentNode = parent;

@@ -9,8 +9,8 @@ namespace QiQiTemplate
     {
         public IFModel Model { get; private set; }
 
-        public IFNodeContext(string code, NodeBlockContext parent)
-            : base(code, parent)
+        public IFNodeContext(string code, NodeBlockContext parent,CoderExpressionProvide coder)
+            : base(code, parent, coder)
         {
             ParsingModel();
             this.NdType = NodeType.IF;
