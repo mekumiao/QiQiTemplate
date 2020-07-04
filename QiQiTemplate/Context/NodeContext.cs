@@ -8,14 +8,14 @@ namespace QiQiTemplate
 {
     public abstract class NodeContext
     {
-        protected static readonly Regex IsIFRegex = new Regex(@"^\s*{{#if\s+[\s\S]+}}\s*$", RegexOptions.Compiled);//针对if的匹配
-        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#else\s+if\s+[\s\S]+}}\s*$", RegexOptions.Compiled);//针对else if的匹配
+        protected static readonly Regex IsIFRegex = new Regex(@"^\s*{{#if\s+.+}}\s*$", RegexOptions.Compiled);//针对if的匹配
+        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#else\s+if\s+.+}}\s*$", RegexOptions.Compiled);//针对else if的匹配
         protected static readonly Regex IsELSERegex = new Regex(@"^\s*{{#else}}\s*$", RegexOptions.Compiled);//针对else的匹配
         protected static readonly Regex IsENDIFRegex = new Regex(@"^\s*{{#/if}}\s*$", RegexOptions.Compiled);//针对if结束的匹配
         protected static readonly Regex IsEACHRegex = new Regex(@"^\s*{{#each\s+((?!{{|}}).)+}}\s*$", RegexOptions.Compiled);//针对each循环的匹配
         protected static readonly Regex IsENDEACHRegex = new Regex(@"^\s*{{#/each}}\s*$", RegexOptions.Compiled);//针对each结束的匹配
         protected static readonly Regex IsPRINTRegex = new Regex("({{[^{](((?!{{|}}).)+)}})+", RegexOptions.Compiled);//针对print的匹配
-        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s+[\w]+[\s\S]+}}\s*$", RegexOptions.Compiled);//针对define的匹配
+        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s+[a-zA-Z]+.+}}\s*$", RegexOptions.Compiled);//针对define的匹配
 
         public CoderExpressionProvide CoderProvide { get; }
 

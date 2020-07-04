@@ -7,6 +7,9 @@ namespace App
     {
         static void Main(string[] args)
         {
+            var tp = TypeHelper.GetFieldTypeByValue("2xx");
+            Console.WriteLine(tp);
+
             //var node = new ELSEIFNodeContext("{{ idx >= 2}}", null);
 
             var provide = new NodeContextProvide();

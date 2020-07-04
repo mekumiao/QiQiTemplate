@@ -18,13 +18,13 @@ namespace QiQiTemplate
 
         private static void MatchPath(StringBuilder builder, List<SourcePathModel> list)
         {
-            Match mh = Regex.Match(builder.ToString(), @"^[\w_][\w\d_]*");
+            Match mh = Regex.Match(builder.ToString(), @"^[a-zA-Z_][\w]*");
             if (mh.Success)
             {
                 MatchFunc(SourcePathType.Variable);//Var
                 return;
             }
-            mh = Regex.Match(builder.ToString(), @"(?<=[.])[\w_][\w\d_]*");
+            mh = Regex.Match(builder.ToString(), @"(?<=[.])[a-zA-Z_][\w]*");
             if (mh.Success)
             {
                 MatchFunc(SourcePathType.Attribute);//Attr
@@ -36,13 +36,13 @@ namespace QiQiTemplate
                 MatchFunc(SourcePathType.Index);//Index
                 return;
             }
-            mh = Regex.Match(builder.ToString(), "(?<=[\\[])(\"[\\w\\d_]*?\")(?=[\\]])");
+            mh = Regex.Match(builder.ToString(), "(?<=[\\[])(\"[\\w]*?\")(?=[\\]])");
             if (mh.Success)
             {
                 MatchFunc(SourcePathType.Attribute);//Attr
                 return;
             }
-            mh = Regex.Match(builder.ToString(), @"^(?<=[\[])([\w_][\w\d_]*?)(?=[\]])");
+            mh = Regex.Match(builder.ToString(), @"^(?<=[\[])([a-zA-Z_][\w]*?)(?=[\]])");
             if (mh.Success)
             {
                 MatchFunc(SourcePathType.Variable);//Var

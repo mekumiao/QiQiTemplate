@@ -1,7 +1,7 @@
-{{#each _data.people val idx}}
-    {{idx}}name: {{val.name}}
-    {{idx}}age: {{val.age}}
-    {{#each val.tel valx idxx}}
-        tel: {{valx}} idxx: {{idxx}}
-    {{#/each}}
-{{#/each}}
+{{#if x >= xxx & y <= 100}}
+public xxx;
+{{#else if x >= xxx & y <= 100}}
+wwww;
+{{#else}}
+sdfs
+{{#/if}}

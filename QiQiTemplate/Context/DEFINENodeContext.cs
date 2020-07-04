@@ -8,7 +8,7 @@ namespace QiQiTemplate
 {
     public class DEFINENodeContext : NodeContext, IParsing
     {
-        protected static readonly Regex ParsingRegex = new Regex(@"{{#define (?<type>\w+)\s(?<name>[\w][\w\d_]+)\s*=\s*(?<value>[\s\S]+?)}}", RegexOptions.Compiled);
+        protected static readonly Regex ParsingRegex = new Regex(@"{{#define (?<type>[a-zA-Z]+)\s(?<name>[a-zA-Z_][\w]+)\s*=\s*(?<value>.+)}}", RegexOptions.Compiled);
 
         public DeFineModel Model { get; private set; }
 

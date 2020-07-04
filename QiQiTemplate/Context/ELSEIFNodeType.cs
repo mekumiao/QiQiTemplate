@@ -11,10 +11,9 @@ namespace QiQiTemplate
         //{{#else if idx >= 2 & xx >= xxx | xx <= xxx}} (?<logoper>&|\|)
         protected static readonly Regex ParsingRegex = new Regex(@"((?<logoper>(\s[&|])?)\s(?<left>[^\s]+)\s(?<oper>>=|>|<|<=|==|!=)\s(?<right>[^|&}]+))+", RegexOptions.Compiled);
 
+        public List<IFModel> Model { get; private set; }
 
-        public IFModel Model { get; private set; }
-
-        public ELSEIFNodeContext(string code, NodeBlockContext parent,CoderExpressionProvide coder)
+        public ELSEIFNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
             : base(code, parent, coder)
         {
             ParsingModel();
@@ -24,9 +23,18 @@ namespace QiQiTemplate
         public void ParsingModel()
         {
             var mths = ParsingRegex.Matches(this.CodeString.Replace("{{#else if", ""));
+            Model = new List<IFModel>(10);
             foreach (Match item in mths)
             {
-                var gp = item.Groups;
+                var md = new IFModel
+                {
+                    LogOper = item.Groups["logoper"].Value,
+                    Left = item.Groups["left"].Value,
+                    Right = item.Groups["right"].Value,
+                    Oper = item.Groups["oper"].Value,
+                };
+
+                Model.Add(md);
             }
             this.Model = null;
         }

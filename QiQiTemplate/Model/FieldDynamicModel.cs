@@ -100,7 +100,7 @@ namespace QiQiTemplate
                 return (object)(x switch
                 {
                     string msg when Regex.IsMatch(msg, @"\d") => Convert.ToInt32(msg),
-                    string msg when Regex.IsMatch(msg, @"[\w_][\w\d_]*") => x.ToString(),
+                    string msg when Regex.IsMatch(msg, @"[a-zA-Z_][\w]*") => x.ToString(),
                     _ => throw new Exception("访问路径格式错误"),
                 });
             }).ToArray();
