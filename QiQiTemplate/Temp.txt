@@ -1,14 +1,12 @@
-{{#each _data.people val idx}}
-    xxxx;
-{{#/each}}
-
 {{#if x >= xxx & y <= 100}}
     public xxx;
+{{#/if}}
 {{#else if x >= xxx & y <= 100}}
     wwww;
+{{#/else if}}
 {{#else}}
     sdfs
-{{#/if}}
+{{#/else}}
 
 {{#each _data.people val idx}}
     {{idx}}name: {{val.name}}

@@ -13,6 +13,8 @@ namespace QiQiTemplate
 
         public List<IFModel> Model { get; private set; }
 
+        public NodeBlockContext ELSENode { get; set; }
+
         public ELSEIFNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
             : base(code, parent, coder)
         {

@@ -27,7 +27,7 @@ namespace QiQiTemplate
 
         public override void ConvertToExpression()
         {
-            var exps = this.Nodes.Select(x => x.NdExpression);
+            var exps = this.Nodes.Select(x => x.NdExpression).ToList();
             this.NdExpression = Expression.Block(exps);
         }
     }

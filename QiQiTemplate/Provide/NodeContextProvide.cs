@@ -62,12 +62,28 @@ namespace QiQiTemplate
                         block = new ELSEIFNodeContext(line, ParentNode, coder);
                         CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
+                        //if (ParentNode.Nodes.Last() is IFNodeContext ifnd1)
+                        //{
+                        //    ifnd1.ELSENode = block;
+                        //}
+                        //else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd1)
+                        //{
+                        //    elnd1.ELSENode = block;
+                        //}
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSE:
                         block = new ELSENodeContext(line, ParentNode, coder);
                         CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
+                        //if (ParentNode.Nodes.Last() is IFNodeContext ifnd)
+                        //{
+                        //    ifnd.ELSENode = block;
+                        //}
+                        //else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd)
+                        //{
+                        //    elnd.ELSENode = block;
+                        //}
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.EACH:
