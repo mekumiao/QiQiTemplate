@@ -10,27 +10,35 @@ namespace QiQiTemplate
     public enum NodeType : byte
     {
         /// <summary>
-        /// if 判断节点
+        /// {{#if}}
         /// </summary>
         IF,
         /// <summary>
-        /// else if 判断节点
-        /// </summary>
-        ELSEIF,
-        /// <summary>
-        /// //else 判断节点
-        /// </summary>
-        ELSE,
-        /// <summary>
-        /// if 结束节点
+        /// {{#/if}}
         /// </summary>
         ENDIF,
         /// <summary>
-        /// each 循环节点
+        /// {{#else if}}
+        /// </summary>
+        ELSEIF,
+        /// <summary>
+        /// {{#/else if}}
+        /// </summary>
+        ENDELSEIF,
+        /// <summary>
+        /// //{{#else}}
+        /// </summary>
+        ELSE,
+        /// <summary>
+        /// {{#/else}}
+        /// </summary>
+        ENDELSE,
+        /// <summary>
+        /// {{#each}}
         /// </summary>
         EACH,
         /// <summary>
-        /// each 结束节点
+        /// {{#/each}}
         /// </summary>
         ENDEACH,
         /// <summary>

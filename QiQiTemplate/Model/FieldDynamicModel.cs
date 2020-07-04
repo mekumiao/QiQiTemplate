@@ -13,7 +13,6 @@ namespace QiQiTemplate
     {
         public string FdName { get; set; }
         public object FdValue { get; set; }
-        public object[] NowSourcePath { get; set; }
         public List<FieldDynamicModel> ChildModel { get { return FdDict.Values.ToList(); } }
         public int Count { get { return this.FdDict.Count; } }
 
@@ -90,20 +89,6 @@ namespace QiQiTemplate
         {
             object prm = idx;
             return Get(prm);
-        }
-
-        public void MakePath(string sourcePath)
-        {
-            var arr = sourcePath.Split(new[] { ".", "[" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Replace("]", "").Replace("\"", "").Replace("\'", ""));
-            this.NowSourcePath = arr.Select(x =>
-            {
-                return (object)(x switch
-                {
-                    string msg when Regex.IsMatch(msg, @"\d") => Convert.ToInt32(msg),
-                    string msg when Regex.IsMatch(msg, @"[a-zA-Z_][\w]*") => x.ToString(),
-                    _ => throw new Exception("访问路径格式错误"),
-                });
-            }).ToArray();
         }
 
         public void Set(FieldDynamicModel model)

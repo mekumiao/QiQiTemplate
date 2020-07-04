@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -26,7 +27,8 @@ namespace QiQiTemplate
 
         public override void ConvertToExpression()
         {
-            throw new NotImplementedException("_data");
+            var exps = this.Nodes.Select(x => x.NdExpression);
+            this.NdExpression = Expression.Block(exps);
         }
     }
 }

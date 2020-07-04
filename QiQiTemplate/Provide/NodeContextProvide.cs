@@ -14,8 +14,9 @@ namespace QiQiTemplate
         {
             var scope = new ScopeBlockContext();
             using var _reader = reader;
-            var node = CreateNodeContextRange(_reader, scope, coder).First();
-            return Expression.Lambda<Action<FieldDynamicModel>>(node.NdExpression, scope.Root);
+            CreateNodeContextRange(_reader, scope, coder);
+            scope.ConvertToExpression();
+            return Expression.Lambda<Action<FieldDynamicModel>>(scope.NdExpression, scope.Root);
         }
 
         public Expression<Action<FieldDynamicModel>> BuildTemplateByPath(string path, CoderExpressionProvide coder)
@@ -34,59 +35,69 @@ namespace QiQiTemplate
             return BuildTemplateByReader(reader, coder);
         }
 
-        private List<NodeContext> CreateNodeContextRange(StreamReader reader, NodeBlockContext ParentNode, CoderExpressionProvide coder)
+        /// <summary>
+        /// 将语法解析为节点树
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="ParentNode"></param>
+        /// <param name="coder"></param>
+        private void CreateNodeContextRange(StreamReader reader, NodeBlockContext ParentNode, CoderExpressionProvide coder)
         {
-            var nodes = new List<NodeContext>(10);
             while (true)
             {
                 var line = reader.ReadLine();
-                if (line == null) return nodes;
+                if (line == null) return;
                 var type = NodeContext.GetNodeType(line);
+                NodeBlockContext block;
+                NodeContext node;
                 switch (type)
                 {
                     case NodeType.IF:
-                        NodeBlockContext block = new IFNodeContext(line, ParentNode, coder);
-                        block.Nodes = CreateNodeContextRange(reader, block, coder);
+                        block = new IFNodeContext(line, ParentNode, coder);
+                        CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
-                        nodes.Add(block);
+                        ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSEIF:
                         block = new ELSEIFNodeContext(line, ParentNode, coder);
-                        block.Nodes = CreateNodeContextRange(reader, block, coder);
+                        CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
-                        nodes.Add(block);
+                        ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSE:
                         block = new ELSENodeContext(line, ParentNode, coder);
-                        block.Nodes = CreateNodeContextRange(reader, block, coder);
+                        CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
-                        nodes.Add(block);
+                        ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.EACH:
                         block = new EACHNodeContext(line, ParentNode, coder);
-                        block.Nodes = CreateNodeContextRange(reader, block, coder);
+                        CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
-                        nodes.Add(block);
+                        ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.PRINT:
-                        NodeContext node = new PRINTNodeContext(line, ParentNode, coder);
+                        node = new PRINTNodeContext(line, ParentNode, coder);
                         node.ConvertToExpression();
-                        nodes.Add(node);
+                        ParentNode.Nodes.Add(node);
                         break;
                     case NodeType.DEFINE:
                         node = new DEFINENodeContext(line, ParentNode, coder);
                         node.ConvertToExpression();
-                        nodes.Add(node);
+                        ParentNode.Nodes.Add(node);
                         break;
                     case NodeType.STRING:
                         node = new STRINGNodeContext(line, ParentNode, coder);
                         node.ConvertToExpression();
-                        nodes.Add(node);
+                        ParentNode.Nodes.Add(node);
                         break;
                     case NodeType.ENDIF:
+                    case NodeType.ENDELSEIF:
+                    case NodeType.ENDELSE:
                     case NodeType.ENDEACH:
+                        return;
                     default:
-                        return nodes;
+                        throw new Exception($"{type}是不受支持的节点类型");
                 }
             }
         }

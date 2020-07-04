@@ -15,7 +15,7 @@ namespace QiQiTemplate
 
         public override void ConvertToExpression()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("ELSE");
         }
     }
 }

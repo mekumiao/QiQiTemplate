@@ -22,26 +22,27 @@ namespace QiQiTemplate
 
         public void ParsingModel()
         {
-            var mths = ParsingRegex.Matches(this.CodeString.Replace("{{#else if", ""));
-            Model = new List<IFModel>(10);
+            var mths = ParsingRegex.Matches(this.CodeString.Replace("{{#else if", "").Replace("}}", ""));
+            var lst = new List<IFModel>(10);
             foreach (Match item in mths)
             {
                 var md = new IFModel
                 {
-                    LogOper = item.Groups["logoper"].Value,
-                    Left = item.Groups["left"].Value,
-                    Right = item.Groups["right"].Value,
-                    Oper = item.Groups["oper"].Value,
+                    LogOper = item.Groups["logoper"].Value.Trim(),
+                    Left = item.Groups["left"].Value.Trim(),
+                    Right = item.Groups["right"].Value.Trim(),
+                    Oper = item.Groups["oper"].Value.Trim(),
                 };
-
-                Model.Add(md);
+                md.LeftType = TypeHelper.GetFieldTypeByValue(md.Left);
+                md.RightType = TypeHelper.GetFieldTypeByValue(md.Right);
+                lst.Add(md);
             }
-            this.Model = null;
+            this.Model = lst;
         }
 
         public override void ConvertToExpression()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("ELSEIF");
         }
     }
 }
