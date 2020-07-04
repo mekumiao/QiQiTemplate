@@ -15,8 +15,10 @@ namespace QiQiTemplate
             var scope = new ScopeBlockContext();
             using var _reader = reader;
             CreateNodeContextRange(_reader, scope, coder);
-            scope.ConvertToExpression();
-            return Expression.Lambda<Action<FieldDynamicModel>>(scope.NdExpression, scope.Root);
+            var node = scope.Nodes;
+            //scope.ConvertToExpression();
+            //return Expression.Lambda<Action<FieldDynamicModel>>(scope.NdExpression, scope.Root);
+            return null;
         }
 
         public Expression<Action<FieldDynamicModel>> BuildTemplateByPath(string path, CoderExpressionProvide coder)
@@ -62,28 +64,28 @@ namespace QiQiTemplate
                         block = new ELSEIFNodeContext(line, ParentNode, coder);
                         CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
-                        //if (ParentNode.Nodes.Last() is IFNodeContext ifnd1)
-                        //{
-                        //    ifnd1.ELSENode = block;
-                        //}
-                        //else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd1)
-                        //{
-                        //    elnd1.ELSENode = block;
-                        //}
+                        if (ParentNode.Nodes.Last() is IFNodeContext ifnd1)
+                        {
+                            ifnd1.ELSENode = block;
+                        }
+                        else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd1)
+                        {
+                            elnd1.ELSENode = block;
+                        }
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSE:
                         block = new ELSENodeContext(line, ParentNode, coder);
                         CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
-                        //if (ParentNode.Nodes.Last() is IFNodeContext ifnd)
-                        //{
-                        //    ifnd.ELSENode = block;
-                        //}
-                        //else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd)
-                        //{
-                        //    elnd.ELSENode = block;
-                        //}
+                        if (ParentNode.Nodes.Last() is IFNodeContext ifnd)
+                        {
+                            ifnd.ELSENode = block;
+                        }
+                        else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd)
+                        {
+                            elnd.ELSENode = block;
+                        }
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.EACH:
