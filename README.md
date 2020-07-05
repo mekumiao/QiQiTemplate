@@ -5,6 +5,10 @@
 #### 介绍
 基于lambda表达式的模板代码工具
 
+## 安装
+
+> Install-Package QiQiTemplate
+
 ## 语法
 
 ### print 输出
@@ -27,7 +31,7 @@
 {{#/else}}
 ~~~
 
-### Each 循环
+### each 循环
 
 ~~~html
 {{#each _data.names val idx}}
@@ -35,7 +39,7 @@
 {{#/each}}
 ~~~
 
-### 定义变量
+### define 变量
 
 > 用法
 
@@ -51,7 +55,26 @@
 {{str}} // 将输出 "
 ~~~
 
-### 跟节点
+### 运算
+
+> 下个版本
+
+~~~html
+{{#oper num += 1}}
+{{#oper num -= 2}}
+{{#oper num *= num}}
+{{#oper num /= 3}}
+~~~
+
+### 三元表达式
+
+> 下个版本
+
+~~~html
+{{#cond num > 2 ? num : "..."}}
+~~~
+
+### 根节点
 
 > `_data`
 
