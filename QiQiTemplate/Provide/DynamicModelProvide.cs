@@ -17,12 +17,12 @@ namespace QiQiTemplate
             if (kind == JsonValueKind.Array)
             {
                 model.FdName = "_data";
-                LoadByJson(doc.RootElement.EnumerateArray(), model);
+                CreateByJson(doc.RootElement.EnumerateArray(), model);
             }
             else if (kind == JsonValueKind.Object)
             {
                 model.FdName = "_data";
-                LoadByJson(doc.RootElement.EnumerateObject(), model);
+                CreateByJson(doc.RootElement.EnumerateObject(), model);
             }
             else
             {
@@ -37,7 +37,7 @@ namespace QiQiTemplate
             return CreateByJson(reader.ReadToEnd());
         }
 
-        private void LoadByJson(ObjectEnumerator obj, DynamicModel parent)
+        private void CreateByJson(ObjectEnumerator obj, DynamicModel parent)
         {
             foreach (var item in obj)
             {
@@ -51,12 +51,12 @@ namespace QiQiTemplate
                         break;
                     case JsonValueKind.Object:
                         model.FdName = item.Name;
-                        LoadByJson(item.Value.EnumerateObject(), model);
+                        CreateByJson(item.Value.EnumerateObject(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.Array:
                         model.FdName = item.Name;
-                        LoadByJson(item.Value.EnumerateArray(), model);
+                        CreateByJson(item.Value.EnumerateArray(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.String:
@@ -90,7 +90,7 @@ namespace QiQiTemplate
             }
         }
 
-        private void LoadByJson(ArrayEnumerator arr, DynamicModel parent)
+        private void CreateByJson(ArrayEnumerator arr, DynamicModel parent)
         {
             int idx = 0;
             foreach (var item in arr)
@@ -105,12 +105,12 @@ namespace QiQiTemplate
                         break;
                     case JsonValueKind.Object:
                         model.FdName = idx.ToString();
-                        LoadByJson(item.EnumerateObject(), model);
+                        CreateByJson(item.EnumerateObject(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.Array:
                         model.FdName = idx.ToString();
-                        LoadByJson(item.EnumerateArray(), model);
+                        CreateByJson(item.EnumerateArray(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.String:
