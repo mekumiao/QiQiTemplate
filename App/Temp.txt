@@ -1,7 +1,15 @@
 ﻿{{#define name = "x"xx"}}
 {{name}}
 ------------------------
-{{#each _data val idx}}
-	{{val.name}}
+{{#each _data.people val idx}}
+    {{#if val.age > 0 & val.age <= 10}}
+    {{val.name}} 儿童 {{val.age}}
+    {{#/if}}
+    {{#else if val.age > 10 & val.age < 25}}
+    {{val.name}} 青少年 {{val.age}}
+    {{#/else if}}
+    {{#else}}
+    {{val.name}} 中年 {{val.age}}
+    {{#/else}}
 {{#/each}}
 ------------------------
