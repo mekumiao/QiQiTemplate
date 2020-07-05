@@ -1,107 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using static System.Text.Json.JsonElement;
 
 namespace QiQiTemplate
 {
-    public class FieldDynamicModel
+    public class DynamicModelProvide
     {
-        public string FdName { get; set; }
-        public object FdValue { get; set; }
-        public List<FieldDynamicModel> ChildModel { get { return FdDict.Values.ToList(); } }
-        public int Count { get { return this.FdDict.Count; } }
-
-        private readonly Dictionary<string, FieldDynamicModel> FdDict;
-
-        public FieldDynamicModel()
+        public DynamicModel CreateByJson(string json)
         {
-            this.FdDict = new Dictionary<string, FieldDynamicModel>(10);
-        }
-
-        public FieldDynamicModel(string json)
-            : this()
-        {
-            this.LoadByJson(json);
-        }
-
-        public void LoadByJson(string json)
-        {
+            var model = new DynamicModel();
             using var doc = JsonDocument.Parse(json);
             var kind = doc.RootElement.ValueKind;
             if (kind == JsonValueKind.Array)
             {
-                this.FdName = "_data";
-                LoadByJson(doc.RootElement.EnumerateArray(), this);
+                model.FdName = "_data";
+                LoadByJson(doc.RootElement.EnumerateArray(), model);
             }
             else if (kind == JsonValueKind.Object)
             {
-                this.FdName = "_data";
-                LoadByJson(doc.RootElement.EnumerateObject(), this);
+                model.FdName = "_data";
+                LoadByJson(doc.RootElement.EnumerateObject(), model);
             }
             else
             {
                 throw new Exception("暂不支持除 array object 类型以外的类型");
             }
+            return model;
         }
 
-        public void LoadByPath(string path)
+        public DynamicModel CreateByFilePath(string path)
         {
             using var reader = new StreamReader(path);
-            LoadByJson(reader.ReadToEnd());
+            return CreateByJson(reader.ReadToEnd());
         }
 
-        public FieldDynamicModel Get(object key)
-        {
-            if (key is string fdName)
-            {
-                if (FdDict.TryGetValue(fdName, out var result))
-                {
-                    return result;
-                }
-                else
-                {
-                    throw new Exception($"对象没有{fdName}属性");
-                }
-            }
-            else if (key is int idx)
-            {
-                var result = FdDict.Values.ToArray()[idx];
-                return result;
-            }
-            else
-            {
-                throw new Exception($"{key}是不受支持的键类型");
-            }
-        }
-
-        public FieldDynamicModel Get(string key)
-        {
-            object prm = key;
-            return Get(prm);
-        }
-
-        public FieldDynamicModel Get(int idx)
-        {
-            object prm = idx;
-            return Get(prm);
-        }
-
-        public void Set(FieldDynamicModel model)
-        {
-            FdDict.Remove(model.FdName);
-            FdDict.TryAdd(model.FdName, model);
-        }
-
-        private void LoadByJson(ObjectEnumerator obj, FieldDynamicModel parent)
+        private void LoadByJson(ObjectEnumerator obj, DynamicModel parent)
         {
             foreach (var item in obj)
             {
-                var model = new FieldDynamicModel();
+                var model = new DynamicModel();
                 switch (item.Value.ValueKind)
                 {
                     case JsonValueKind.Undefined:
@@ -150,12 +90,12 @@ namespace QiQiTemplate
             }
         }
 
-        private void LoadByJson(ArrayEnumerator arr, FieldDynamicModel parent)
+        private void LoadByJson(ArrayEnumerator arr, DynamicModel parent)
         {
             int idx = 0;
             foreach (var item in arr)
             {
-                var model = new FieldDynamicModel();
+                var model = new DynamicModel();
                 switch (item.ValueKind)
                 {
                     case JsonValueKind.Undefined:
@@ -205,9 +145,5 @@ namespace QiQiTemplate
             }
         }
 
-        public override string ToString()
-        {
-            return FdValue?.ToString();
-        }
     }
 }

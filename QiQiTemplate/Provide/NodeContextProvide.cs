@@ -10,24 +10,23 @@ namespace QiQiTemplate
 {
     public class NodeContextProvide
     {
-        public Expression<Action<FieldDynamicModel>> BuildTemplateByReader(StreamReader reader, CoderExpressionProvide coder)
+        public Expression<Action<DynamicModel>> BuildTemplateByReader(StreamReader reader, CoderExpressionProvide coder)
         {
             var scope = new ScopeBlockContext();
             using var _reader = reader;
             CreateNodeContextRange(_reader, scope, coder);
             var node = scope.Nodes;
-            //scope.ConvertToExpression();
-            //return Expression.Lambda<Action<FieldDynamicModel>>(scope.NdExpression, scope.Root);
-            return null;
+            scope.ConvertToExpression();
+            return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
         }
 
-        public Expression<Action<FieldDynamicModel>> BuildTemplateByPath(string path, CoderExpressionProvide coder)
+        public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, CoderExpressionProvide coder)
         {
             var reader = new StreamReader(path);
             return BuildTemplateByReader(reader, coder);
         }
 
-        public Expression<Action<FieldDynamicModel>> BuildTemplateByString(string template, CoderExpressionProvide coder)
+        public Expression<Action<DynamicModel>> BuildTemplateByString(string template, CoderExpressionProvide coder)
         {
             using var memory = new MemoryStream();
             using var writer = new StreamWriter(memory);

@@ -6,7 +6,22 @@ namespace QiQiTemplate
 {
     public class IFModel
     {
-        public string LogOper { get; set; }// &(且)|(或)
+        private string _logOper;
+        public string LogOper
+        {
+            get { return this._logOper; }
+            set
+            {
+                if (value != "&" || value != "|")
+                {
+                    this._logOper = "&";
+                }
+                else
+                {
+                    this._logOper = value;
+                }
+            }
+        }
         public FieldType LeftType { get; set; }
         public string Left { get; set; }
         public FieldType RightType { get; set; }

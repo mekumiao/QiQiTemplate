@@ -6,29 +6,29 @@ namespace QiQiTemplate
 {
     public class BuilderTest
     {
-        public static Action<FieldDynamicModel> Builder()
+        public static Action<DynamicModel> Builder()
         {
-            ParameterExpression _data = Expression.Parameter(typeof(FieldDynamicModel), "_data");
+            ParameterExpression _data = Expression.Parameter(typeof(DynamicModel), "_data");
             List<Expression> expressions = new List<Expression>(10);
 
             MemberExpression nowmodel = Expression.PropertyOrField(_data, "NowModel");
 
-            MethodCallExpression path1 = Expression.Call(nowmodel, typeof(FieldDynamicModel).GetMethod("Get", new[] { typeof(string) }), Expression.Constant("usings"));
+            MethodCallExpression path1 = Expression.Call(nowmodel, typeof(DynamicModel).GetMethod("Get", new[] { typeof(string) }), Expression.Constant("usings"));
             expressions.Add(path1);
 
-            ParameterExpression root = Expression.Variable(typeof(FieldDynamicModel), "root");
+            ParameterExpression root = Expression.Variable(typeof(DynamicModel), "root");
 
             BinaryExpression init_root = Expression.Assign(root, nowmodel);
             expressions.Add(init_root);
 
-            MethodCallExpression resetCall = Expression.Call(_data, typeof(FieldDynamicModel).GetMethod("Reset"));
+            MethodCallExpression resetCall = Expression.Call(_data, typeof(DynamicModel).GetMethod("Reset"));
             expressions.Add(resetCall);
 
             ParameterExpression idx = Expression.Variable(typeof(int), "idx");
             BinaryExpression init_idx = Expression.Assign(idx, Expression.Constant(0));
 
-            ParameterExpression val = Expression.Variable(typeof(FieldDynamicModel), "val");
-            MethodCallExpression init_arr = Expression.Call(root, typeof(FieldDynamicModel).GetMethod("Get", new[] { typeof(int) }), idx);
+            ParameterExpression val = Expression.Variable(typeof(DynamicModel), "val");
+            MethodCallExpression init_arr = Expression.Call(root, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), idx);
             BinaryExpression init_val = Expression.Assign(val, init_arr);
 
             LabelTarget label = Expression.Label();
@@ -69,7 +69,7 @@ namespace QiQiTemplate
             //expressions.Add(print6);
 
             var result = Expression.Block(new[] { root }, expressions);
-            var lambda = Expression.Lambda<Action<FieldDynamicModel>>(result, _data);
+            var lambda = Expression.Lambda<Action<DynamicModel>>(result, _data);
             return lambda.Compile();
         }
     }

@@ -37,7 +37,7 @@ namespace QiQiTemplate
 
         public void BuildEachVariable()
         {
-            ParameterExpression val = Expression.Variable(typeof(FieldDynamicModel), this.Model.ValName);
+            ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model.ValName);
             ParameterExpression idx = Expression.Variable(typeof(int), this.Model.IdxName);
             this.Scope.Add(this.Model.ValName, val);
             this.Scope.Add(this.Model.IdxName, idx);
@@ -45,7 +45,7 @@ namespace QiQiTemplate
 
         public override void ConvertToExpression()
         {
-            var param = Expression.Variable(typeof(FieldDynamicModel));
+            var param = Expression.Variable(typeof(DynamicModel));
             var path = this.SearchPath(param, this.Model.SourcePath);
             var block = Expression.Block(this.Nodes.Select(x => x.NdExpression));
 
@@ -53,7 +53,7 @@ namespace QiQiTemplate
             var idx = this.SearchVariable(this.Model.IdxName) as ParameterExpression;
 
             BinaryExpression init_idx = Expression.Assign(this.SearchVariable(this.Model.IdxName), Expression.Constant(0));
-            MethodCallExpression init_arr = Expression.Call(param, typeof(FieldDynamicModel).GetMethod("Get", new[] { typeof(int) }), idx);
+            MethodCallExpression init_arr = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), idx);
             BinaryExpression init_val = Expression.Assign(val, init_arr);
 
             LabelTarget label = Expression.Label();

@@ -80,7 +80,7 @@ namespace QiQiTemplate
 
             Expression root = this.ParentNode.SearchVariable(paths[0].SourcePath);
             BinaryExpression init_param;
-            if (root.Type == typeof(FieldDynamicModel))
+            if (root.Type == typeof(DynamicModel))
             {
                 init_param = Expression.Assign(param, root);
                 exps.Add(init_param);
@@ -88,9 +88,9 @@ namespace QiQiTemplate
             else if (root.Type == typeof(int))
             {
                 ParameterExpression idx = root as ParameterExpression;
-                MemberAssignment bind1 = Expression.Bind(typeof(FieldDynamicModel).GetProperty("FdName"), Expression.Constant(idx.Name));
-                MemberAssignment bind2 = Expression.Bind(typeof(FieldDynamicModel).GetProperty("FdValue"), Expression.Convert(idx, typeof(object)));
-                MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(FieldDynamicModel)), bind1, bind2);
+                MemberAssignment bind1 = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(idx.Name));
+                MemberAssignment bind2 = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(idx, typeof(object)));
+                MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind1, bind2);
                 init_param = Expression.Assign(param, init);
                 exps.Add(init_param);
             }
@@ -108,15 +108,15 @@ namespace QiQiTemplate
                 {
                     case SourcePathType.Index:
                         exppath = Expression.Constant(Convert.ToInt32(item.SourcePath));
-                        getCall = Expression.Call(param, typeof(FieldDynamicModel).GetMethod("Get", new[] { typeof(int) }), exppath);
+                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), exppath);
                         break;
                     case SourcePathType.Attribute:
                         exppath = Expression.Constant(item.SourcePath);
-                        getCall = Expression.Call(param, typeof(FieldDynamicModel).GetMethod("Get", new[] { typeof(string) }), exppath);
+                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(string) }), exppath);
                         break;
                     case SourcePathType.Variable:
                         exppath = this.ParentNode.SearchVariable(item.SourcePath);
-                        getCall = Expression.Call(param, typeof(FieldDynamicModel).GetMethod("Get", new[] { exppath.Type }), exppath);
+                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { exppath.Type }), exppath);
                         break;
                     default:
                         throw new Exception($"不支持{item.PathType}类型的访问路径");

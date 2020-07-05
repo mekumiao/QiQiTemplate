@@ -22,12 +22,12 @@ namespace QiQiTemplate
         public ScopeBlockContext() :
             base("_data", null, null)
         {
-            this.Scope.Add("_data", Expression.Parameter(typeof(FieldDynamicModel), "_data"));
+            this.Scope.Add("_data", Expression.Parameter(typeof(DynamicModel), "_data"));
         }
 
         public override void ConvertToExpression()
         {
-            var exps = this.Nodes.Select(x => x.NdExpression).ToList();
+            var exps = this.Nodes.Select(x => x.NdExpression);
             this.NdExpression = Expression.Block(exps);
         }
     }

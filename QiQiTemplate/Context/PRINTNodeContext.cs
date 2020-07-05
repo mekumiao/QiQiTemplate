@@ -74,7 +74,7 @@ namespace QiQiTemplate
                         exps.Add(print);
                         break;
                     case PrintType.Variable:
-                        ParameterExpression param = Expression.Variable(typeof(FieldDynamicModel));
+                        ParameterExpression param = Expression.Variable(typeof(DynamicModel));
                         BlockExpression path = this.SearchPath(param, item.SourcePath);
                         print = this.CoderProvide.ExpressionPrint(param);
                         pars.Add(param);

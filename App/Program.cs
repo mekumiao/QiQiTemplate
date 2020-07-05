@@ -1,5 +1,6 @@
 ﻿using QiQiTemplate;
 using System;
+using System.Linq.Expressions;
 
 namespace App
 {
@@ -7,19 +8,17 @@ namespace App
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("---开始---");
-            var provide = new NodeContextProvide();
-            var coder = new CoderExpressionProvide();
-            var lambda = provide.BuildTemplateByPath(@"Temp.txt", coder);
+            var ndProvide = new NodeContextProvide();
+            var cdProvide = new CoderExpressionProvide();
+            var dyProvide = new DynamicModelProvide();
 
+            var lambda = ndProvide.BuildTemplateByPath(@"Temp.txt", cdProvide);
             var action = lambda.Compile();
 
-            var model = new FieldDynamicModel();
-            model.LoadByPath(@"Temp.json");
-
+            var model = dyProvide.CreateByFilePath(@"Temp.json");
             action.Invoke(model);
-            Console.WriteLine(coder.GetCode());
-            Console.ReadLine();
+
+            Console.WriteLine(cdProvide.GetCode());
         }
     }
 }
