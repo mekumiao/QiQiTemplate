@@ -16,8 +16,12 @@ namespace QiQiTemplate
 
         public override void ConvertToExpression()
         {
-            var exps = this.Nodes.Select(x => x.NdExpression);
-            this.NdExpression = Expression.Block(exps);
+            this.NdExpression = this.MergeNodes();
+        }
+
+        protected override void ParsingModel()
+        {
+            //不需要实现
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -26,6 +27,12 @@ namespace QiQiTemplate
             return SearchVariable(name, this);
         }
 
+        protected BlockExpression MergeNodes()
+        {
+            var lst = this.Nodes.Where(x => x.NdType != NodeType.ELSEIF && x.NdType != NodeType.ELSE).Select(x => x.NdExpression);
+            return Expression.Block(lst);
+        }
+
         private Expression SearchVariable(string name, NodeContext node)
         {
             if (node != null && node is NodeBlockContext block)
@@ -39,7 +46,7 @@ namespace QiQiTemplate
                     return SearchVariable(name, node.ParentNode);
                 }
             }
-            return null;
+            throw new Exception($"作用域中没有找到{name}变量");
         }
     }
 }

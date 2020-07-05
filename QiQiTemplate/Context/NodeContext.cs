@@ -63,6 +63,11 @@ namespace QiQiTemplate
         }
 
         /// <summary>
+        /// 解析Code
+        /// </summary>
+        protected abstract void ParsingModel();
+
+        /// <summary>
         /// 将节点转为Expression
         /// </summary>
         /// <returns></returns>

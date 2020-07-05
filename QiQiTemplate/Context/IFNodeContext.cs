@@ -9,12 +9,10 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate
 {
-    public class IFNodeContext : NodeBlockContext, IParsing
+    public class IFNodeContext : NodeBlockContext
     {
         protected static readonly Regex ParsingRegex = new Regex(@"((?<logoper>(\s[&|])?)\s(?<left>[^\s]+)\s(?<oper>>=|>|<|<=|==|!=)\s(?<right>[^|&}]+))+", RegexOptions.Compiled);
-
-        public List<IFModel> Model { get; private set; }
-
+        public List<IFModel> Model { get; protected set; }
         public NodeBlockContext ELSENode { get; set; }
 
         public IFNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
@@ -24,9 +22,14 @@ namespace QiQiTemplate
             this.NdType = NodeType.IF;
         }
 
-        public void ParsingModel()
+        protected virtual string FormatCode()
         {
-            var mths = ParsingRegex.Matches(this.CodeString.Replace("{{#if", "").Replace("}}", ""));
+            return this.CodeString.Trim().Replace("{{#if", "");
+        }
+
+        protected override void ParsingModel()
+        {
+            var mths = ParsingRegex.Matches(FormatCode());
             var lst = new List<IFModel>(10);
             foreach (Match item in mths)
             {
@@ -88,9 +91,11 @@ namespace QiQiTemplate
                 }
             }
 
-            BlockExpression exptrue = Expression.Block(this.Nodes.Select(x => x.NdExpression));
-            if (this.ELSENode != null) Expression.IfThenElse(comp, exptrue, this.ELSENode.NdExpression);
-            else Expression.IfThen(comp, exptrue);
+            BlockExpression exptrue = this.MergeNodes();
+            ConditionalExpression conditional = default;
+            if (this.ELSENode != null) conditional = Expression.IfThenElse(comp, exptrue, this.ELSENode.NdExpression);
+            else conditional = Expression.IfThen(comp, exptrue);
+            inits.Add(conditional);
             this.NdExpression = Expression.Block(parames, inits);
 
             Expression GetExpressionByIFModel(FieldType type, string value)

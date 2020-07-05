@@ -18,5 +18,10 @@ namespace QiQiTemplate.Context
         {
             this.NdExpression = this.CoderProvide.ExpressionPrintLine(Expression.Constant(this.CodeString));
         }
+
+        protected override void ParsingModel()
+        {
+            //
+        }
     }
 }

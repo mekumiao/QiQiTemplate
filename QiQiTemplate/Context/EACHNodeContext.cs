@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate
 {
-    public class EACHNodeContext : NodeBlockContext, IParsing
+    public class EACHNodeContext : NodeBlockContext
     {
         protected static readonly Regex ParsingRegex = new Regex(@"{{#each (?<path>[^\s]+) (?<val>[^\s]+) (?<idx>[^\s]+)}}", RegexOptions.Compiled);
 
@@ -24,7 +24,7 @@ namespace QiQiTemplate
             this.BuildEachVariable();
         }
 
-        public void ParsingModel()
+        protected override void ParsingModel()
         {
             var mth = ParsingRegex.Match(this.CodeString);
             this.Model = new EachModel
@@ -47,7 +47,7 @@ namespace QiQiTemplate
         {
             var param = Expression.Variable(typeof(DynamicModel));
             var path = this.SearchPath(param, this.Model.SourcePath);
-            var block = Expression.Block(this.Nodes.Select(x => x.NdExpression));
+            var block = this.MergeNodes();
 
             var val = this.SearchVariable(this.Model.ValName) as ParameterExpression;
             var idx = this.SearchVariable(this.Model.IdxName) as ParameterExpression;

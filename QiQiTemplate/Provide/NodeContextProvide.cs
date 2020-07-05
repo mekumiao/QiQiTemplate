@@ -10,6 +10,7 @@ namespace QiQiTemplate
 {
     public class NodeContextProvide
     {
+        private int _lineNumber = 0;
         public Expression<Action<DynamicModel>> BuildTemplateByReader(StreamReader reader, CoderExpressionProvide coder)
         {
             var scope = new ScopeBlockContext();
@@ -46,30 +47,47 @@ namespace QiQiTemplate
         {
             while (true)
             {
-                var line = reader.ReadLine();
+                string line = reader.ReadLine();
                 if (line == null) return;
-                var type = NodeContext.GetNodeType(line);
-                NodeBlockContext block;
-                NodeContext node;
+                _lineNumber++;
+                NodeType type = NodeContext.GetNodeType(line);
+                NodeContext last = ParentNode.Nodes.LastOrDefault();
+                if (last?.NdType == NodeType.IF || last?.NdType == NodeType.ELSEIF)
+                {
+                    if (type != NodeType.ELSEIF && type != NodeType.ELSE)
+                    {
+                        for (int i = ParentNode.Nodes.Count - 1; i >= 0; i--)
+                        {
+                            NodeContext item = ParentNode.Nodes[i];
+                            if (item.NdType != NodeType.ELSEIF && item.NdType != NodeType.IF)
+                                break;
+                            item.ConvertToExpression();
+                        }
+                    }
+                }
                 switch (type)
                 {
                     case NodeType.IF:
-                        block = new IFNodeContext(line, ParentNode, coder);
+                        NodeBlockContext block = new IFNodeContext(line, ParentNode, coder);
                         CreateNodeContextRange(reader, block, coder);
-                        block.ConvertToExpression();
+                        //block.ConvertToExpression();
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSEIF:
                         block = new ELSEIFNodeContext(line, ParentNode, coder);
                         CreateNodeContextRange(reader, block, coder);
-                        block.ConvertToExpression();
-                        if (ParentNode.Nodes.Last() is IFNodeContext ifnd1)
+                        //block.ConvertToExpression();
+                        if (last is IFNodeContext ifnd1)
                         {
                             ifnd1.ELSENode = block;
                         }
-                        else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd1)
+                        else if (last is ELSEIFNodeContext elnd1)
                         {
                             elnd1.ELSENode = block;
+                        }
+                        else
+                        {
+                            throw new Exception($"第{_lineNumber}行语法错误,else if必须在 if 或 else if 之后");
                         }
                         ParentNode.Nodes.Add(block);
                         break;
@@ -77,14 +95,27 @@ namespace QiQiTemplate
                         block = new ELSENodeContext(line, ParentNode, coder);
                         CreateNodeContextRange(reader, block, coder);
                         block.ConvertToExpression();
-                        if (ParentNode.Nodes.Last() is IFNodeContext ifnd)
+                        if (last is IFNodeContext ifnd)
                         {
                             ifnd.ELSENode = block;
                         }
-                        else if (ParentNode.Nodes.Last() is ELSEIFNodeContext elnd)
+                        else if (last is ELSEIFNodeContext elnd)
                         {
                             elnd.ELSENode = block;
                         }
+                        else
+                        {
+                            throw new Exception($"第{_lineNumber}行语法错误,else 必须在 if 或 else if之后");
+                        }
+
+                        for (int i = ParentNode.Nodes.Count - 1; i >= 0; i--)
+                        {
+                            NodeContext item = ParentNode.Nodes[i];
+                            if (item.NdType != NodeType.ELSEIF && item.NdType != NodeType.IF)
+                                break;
+                            item.ConvertToExpression();
+                        }
+
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.EACH:
@@ -94,7 +125,7 @@ namespace QiQiTemplate
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.PRINT:
-                        node = new PRINTNodeContext(line, ParentNode, coder);
+                        NodeContext node = new PRINTNodeContext(line, ParentNode, coder);
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;

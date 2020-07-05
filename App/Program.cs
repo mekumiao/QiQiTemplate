@@ -1,5 +1,6 @@
 ﻿using QiQiTemplate;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace App
@@ -12,12 +13,13 @@ namespace App
             var cdProvide = new CoderExpressionProvide();
             var dyProvide = new DynamicModelProvide();
 
-            var lambda = ndProvide.BuildTemplateByPath(@"Temp.txt", cdProvide);
-            var action = lambda.Compile();
-
+            //加载数据
             var model = dyProvide.CreateByFilePath(@"Temp.json");
+            //编译模板
+            var action = ndProvide.BuildTemplateByPath(@"Temp.txt", cdProvide).Compile();
+            //执行
             action.Invoke(model);
-
+            //输出
             Console.WriteLine(cdProvide.GetCode());
         }
     }

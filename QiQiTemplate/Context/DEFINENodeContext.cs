@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate
 {
-    public class DEFINENodeContext : NodeContext, IParsing
+    public class DEFINENodeContext : NodeContext
     {
         protected static readonly Regex ParsingRegex = new Regex(@"{{#define (?<type>[a-zA-Z]+)\s(?<name>[a-zA-Z_][\w]+)\s*=\s*(?<value>.+)}}", RegexOptions.Compiled);
 
@@ -19,7 +19,7 @@ namespace QiQiTemplate
             this.NdType = NodeType.DEFINE;
         }
 
-        public void ParsingModel()
+        protected override void ParsingModel()
         {
             var mth = ParsingRegex.Match(this.CodeString);
             this.Model = new DeFineModel

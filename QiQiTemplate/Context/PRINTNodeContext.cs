@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate
 {
-    public class PRINTNodeContext : NodeContext, IParsing
+    public class PRINTNodeContext : NodeContext
     {
         protected static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(.+?)(?=}})", RegexOptions.Compiled);
         protected static readonly Regex ParsingReges2 = new Regex(@"{{", RegexOptions.Compiled);
@@ -52,7 +52,7 @@ namespace QiQiTemplate
 
         }
 
-        public void ParsingModel()
+        protected override void ParsingModel()
         {
             var builder = new StringBuilder(this.CodeString);
             var list = new List<PrintModel>(10);
