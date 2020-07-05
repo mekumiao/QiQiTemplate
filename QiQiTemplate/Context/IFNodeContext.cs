@@ -47,14 +47,11 @@ namespace QiQiTemplate
             this.Model = lst;
         }
 
-        public override void ConvertToExpression()
+        public (ParameterExpression parme, Expression init) CreateConditionExpression()
         {
-            ParameterExpression comp = Expression.Variable(typeof(bool));
-            BinaryExpression init_comp = Expression.Assign(comp, Expression.Constant(true));
-            List<ParameterExpression> parames = new List<ParameterExpression>(10)
-            {
-                comp
-            };
+            ParameterExpression parme = Expression.Variable(typeof(bool));
+            BinaryExpression init_comp = Expression.Assign(parme, Expression.Constant(true));
+            List<ParameterExpression> parames = new List<ParameterExpression>(10);
             List<Expression> inits = new List<Expression>(10)
             {
                 init_comp
@@ -74,17 +71,16 @@ namespace QiQiTemplate
                 switch (item.LogOper)
                 {
                     case "&":
-                        BinaryExpression assign = Expression.AndAssign(comp, binary);
+                        BinaryExpression assign = Expression.AndAssign(parme, binary);
                         inits.Add(assign);
                         break;
                     case "|":
-                        assign = Expression.OrAssign(comp, binary);
+                        assign = Expression.OrAssign(parme, binary);
                         inits.Add(assign);
                         break;
                     default:
                         throw new Exception($"{item.LogOper}是不受支持的逻辑运算符");
                 }
-
                 BinaryExpression InitField(Func<Expression, Expression, BinaryExpression> func)
                 {
                     return func.Invoke(GetExpressionByIFModel(item.LeftType, item.Left), GetExpressionByIFModel(item.RightType, item.Right));
@@ -97,13 +93,17 @@ namespace QiQiTemplate
                     return param;
                 }
             }
+            return (parme, Expression.Block(parames, inits));
+        }
 
+        public override void ConvertToExpression()
+        {
+            var (parme, init) = this.CreateConditionExpression();
             BlockExpression exptrue = this.MergeNodes();
-            ConditionalExpression conditional = default;
-            if (this.ELSENode != null) conditional = Expression.IfThenElse(comp, exptrue, this.ELSENode.NdExpression);
-            else conditional = Expression.IfThen(comp, exptrue);
-            inits.Add(conditional);
-            this.NdExpression = Expression.Block(parames, inits);
+            ConditionalExpression conditiona;
+            if (this.ELSENode != null) conditiona = Expression.IfThenElse(parme, exptrue, this.ELSENode.NdExpression);
+            else conditiona = Expression.IfThen(parme, exptrue);
+            this.NdExpression = Expression.Block(new[] { parme }, init, conditiona);
         }
     }
 }

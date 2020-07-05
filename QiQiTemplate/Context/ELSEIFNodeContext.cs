@@ -9,9 +9,6 @@ namespace QiQiTemplate
 {
     public class ELSEIFNodeContext : IFNodeContext
     {
-        //{{#else if idx >= 2 & xx >= xxx | xx <= xxx}} (?<logoper>&|\|)
-        protected static readonly new Regex ParsingRegex = new Regex(@"((?<logoper>(\s[&|])?)\s(?<left>[^\s]+)\s(?<oper>>=|>|<|<=|==|!=)\s(?<right>[^|&}]+))+", RegexOptions.Compiled);
-
         public ELSEIFNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
             : base(code, parent, coder)
         {
