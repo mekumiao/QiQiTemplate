@@ -40,7 +40,12 @@ namespace QiQiTemplate.Provide
 
         public string GetCode()
         {
-            return this.stringBuilder.ToString().TrimEnd('\n').TrimEnd('\r');
+            return this.stringBuilder.ToString()?.TrimEnd('\n')?.TrimEnd('\r');
+        }
+
+        public void Clear()
+        {
+            this.stringBuilder.Clear();
         }
     }
 }
