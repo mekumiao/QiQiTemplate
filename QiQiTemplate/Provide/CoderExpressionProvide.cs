@@ -11,19 +11,16 @@ namespace QiQiTemplate.Provide
         public void Print(object code)
         {
             stringBuilder.Append(code);
-            //Console.Write(code);
         }
 
         public void PrintLine(object code)
         {
             stringBuilder.AppendLine($"{code}");
-            //Console.WriteLine($"{code}");
         }
 
         public void PrintLine()
         {
             stringBuilder.AppendLine();
-            //Console.WriteLine();
         }
 
         public MethodCallExpression ExpressionPrint(Expression exp)
@@ -43,7 +40,7 @@ namespace QiQiTemplate.Provide
 
         public string GetCode()
         {
-            return this.stringBuilder.ToString();
+            return this.stringBuilder.ToString().TrimEnd('\n').TrimEnd('\r');
         }
     }
 }

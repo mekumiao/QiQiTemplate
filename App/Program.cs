@@ -1,6 +1,7 @@
 ﻿using QiQiTemplate;
 using QiQiTemplate.Provide;
 using System;
+using System.Text;
 
 namespace App
 {
@@ -19,7 +20,7 @@ namespace App
             //执行
             action.Invoke(model);
             //输出
-            Console.WriteLine(cdProvide.GetCode());
+            Console.Write(cdProvide.GetCode());
         }
     }
 }
