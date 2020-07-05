@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Model
 {
     public class DynamicModel
     {

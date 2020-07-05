@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Linq.Expressions;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Provide
 {
     public class ExpressionProvide
     {

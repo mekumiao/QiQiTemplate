@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
+﻿using QiQiTemplate.Enum;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Model
 {
     public class SourcePathModel
     {

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Provide
 {
     public class CoderExpressionProvide
     {

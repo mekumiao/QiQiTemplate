@@ -1,10 +1,10 @@
-﻿using System;
+﻿using QiQiTemplate.Enum;
+using QiQiTemplate.Model;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Provide
 {
     public class SourcePathProvider
     {

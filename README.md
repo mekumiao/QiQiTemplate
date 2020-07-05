@@ -1,103 +1,88 @@
-# tempdemo
+
+
+# QiQiTemplate
 
 #### 介绍
 基于lambda表达式的模板代码工具
 
+## 语法
+
+### print 输出
+
 ~~~html
-
-{{#if}}
-
-{{#else if}}
-
-{{#else}}
-
-{{#/if}}
-
-{{#each data val idx}}
-
-{{#/each}}
-
-{{#each _data val}}
-
-{{#/each}}
-
-{{_data.val}}
-
-{{#define int num = 10}}
-{{#define string msg = "success"}}
-{{#define decimal price = 12.25}}
-
-
-{{each _data.usings val key}}
-using {{val}};
-{{/each}}
-
-namespace {{_data.namespace}}
-{
-    [DataContract]
-    public class {{_data.class}} : ModelBase
-    {
-        {{each _data.fields val key}}
-        [DataMember]
-        {{if key == 0}}
-        [Key]
-        {{/if}}
-        {{if val.type == "byte[]"}}
-        [Timestamp]
-        {{/if}}
-        public {{val.type}} {{val.name}} { get; set; }
-        
-        {{/each}}
-    }
-}
-
-字符串解析为表达式树
-
-1. if 语句解析
-{{#if x + y >= 10 & "xxx" != str}}
-
-2.each 
-{{#each _data val idx}}
-
-{{#each _data val}}
-
-3.print
-{{_data.val}}
-
-4.define
-{{#define int num = 0}}
-
-
-{{#each _data.usings val key}}
-using {{val}};
-{{#/each}}
-
-namespace {{_data.namespace}}
-{
-    [DataContract]
-    public class {{_data.class}} : ModelBase
-    {
-        {{#each _data.fields val key}}
-        [DataMember]
-        {{#if key == 0}}
-        [Key]
-        {{#/if}}
-        {{#if val.type == "byte[]"}}
-        [Timestamp]
-        {{#/if}}
-        public {{val.type}} {{val.name}} { get; set; }
-        
-        {{#/each}}
-    }
-}
-
-{{#define int num i = 10}}
-
-{{#if i == 0}}
-{{_data.val}}
-{{#else if i == 2}}
-{{_data.val}}
-{{#else}}
-{{_data.val}}
-{{#/if}}
+{{_data.name}}
 ~~~
+
+### if 判断
+
+~~~html
+{{#if 1 > 2}}
+我是一只额.
+{{#/if}}
+{{#else if 2 > 3}}
+我是一只猪.
+{{#/else if}}
+{{#else}}
+我可能不是人.
+{{#/else}}
+~~~
+
+### Each 循环
+
+~~~html
+{{#each _data.names val idx}}
+{{idx}}.我叫{{val}}
+{{#/each}}
+~~~
+
+### 定义变量
+
+> 用法
+
+~~~html
+{{#define name = "wyl"}}
+{{name}}
+~~~
+
+> 小技巧
+
+~~~html
+{{#define str = """}}
+{{str}} // 将输出 "
+~~~
+
+### 跟节点
+
+> `_data`
+
+~~~html
+{{_data.name}}
+{{#define name = _data.name}}
+~~~
+
+> json数据示例
+
+~~~json
+{
+    "name":"wyl",
+    "names":["wyl","xxx","yyy"]
+}
+~~~
+
+## 调用
+
+~~~c#
+var ndProvide = new NodeContextProvide();
+var cdProvide = new CoderExpressionProvide();
+var dyProvide = new DynamicModelProvide();
+
+//加载数据
+var model = dyProvide.CreateByFilePath(@"Temp.json");
+//编译模板
+var action = ndProvide.BuildTemplateByPath(@"Temp.txt", cdProvide).Compile();
+//执行
+action.Invoke(model);
+//输出
+Console.WriteLine(cdProvide.GetCode());
+~~~
+

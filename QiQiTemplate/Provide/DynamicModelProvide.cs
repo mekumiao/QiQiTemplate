@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QiQiTemplate.Model;
+using System;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using static System.Text.Json.JsonElement;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Provide
 {
     public class DynamicModelProvide
     {

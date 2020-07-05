@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QiQiTemplate.Enum;
+using QiQiTemplate.Provide;
 using System.Linq.Expressions;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Context
 {

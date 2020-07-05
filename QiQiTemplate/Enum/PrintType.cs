@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QiQiTemplate
+﻿namespace QiQiTemplate.Enum
 {
     public enum PrintType : byte
     {

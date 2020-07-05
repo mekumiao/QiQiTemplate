@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QiQiTemplate.Context;
+using QiQiTemplate.Enum;
+using QiQiTemplate.Model;
+using System;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Text.RegularExpressions;
-using QiQiTemplate.Context;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Provide
 {
     public class NodeContextProvide
     {

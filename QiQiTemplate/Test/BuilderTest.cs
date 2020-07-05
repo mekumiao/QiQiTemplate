@@ -1,8 +1,10 @@
-﻿using System;
+﻿using QiQiTemplate.Model;
+using QiQiTemplate.Provide;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Test
 {
     public class BuilderTest
     {

@@ -1,8 +1,6 @@
 ﻿using QiQiTemplate;
+using QiQiTemplate.Provide;
 using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 
 namespace App
 {

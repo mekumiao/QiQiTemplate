@@ -1,10 +1,12 @@
-﻿using System;
+﻿using QiQiTemplate.Enum;
+using QiQiTemplate.Model;
+using QiQiTemplate.Provide;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Context
 {
     public class PRINTNodeContext : NodeContext
     {

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using QiQiTemplate.Enum;
+using System;
 using System.Text.RegularExpressions;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Tool
 {
     public class TypeHelper
     {

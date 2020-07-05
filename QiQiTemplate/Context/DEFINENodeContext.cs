@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
+﻿using QiQiTemplate.Enum;
+using QiQiTemplate.Model;
+using QiQiTemplate.Provide;
+using QiQiTemplate.Tool;
+using System;
 using System.Text.RegularExpressions;
 
-namespace QiQiTemplate
+namespace QiQiTemplate.Context
 {
     public class DEFINENodeContext : NodeContext
     {
