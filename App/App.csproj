@@ -9,4 +9,13 @@
     <ProjectReference Include="..\QiQiTemplate\QiQiTemplate.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Temp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Temp.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -2,15 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <None Update="Temp.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Temp.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    <Version>1.0.1</Version>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    <PackageId>qiqigou.QiQiTemplate</PackageId>
+    <Title>QiQiTemplate</Title>
+    <Authors>qiqigou</Authors>
+    <Description>基于.Net Core 表达式树实现的模板代码生成器</Description>
+    <PackageTags>dotnet-core;template;code generation</PackageTags>
+  </PropertyGroup>
 
 </Project>
