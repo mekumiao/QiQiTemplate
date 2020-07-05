@@ -1,4 +1,6 @@
-﻿------------------------
+﻿{{#define name = "x"xx"}}
+{{name}}
+------------------------
 {{#each _data.people val idx}}
     {{#if val.age > 0 & val.age <= 10}}
     {{val.name}} 儿童 {{val.age}}

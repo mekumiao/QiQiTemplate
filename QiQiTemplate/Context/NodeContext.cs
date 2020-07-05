@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -8,17 +9,6 @@ namespace QiQiTemplate
 {
     public abstract class NodeContext
     {
-        protected static readonly Regex IsIFRegex = new Regex(@"^\s*{{#if\s+.+}}\s*$", RegexOptions.Compiled);//针对if的匹配
-        protected static readonly Regex IsENDIFRegex = new Regex(@"^\s*{{#/if}}\s*$", RegexOptions.Compiled);//针对if结束的匹配
-        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#else\s+if\s+.+}}\s*$", RegexOptions.Compiled);//针对else if的匹配
-        protected static readonly Regex IsENDELSEIFRegex = new Regex(@"^\s*{{#/else if}}\s*$");//else if 结束
-        protected static readonly Regex IsELSERegex = new Regex(@"^\s*{{#else}}\s*$", RegexOptions.Compiled);//针对else的匹配
-        protected static readonly Regex IsENDELSERegex = new Regex(@"^\s*{{#/else}}\s*$");//else 结束
-        protected static readonly Regex IsEACHRegex = new Regex(@"^\s*{{#each\s+((?!{{|}}).)+}}\s*$", RegexOptions.Compiled);//针对each循环的匹配
-        protected static readonly Regex IsENDEACHRegex = new Regex(@"^\s*{{#/each}}\s*$", RegexOptions.Compiled);//针对each结束的匹配
-        protected static readonly Regex IsPRINTRegex = new Regex("({{[^{](((?!{{|}}).)+)}})+", RegexOptions.Compiled);//针对print的匹配
-        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s+[a-zA-Z]+.+}}\s*$", RegexOptions.Compiled);//针对define的匹配
-
         public CoderExpressionProvide CoderProvide { get; }
 
         public string NodeId { get; }
@@ -37,29 +27,6 @@ namespace QiQiTemplate
             this.NodeId = Guid.NewGuid().ToString("N");
             this.CodeString = code;
             this.ParentNode = parent;
-        }
-
-        /// <summary>
-        /// 获取代码节点的类型
-        /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
-        public static NodeType GetNodeType(string code)
-        {
-            return code switch
-            {
-                string msg when IsIFRegex.IsMatch(msg) => NodeType.IF,
-                string msg when IsENDIFRegex.IsMatch(msg) => NodeType.ENDIF,
-                string msg when IsELSEIFRegex.IsMatch(msg) => NodeType.ELSEIF,
-                string msg when IsENDELSEIFRegex.IsMatch(msg) => NodeType.ENDELSEIF,
-                string msg when IsELSERegex.IsMatch(msg) => NodeType.ELSE,
-                string msg when IsENDELSERegex.IsMatch(msg) => NodeType.ENDELSE,
-                string msg when IsEACHRegex.IsMatch(msg) => NodeType.EACH,
-                string msg when IsENDEACHRegex.IsMatch(msg) => NodeType.ENDEACH,
-                string msg when IsPRINTRegex.IsMatch(msg) => NodeType.PRINT,
-                string msg when IsDEFINERegex.IsMatch(msg) => NodeType.DEFINE,
-                _ => NodeType.STRING,
-            };
         }
 
         /// <summary>
@@ -130,6 +97,27 @@ namespace QiQiTemplate
                 exps.Add(init_param);
             }
             return Expression.Block(exps);
+        }
+
+        protected (ParameterExpression param, Expression init) CreateDynamicModel(FieldType fdType, string fdName, string fdValue)
+        {
+            ParameterExpression param = Expression.Parameter(typeof(DynamicModel));
+            return fdType switch
+            {
+                FieldType.Int32 => (param, InitParame(Convert.ToInt32(fdValue))),
+                FieldType.Decimal => (param, InitParame(Convert.ToDecimal(fdValue))),
+                FieldType.String => (param, InitParame(fdValue)),
+                FieldType.Bool => (param, InitParame(Convert.ToBoolean(fdValue))),
+                FieldType.Variable => (param, this.SearchPath(param, fdValue)),
+                _ => throw new Exception($"{fdType}是不受支持的字段类型"),
+            };
+            BinaryExpression InitParame<TValue>(TValue value)
+            {
+                MemberAssignment bind1 = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(fdName));
+                MemberAssignment bind2 = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(Expression.Constant(value), typeof(object)));
+                MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind1, bind2);
+                return Expression.Assign(param, init);
+            }
         }
     }
 }

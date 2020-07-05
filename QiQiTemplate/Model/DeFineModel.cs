@@ -6,10 +6,10 @@ namespace QiQiTemplate
 {
     public class DeFineModel
     {
-        public Type FdType { get; set; }
+        public FieldType FdType { get; set; }
 
         public string ArgName { get; set; }
 
-        public object ArgVal { get; set; }
+        public string ArgValue { get; set; }
     }
 }

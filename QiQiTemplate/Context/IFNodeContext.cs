@@ -89,6 +89,13 @@ namespace QiQiTemplate
                 {
                     return func.Invoke(GetExpressionByIFModel(item.LeftType, item.Left), GetExpressionByIFModel(item.RightType, item.Right));
                 }
+                Expression GetExpressionByIFModel(FieldType type, string value)
+                {
+                    var (param, init) = this.CreateDynamicModel(type, string.Empty, value);
+                    parames.Add(param);
+                    inits.Add(init);
+                    return param;
+                }
             }
 
             BlockExpression exptrue = this.MergeNodes();
@@ -97,34 +104,6 @@ namespace QiQiTemplate
             else conditional = Expression.IfThen(comp, exptrue);
             inits.Add(conditional);
             this.NdExpression = Expression.Block(parames, inits);
-
-            Expression GetExpressionByIFModel(FieldType type, string value)
-            {
-                var (param, init) = ModelInit(type, value);
-                parames.Add(param);
-                inits.Add(init);
-                return param;
-            }
-
-            (ParameterExpression param, Expression init) ModelInit(FieldType fdType, string fdValue)
-            {
-                ParameterExpression param = Expression.Parameter(typeof(DynamicModel));
-                return fdType switch
-                {
-                    FieldType.Int32 => (param, InitParame(Convert.ToInt32(fdValue))),
-                    FieldType.Decimal => (param, InitParame(Convert.ToDecimal(fdValue))),
-                    FieldType.String => (param, InitParame(fdValue)),
-                    FieldType.Bool => (param, InitParame(Convert.ToBoolean(fdValue))),
-                    FieldType.Variable => (param, this.SearchPath(param, fdValue)),
-                    _ => throw new Exception($"{fdType}是不受支持的字段类型"),
-                };
-                BinaryExpression InitParame<TValue>(TValue value)
-                {
-                    MemberAssignment bind = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(Expression.Constant(value), typeof(object)));
-                    MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind);
-                    return Expression.Assign(param, init);
-                }
-            }
         }
     }
 }
