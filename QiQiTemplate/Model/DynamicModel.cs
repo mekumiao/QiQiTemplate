@@ -64,43 +64,13 @@ namespace QiQiTemplate.Model
             return FdValue?.ToString();
         }
 
-        public static bool operator >(DynamicModel field1, DynamicModel field2)
-        {
-            var v1 = Convert.ToDecimal(field1.FdValue);
-            var v2 = Convert.ToDecimal(field2.FdValue);
-            return v1 > v2;
-        }
-        public static bool operator <(DynamicModel field1, DynamicModel field2)
-        {
-            var v1 = Convert.ToDecimal(field1.FdValue);
-            var v2 = Convert.ToDecimal(field2.FdValue);
-            return v1 < v2;
-        }
-
-        public static bool operator >=(DynamicModel field1, DynamicModel field2)
-        {
-            var v1 = Convert.ToDecimal(field1.FdValue);
-            var v2 = Convert.ToDecimal(field2.FdValue);
-            return v1 >= v2;
-        }
-        public static bool operator <=(DynamicModel field1, DynamicModel field2)
-        {
-            var v1 = Convert.ToDecimal(field1.FdValue);
-            var v2 = Convert.ToDecimal(field2.FdValue);
-            return v1 <= v2;
-        }
-        public static bool operator ==(DynamicModel field1, DynamicModel field2)
-        {
-            var v1 = field1.FdValue.ToString();
-            var v2 = field2.FdValue.ToString();
-            return v1 == v2;
-        }
-        public static bool operator !=(DynamicModel field1, DynamicModel field2)
-        {
-            var v1 = field1.FdValue.ToString();
-            var v2 = field2.FdValue.ToString();
-            return v1 != v2;
-        }
+        public static bool operator >(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) > Convert.ToDecimal(field2.FdValue);
+        public static bool operator <(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) < Convert.ToDecimal(field2.FdValue);
+        public static bool operator >=(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) >= Convert.ToDecimal(field2.FdValue);
+        public static bool operator <=(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) <= Convert.ToDecimal(field2.FdValue);
+        public static bool operator ==(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() == field2.FdValue.ToString();
+        public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() != field2.FdValue.ToString();
+        public override int GetHashCode() => this.FdValue.ToString().GetHashCode();
 
         public override bool Equals(object obj)
         {
@@ -111,12 +81,6 @@ namespace QiQiTemplate.Model
                 return str1 == str2;
             }
             return false;
-        }
-
-        public override int GetHashCode()
-        {
-            var hs = this.FdValue.ToString().GetHashCode();
-            return hs;
         }
     }
 }
