@@ -51,30 +51,30 @@ namespace QiQiTemplate.Provide
             };
         }
 
-        public Expression<Action<DynamicModel>> BuildTemplateByReader(StreamReader reader, CoderExpressionProvide coder)
+        public Expression<Action<DynamicModel>> BuildTemplateByReader(StreamReader reader, OutPutProvide output)
         {
             var scope = new ScopeBlockContext();
             using var _reader = reader;
-            CreateNodeContextRange(_reader, scope, coder);
+            CreateNodeContextRange(_reader, scope, output);
             var node = scope.Nodes;
             scope.ConvertToExpression();
             return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
         }
 
-        public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, CoderExpressionProvide coder)
+        public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, OutPutProvide output)
         {
             var reader = new StreamReader(path);
-            return BuildTemplateByReader(reader, coder);
+            return BuildTemplateByReader(reader, output);
         }
 
-        public Expression<Action<DynamicModel>> BuildTemplateByString(string template, CoderExpressionProvide coder)
+        public Expression<Action<DynamicModel>> BuildTemplateByString(string template, OutPutProvide output)
         {
             using var memory = new MemoryStream();
             using var writer = new StreamWriter(memory);
             writer.Write(template);
             memory.Seek(0, SeekOrigin.Begin);
             using var reader = new StreamReader(memory);
-            return BuildTemplateByReader(reader, coder);
+            return BuildTemplateByReader(reader, output);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace QiQiTemplate.Provide
         /// <param name="reader"></param>
         /// <param name="ParentNode"></param>
         /// <param name="coder"></param>
-        private void CreateNodeContextRange(StreamReader reader, NodeBlockContext ParentNode, CoderExpressionProvide coder)
+        private void CreateNodeContextRange(StreamReader reader, NodeBlockContext ParentNode, OutPutProvide output)
         {
             while (true)
             {
@@ -108,15 +108,13 @@ namespace QiQiTemplate.Provide
                 switch (type)
                 {
                     case NodeType.IF:
-                        NodeBlockContext block = new IFNodeContext(line, ParentNode, coder);
-                        CreateNodeContextRange(reader, block, coder);
-                        //block.ConvertToExpression();
+                        NodeBlockContext block = new IFNodeContext(line, ParentNode, output);
+                        CreateNodeContextRange(reader, block, output);
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSEIF:
-                        block = new ELSEIFNodeContext(line, ParentNode, coder);
-                        CreateNodeContextRange(reader, block, coder);
-                        //block.ConvertToExpression();
+                        block = new ELSEIFNodeContext(line, ParentNode, output);
+                        CreateNodeContextRange(reader, block, output);
                         if (last is IFNodeContext ifnd1)
                         {
                             ifnd1.ELSENode = block;
@@ -132,8 +130,8 @@ namespace QiQiTemplate.Provide
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSE:
-                        block = new ELSENodeContext(line, ParentNode, coder);
-                        CreateNodeContextRange(reader, block, coder);
+                        block = new ELSENodeContext(line, ParentNode, output);
+                        CreateNodeContextRange(reader, block, output);
                         block.ConvertToExpression();
                         if (last is IFNodeContext ifnd)
                         {
@@ -159,23 +157,23 @@ namespace QiQiTemplate.Provide
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.EACH:
-                        block = new EACHNodeContext(line, ParentNode, coder);
-                        CreateNodeContextRange(reader, block, coder);
+                        block = new EACHNodeContext(line, ParentNode, output);
+                        CreateNodeContextRange(reader, block, output);
                         block.ConvertToExpression();
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.PRINT:
-                        NodeContext node = new PRINTNodeContext(line, ParentNode, coder);
+                        NodeContext node = new PRINTNodeContext(line, ParentNode, output);
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;
                     case NodeType.STRING:
-                        node = new STRINGNodeContext(line, ParentNode, coder);
+                        node = new STRINGNodeContext(line, ParentNode, output);
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;
                     case NodeType.DEFINE:
-                        node = new DEFINENodeContext(line, ParentNode, coder);
+                        node = new DEFINENodeContext(line, ParentNode, output);
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;

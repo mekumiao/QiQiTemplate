@@ -15,8 +15,8 @@ namespace QiQiTemplate.Context
         public List<IFModel> Model { get; protected set; }
         public NodeBlockContext ELSENode { get; set; }
 
-        public IFNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
-            : base(code, parent, coder)
+        public IFNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
+            : base(code, parent, output)
         {
             ParsingModel();
             this.NdType = NodeType.IF;

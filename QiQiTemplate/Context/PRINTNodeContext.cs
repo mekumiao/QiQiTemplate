@@ -1,6 +1,7 @@
 ﻿using QiQiTemplate.Enum;
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
+using QiQiTemplate.Tool;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -15,8 +16,8 @@ namespace QiQiTemplate.Context
 
         public List<PrintModel> Model { get; private set; }
 
-        public PRINTNodeContext(string code, NodeBlockContext parent,CoderExpressionProvide coder)
-            : base(code, parent, coder)
+        public PRINTNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
+            : base(code, parent, output)
         {
             ParsingModel();
             this.NdType = NodeType.PRINT;
@@ -72,7 +73,7 @@ namespace QiQiTemplate.Context
                 switch (item.PtType)
                 {
                     case PrintType.String:
-                        MethodCallExpression print = this.CoderProvide.ExpressionPrint(Expression.Constant(item.SourcePath));
+                        MethodCallExpression print = this.CoderProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
                         exps.Add(print);
                         break;
                     case PrintType.Variable:
