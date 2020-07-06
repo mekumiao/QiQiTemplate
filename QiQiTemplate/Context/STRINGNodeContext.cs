@@ -1,5 +1,6 @@
 ﻿using QiQiTemplate.Enum;
 using QiQiTemplate.Provide;
+using QiQiTemplate.Tool;
 using System.Linq.Expressions;
 
 namespace QiQiTemplate.Context
@@ -14,7 +15,7 @@ namespace QiQiTemplate.Context
 
         public override void ConvertToExpression()
         {
-            this.NdExpression = this.CoderProvide.ExpressionPrintLine(Expression.Constant(this.CodeString));
+            this.NdExpression = this.CoderProvide.ExpressionPrintLine(Expression.Constant(StringConvert.Convert1(this.CodeString)));
         }
 
         protected override void ParsingModel()
