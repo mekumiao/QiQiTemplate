@@ -9,18 +9,20 @@ namespace App
     {
         static void Main(string[] args)
         {
-            var ndProvide = new NodeContextProvide();
-            var cdProvide = new CoderExpressionProvide();
-            var dyProvide = new DynamicModelProvide();
+            var dyProvide = new DynamicModelProvide();//数据加载类
+            var outProvide = new OutPutProvide();//输出类
+            var ndProvide = new NodeContextProvide();//模板编译类
 
             //加载数据
             var model = dyProvide.CreateByFilePath(@"Temp.json");
             //编译模板
-            var action = ndProvide.BuildTemplateByPath(@"Temp.txt", cdProvide).Compile();
+            var action = ndProvide.BuildTemplateByPath(@"Temp.txt", outProvide).Compile();
             //执行
             action.Invoke(model);
-            //输出
-            Console.Write(cdProvide.GetCode());
+            //输出到文件
+            outProvide.OutPut(@"output.txt");
+            //输出到控制台
+            Console.Write(outProvide.GetCode());
         }
     }
 }

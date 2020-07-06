@@ -6,8 +6,8 @@ namespace QiQiTemplate.Context
 {
     public class STRINGNodeContext : NodeContext
     {
-        public STRINGNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder) :
-            base(code, parent, coder)
+        public STRINGNodeContext(string code, NodeBlockContext parent, OutPutProvide output) :
+            base(code, parent, output)
         {
             this.NdType = NodeType.STRING;
         }

@@ -21,9 +21,9 @@ namespace QiQiTemplate.Context
 
         public NodeBlockContext ParentNode { get; }
 
-        public NodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
+        public NodeContext(string code, NodeBlockContext parent, OutPutProvide output)
         {
-            this.CoderProvide = coder;
+            this.CoderProvide = new CoderExpressionProvide(output);
             this.NodeId = Guid.NewGuid().ToString("N");
             this.CodeString = code;
             this.ParentNode = parent;

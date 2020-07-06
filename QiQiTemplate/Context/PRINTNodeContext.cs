@@ -15,8 +15,8 @@ namespace QiQiTemplate.Context
 
         public List<PrintModel> Model { get; private set; }
 
-        public PRINTNodeContext(string code, NodeBlockContext parent,CoderExpressionProvide coder)
-            : base(code, parent, coder)
+        public PRINTNodeContext(string code, NodeBlockContext parent,OutPutProvide output)
+            : base(code, parent, output)
         {
             ParsingModel();
             this.NdType = NodeType.PRINT;

@@ -1,51 +1,31 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace QiQiTemplate.Provide
 {
     public class CoderExpressionProvide
     {
-        private readonly StringBuilder stringBuilder = new StringBuilder();
+        private readonly OutPutProvide _outPut;
 
-        public void Print(object code)
+        public CoderExpressionProvide(OutPutProvide outPut)
         {
-            stringBuilder.Append(code);
-        }
-
-        public void PrintLine(object code)
-        {
-            stringBuilder.AppendLine($"{code}");
-        }
-
-        public void PrintLine()
-        {
-            stringBuilder.AppendLine();
+            this._outPut = outPut;
         }
 
         public MethodCallExpression ExpressionPrint(Expression exp)
         {
-            return Expression.Call(Expression.Constant(this), typeof(CoderExpressionProvide).GetMethod("Print"), exp);
+            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("Print"), exp);
         }
 
         public MethodCallExpression ExpressionPrintLine(Expression exp)
         {
-            return Expression.Call(Expression.Constant(this), typeof(CoderExpressionProvide).GetMethod("PrintLine", new[] { typeof(object) }), exp);
+            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("PrintLine", new[] { typeof(object) }), exp);
         }
 
         public MethodCallExpression ExpressionPrintLine()
         {
-            return Expression.Call(Expression.Constant(this), typeof(CoderExpressionProvide).GetMethod("PrintLine", new Type[0]));
+            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("PrintLine", new Type[0]));
         }
 
-        public string GetCode()
-        {
-            return this.stringBuilder.ToString()?.TrimEnd('\n')?.TrimEnd('\r');
-        }
-
-        public void Clear()
-        {
-            this.stringBuilder.Clear();
-        }
     }
 }

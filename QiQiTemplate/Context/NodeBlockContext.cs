@@ -22,8 +22,8 @@ namespace QiQiTemplate.Context
         /// </summary>
         public List<ParameterExpression> DefineParams { get; }
 
-        public NodeBlockContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
-            : base(code, parent, coder)
+        public NodeBlockContext(string code, NodeBlockContext parent, OutPutProvide output)
+            : base(code, parent, output)
         {
             this.Scope = new Dictionary<string, Expression>(10);
             this.Nodes = new List<NodeContext>(10);

@@ -5,8 +5,8 @@ namespace QiQiTemplate.Context
 {
     public class ELSEIFNodeContext : IFNodeContext
     {
-        public ELSEIFNodeContext(string code, NodeBlockContext parent, CoderExpressionProvide coder)
-            : base(code, parent, coder)
+        public ELSEIFNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
+            : base(code, parent, output)
         {
             this.NdType = NodeType.ELSEIF;
         }

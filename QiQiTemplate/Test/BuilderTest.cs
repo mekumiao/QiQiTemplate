@@ -36,7 +36,7 @@ namespace QiQiTemplate.Test
             LabelTarget label = Expression.Label();
             MemberExpression count = Expression.Property(root, "Count");
 
-            CoderExpressionProvide coder = new CoderExpressionProvide();
+            CoderExpressionProvide coder = new CoderExpressionProvide(new OutPutProvide());
             MethodCallExpression print1 = coder.ExpressionPrintLine(Expression.Constant("using "));
             MethodCallExpression print2 = coder.ExpressionPrint(val);
             MethodCallExpression print3 = coder.ExpressionPrint(Expression.Constant(";"));
