@@ -25,6 +25,11 @@ namespace QiQiTemplate.Context
 
         private void MatchPrint(StringBuilder builder, List<PrintModel> prints)
         {
+            /*
+             * 1.如果匹配第一个{{位置成功,并且位置大于0,说明开始的语句为String类型
+             * 2.如果匹配第一个{{位置成功,并且位置不大于0,说明开始的语句为Variable类型
+             * 3.如果匹配失败,说明剩余部分是结尾的字符串,则直接判定为String类型
+             */
             var mth = ParsingReges2.Match(builder.ToString());
             if (mth.Success)
             {
@@ -39,20 +44,27 @@ namespace QiQiTemplate.Context
                     if (builder.Length > 0) MatchPrint(builder, prints);
                     return;
                 }
-            }
-            mth = ParsingRegex1.Match(builder.ToString());
-            if (mth.Success)
-            {
-                prints.Add(new PrintModel
+                else
                 {
-                    PtType = PrintType.Variable,
-                    SourcePath = mth.Value,
-                });
-                builder.Remove(0, mth.Length + 4);
-                if (builder.Length > 0) MatchPrint(builder, prints);
-                return;
+                    mth = ParsingRegex1.Match(builder.ToString());
+                    if (mth.Success)
+                    {
+                        prints.Add(new PrintModel
+                        {
+                            PtType = PrintType.Variable,
+                            SourcePath = mth.Value,
+                        });
+                        builder.Remove(0, mth.Length + 4);
+                        if (builder.Length > 0) MatchPrint(builder, prints);
+                        return;
+                    }
+                }
             }
-
+            prints.Add(new PrintModel
+            {
+                PtType = PrintType.String,
+                SourcePath = builder.ToString(),
+            });
         }
 
         protected override void ParsingModel()
