@@ -4,8 +4,16 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Tool
 {
+    /// <summary>
+    /// 类型辅助
+    /// </summary>
     public class TypeHelper
     {
+        /// <summary>
+        /// 获取字符串的类型
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static FieldType GetFieldTypeByValue(string value)
         {
             return value switch

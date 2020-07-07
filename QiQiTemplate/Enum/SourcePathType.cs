@@ -1,5 +1,8 @@
 ﻿namespace QiQiTemplate.Enum
 {
+    /// <summary>
+    /// 访问路径类型
+    /// </summary>
     public enum SourcePathType : byte
     {
         /// <summary>

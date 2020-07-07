@@ -22,8 +22,7 @@ namespace App
             //输出到文件
             outProvide.OutPut(@"output.txt");
             //输出到控制台
-            ConsolePlus.WriterLine(outProvide.GetCode());
-            ConsolePlus.WriterLineGreen("-----结束-----");
+            Console.Write(outProvide.ToString());
         }
     }
 }

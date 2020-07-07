@@ -7,20 +7,38 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Context
 {
+    /// <summary>
+    /// 定义变量节点
+    /// </summary>
     public class DEFINENodeContext : NodeContext
     {
+        /// <summary>
+        /// 正则
+        /// </summary>
         protected static readonly Regex ParsingRegex = new Regex(@"{{#define (?<name>[a-zA-Z_][\w]+)\s=\s(?<value>.+)}}", RegexOptions.Compiled);
+        /// <summary>
+        /// 正则
+        /// </summary>
         protected static readonly Regex RegexValue = new Regex("(?<=\")(.*)(?=\")", RegexOptions.Compiled);
-
+        /// <summary>
+        /// 信息
+        /// </summary>
         public DeFineModel Model { get; private set; }
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="parent"></param>
+        /// <param name="output"></param>
         public DEFINENodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
             ParsingModel();
             this.NdType = NodeType.DEFINE;
         }
-
+        /// <summary>
+        /// 解析
+        /// </summary>
         protected override void ParsingModel()
         {
             var mth = ParsingRegex.Match(this.CodeString);
@@ -35,7 +53,9 @@ namespace QiQiTemplate.Context
                 this.Model.ArgValue = RegexValue.Match(this.Model.ArgValue).Value;
             }
         }
-
+        /// <summary>
+        /// 转换表达式
+        /// </summary>
         public override void ConvertToExpression()
         {
             var (param, init) = this.CreateDynamicModel(this.Model.FdType, this.Model.ArgName, this.Model.ArgValue);

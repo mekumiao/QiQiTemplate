@@ -7,6 +7,9 @@ using System.Linq.Expressions;
 
 namespace QiQiTemplate.Context
 {
+    /// <summary>
+    /// 块节点
+    /// </summary>
     public abstract class NodeBlockContext : NodeContext
     {
         /// <summary>
@@ -22,6 +25,12 @@ namespace QiQiTemplate.Context
         /// </summary>
         public List<ParameterExpression> DefineParams { get; }
 
+        /// <summary>
+        /// 初始化块节点
+        /// </summary>
+        /// <param name="code">代码串</param>
+        /// <param name="parent">父节点</param>
+        /// <param name="output">输出类</param>
         public NodeBlockContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
@@ -30,11 +39,20 @@ namespace QiQiTemplate.Context
             this.DefineParams = new List<ParameterExpression>(10);
         }
 
+        /// <summary>
+        /// 递归的在父节点上搜索变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Expression SearchVariable(string name)
         {
             return SearchVariable(name, this);
         }
 
+        /// <summary>
+        /// 合并当前块节点
+        /// </summary>
+        /// <returns></returns>
         protected BlockExpression MergeNodes()
         {
             var lst = this.Nodes.Where(x => x.NdType != NodeType.ELSEIF && x.NdType != NodeType.ELSE).Select(x => x.NdExpression);

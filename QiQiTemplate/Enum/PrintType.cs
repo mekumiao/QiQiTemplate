@@ -1,5 +1,8 @@
 ﻿namespace QiQiTemplate.Enum
 {
+    /// <summary>
+    /// 输出类型
+    /// </summary>
     public enum PrintType : byte
     {
         /// <summary>

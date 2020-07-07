@@ -6,8 +6,16 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Provide
 {
+    /// <summary>
+    /// 访问路径解析提供类
+    /// </summary>
     public class SourcePathProvider
     {
+        /// <summary>
+        /// 解析访问路径
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <returns></returns>
         public static SourcePathModel[] CreateSourcePath(string sourcePath)
         {
             var builder = new StringBuilder(sourcePath);
