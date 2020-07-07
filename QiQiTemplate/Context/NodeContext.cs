@@ -7,23 +7,44 @@ using System.Linq.Expressions;
 
 namespace QiQiTemplate.Context
 {
+    /// <summary>
+    /// 语法节点抽象类
+    /// </summary>
     public abstract class NodeContext
     {
-        public CoderExpressionProvide CoderProvide { get; }
-
+        /// <summary>
+        /// 输出提供类
+        /// </summary>
+        protected PrintExpressionProvide PrintProvide { get; }
+        /// <summary>
+        /// 节点ID
+        /// </summary>
         public string NodeId { get; }
-
+        /// <summary>
+        /// 节点类型
+        /// </summary>
         public NodeType NdType { get; protected set; }
-
+        /// <summary>
+        /// 节点表达式
+        /// </summary>
         public Expression NdExpression { get; protected set; }
-
+        /// <summary>
+        /// 节点代码串
+        /// </summary>
         public string CodeString { get; }
-
+        /// <summary>
+        /// 父节点
+        /// </summary>
         public NodeBlockContext ParentNode { get; }
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="parent"></param>
+        /// <param name="output"></param>
         public NodeContext(string code, NodeBlockContext parent, OutPutProvide output)
         {
-            this.CoderProvide = new CoderExpressionProvide(output);
+            this.PrintProvide = new PrintExpressionProvide(output);
             this.NodeId = Guid.NewGuid().ToString("N");
             this.CodeString = code;
             this.ParentNode = parent;
@@ -45,10 +66,11 @@ namespace QiQiTemplate.Context
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <returns></returns>
-        public BlockExpression SearchPath(ParameterExpression param, string sourcePath)
+        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath)
         {
             var exps = new List<Expression>(10);
             var paths = SourcePathProvider.CreateSourcePath(sourcePath);
+            ParameterExpression param = Expression.Variable(typeof(DynamicModel));
 
             Expression root = this.ParentNode.SearchVariable(paths[0].SourcePath);
             BinaryExpression init_param;
@@ -96,19 +118,25 @@ namespace QiQiTemplate.Context
                 init_param = Expression.Assign(param, getCall);
                 exps.Add(init_param);
             }
-            return Expression.Block(exps);
+            return (param, Expression.Block(exps));
         }
-
+        /// <summary>
+        /// 根据访问路径创建数据
+        /// </summary>
+        /// <param name="fdType"></param>
+        /// <param name="fdName"></param>
+        /// <param name="fdValue"></param>
+        /// <returns></returns>
         protected (ParameterExpression param, Expression init) CreateDynamicModel(FieldType fdType, string fdName, string fdValue)
         {
-            ParameterExpression param = Expression.Parameter(typeof(DynamicModel));
+            ParameterExpression param = Expression.Variable(typeof(DynamicModel));
             return fdType switch
             {
                 FieldType.Int32 => (param, InitParame(Convert.ToInt32(fdValue))),
                 FieldType.Decimal => (param, InitParame(Convert.ToDecimal(fdValue))),
                 FieldType.String => (param, InitParame(fdValue)),
                 FieldType.Bool => (param, InitParame(Convert.ToBoolean(fdValue))),
-                FieldType.Variable => (param, this.SearchPath(param, fdValue)),
+                FieldType.Variable => this.SearchPath(fdValue),
                 _ => throw new Exception($"{fdType}是不受支持的字段类型"),
             };
             BinaryExpression InitParame<TValue>(TValue value)

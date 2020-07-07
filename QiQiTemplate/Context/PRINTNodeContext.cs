@@ -9,13 +9,30 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Context
 {
+    /// <summary>
+    /// 输出节点
+    /// </summary>
     public class PRINTNodeContext : NodeContext
     {
+        /// <summary>
+        /// 正则1
+        /// </summary>
         protected static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(.+?)(?=}})", RegexOptions.Compiled);
+        /// <summary>
+        /// 正则1
+        /// </summary>
         protected static readonly Regex ParsingReges2 = new Regex(@"{{", RegexOptions.Compiled);
-
+        /// <summary>
+        /// 节点信息
+        /// </summary>
         public List<PrintModel> Model { get; private set; }
 
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="parent"></param>
+        /// <param name="output"></param>
         public PRINTNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
@@ -66,7 +83,9 @@ namespace QiQiTemplate.Context
                 SourcePath = builder.ToString(),
             });
         }
-
+        /// <summary>
+        /// 解析
+        /// </summary>
         protected override void ParsingModel()
         {
             var builder = new StringBuilder(this.CodeString);
@@ -74,7 +93,9 @@ namespace QiQiTemplate.Context
             this.Model = list;
             MatchPrint(builder, list);
         }
-
+        /// <summary>
+        /// 转换表达式
+        /// </summary>
         public override void ConvertToExpression()
         {
             var exps = new List<Expression>(10);
@@ -85,13 +106,12 @@ namespace QiQiTemplate.Context
                 switch (item.PtType)
                 {
                     case PrintType.String:
-                        MethodCallExpression print = this.CoderProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
+                        MethodCallExpression print = this.PrintProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
                         exps.Add(print);
                         break;
                     case PrintType.Variable:
-                        ParameterExpression param = Expression.Variable(typeof(DynamicModel));
-                        BlockExpression path = this.SearchPath(param, item.SourcePath);
-                        print = this.CoderProvide.ExpressionPrint(param);
+                        var (param, path) = this.SearchPath(item.SourcePath);
+                        print = this.PrintProvide.ExpressionPrint(param);
                         pars.Add(param);
                         exps.Add(path);
                         exps.Add(print);
@@ -100,7 +120,7 @@ namespace QiQiTemplate.Context
                         break;
                 }
             }
-            MethodCallExpression printLine = this.CoderProvide.ExpressionPrintLine();
+            MethodCallExpression printLine = this.PrintProvide.ExpressionPrintLine();
             exps.Add(printLine);
             this.NdExpression = Expression.Block(pars, exps);
         }

@@ -9,24 +9,46 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Context
 {
+    /// <summary>
+    /// if 节点
+    /// </summary>
     public class IFNodeContext : NodeBlockContext
     {
+        /// <summary>
+        /// 正则
+        /// </summary>
         protected static readonly Regex ParsingRegex = new Regex(@"((?<logoper>(\s[&|])?)\s(?<left>[^\s]+)\s(?<oper>>=|>|<|<=|==|!=)\s(?<right>[^|&}]+))+", RegexOptions.Compiled);
+        /// <summary>
+        /// 信息
+        /// </summary>
         public List<IFModel> Model { get; protected set; }
+        /// <summary>
+        /// else 节点
+        /// </summary>
         public NodeBlockContext ELSENode { get; set; }
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="parent"></param>
+        /// <param name="output"></param>
         public IFNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
             ParsingModel();
             this.NdType = NodeType.IF;
         }
-
+        /// <summary>
+        /// 格式化
+        /// </summary>
+        /// <returns></returns>
         protected virtual string FormatCode()
         {
             return this.CodeString.Trim().Replace("{{#if", "");
         }
-
+        /// <summary>
+        /// 解析
+        /// </summary>
         protected override void ParsingModel()
         {
             var mths = ParsingRegex.Matches(FormatCode());
@@ -46,8 +68,11 @@ namespace QiQiTemplate.Context
             }
             this.Model = lst;
         }
-
-        public (ParameterExpression parme, Expression init) CreateConditionExpression()
+        /// <summary>
+        /// 创建条件表达式
+        /// </summary>
+        /// <returns></returns>
+        protected (ParameterExpression parme, Expression init) CreateConditionExpression()
         {
             ParameterExpression parme = Expression.Variable(typeof(bool));
             BinaryExpression init_comp = Expression.Assign(parme, Expression.Constant(true));
@@ -95,7 +120,9 @@ namespace QiQiTemplate.Context
             }
             return (parme, Expression.Block(parames, inits));
         }
-
+        /// <summary>
+        /// 转换表达式
+        /// </summary>
         public override void ConvertToExpression()
         {
             var (parme, init) = this.CreateConditionExpression();

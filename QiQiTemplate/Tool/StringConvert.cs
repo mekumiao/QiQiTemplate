@@ -4,6 +4,9 @@ using System.Text;
 
 namespace QiQiTemplate.Tool
 {
+    /// <summary>
+    /// 字符转义
+    /// </summary>
     public class StringConvert
     {
         /// <summary>

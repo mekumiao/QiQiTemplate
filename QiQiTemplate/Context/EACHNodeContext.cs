@@ -6,15 +6,34 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Context
 {
+    /// <summary>
+    /// each 循环节点
+    /// </summary>
     public class EACHNodeContext : NodeBlockContext
     {
+        /// <summary>
+        /// 解析语法正则
+        /// </summary>
         protected static readonly Regex ParsingRegex = new Regex(@"{{#each (?<path>[^\s]+) (?<val>[^\s]+) (?<idx>[^\s]+)}}", RegexOptions.Compiled);
-
+        /// <summary>
+        /// 循环值
+        /// </summary>
         protected ParameterExpression _val;
+        /// <summary>
+        /// 循环索引
+        /// </summary>
         protected ParameterExpression _idx;
 
+        /// <summary>
+        /// 节点信息
+        /// </summary>
         public EachModel Model { get; private set; }
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="parent"></param>
+        /// <param name="output"></param>
         public EACHNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
@@ -23,6 +42,9 @@ namespace QiQiTemplate.Context
             this.BuildEachVariable();
         }
 
+        /// <summary>
+        /// 解析节点
+        /// </summary>
         protected override void ParsingModel()
         {
             var mth = ParsingRegex.Match(this.CodeString);
@@ -34,7 +56,7 @@ namespace QiQiTemplate.Context
             };
         }
 
-        public void BuildEachVariable()
+        private void BuildEachVariable()
         {
             ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model.ValName);
             ParameterExpression idx = Expression.Variable(typeof(int), this.Model.IdxName);
@@ -42,10 +64,12 @@ namespace QiQiTemplate.Context
             this.Scope.Add(this.Model.IdxName, idx);
         }
 
+        /// <summary>
+        /// 转换为表达式
+        /// </summary>
         public override void ConvertToExpression()
         {
-            var param = Expression.Variable(typeof(DynamicModel));
-            var path = this.SearchPath(param, this.Model.SourcePath);
+            var (param, path) = this.SearchPath(this.Model.SourcePath);
             var block = this.MergeNodes();
 
             var val = this.SearchVariable(this.Model.ValName) as ParameterExpression;

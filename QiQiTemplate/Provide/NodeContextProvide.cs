@@ -9,48 +9,62 @@ using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Provide
 {
+    /// <summary>
+    /// 几点解析提供类
+    /// </summary>
     public class NodeContextProvide
     {
         /// <summary>
         /// 行号
         /// </summary>
         private int _lineNumber = 0;
-
-        protected static readonly Regex IsIFRegex = new Regex(@"^\s*{{#if\s+.+}}\s*$", RegexOptions.Compiled);//针对if的匹配
-        protected static readonly Regex IsENDIFRegex = new Regex(@"^\s*{{#/if}}\s*$", RegexOptions.Compiled);//针对if结束的匹配
-        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#else\s+if\s+.+}}\s*$", RegexOptions.Compiled);//针对else if的匹配
-        protected static readonly Regex IsENDELSEIFRegex = new Regex(@"^\s*{{#/else if}}\s*$");//else if 结束
-        protected static readonly Regex IsELSERegex = new Regex(@"^\s*{{#else}}\s*$", RegexOptions.Compiled);//针对else的匹配
-        protected static readonly Regex IsENDELSERegex = new Regex(@"^\s*{{#/else}}\s*$");//else 结束
-        protected static readonly Regex IsEACHRegex = new Regex(@"^\s*{{#each\s+((?!{{|}}).)+}}\s*$", RegexOptions.Compiled);//针对each循环的匹配
-        protected static readonly Regex IsENDEACHRegex = new Regex(@"^\s*{{#/each}}\s*$", RegexOptions.Compiled);//针对each结束的匹配
-        protected static readonly Regex IsPRINTRegex = new Regex("({{[^{](((?!{{|}}).)+)}})+", RegexOptions.Compiled);//针对print的匹配
-        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s[a-zA-Z_][\w]+.+}}\s*$", RegexOptions.Compiled);//针对define的匹配
+        /// <summary>
+        /// 针对if的匹配
+        /// </summary>
+        protected static readonly Regex IsIFRegex = new Regex(@"^\s*{{#if\s+.+}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对if结束的匹配
+        /// </summary>
+        protected static readonly Regex IsENDIFRegex = new Regex(@"^\s*{{#/if}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对else if的匹配
+        /// </summary>
+        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#else\s+if\s+.+}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// else if 结束
+        /// </summary>
+        protected static readonly Regex IsENDELSEIFRegex = new Regex(@"^\s*{{#/else if}}\s*$");
+        /// <summary>
+        /// 针对else的匹配
+        /// </summary>
+        protected static readonly Regex IsELSERegex = new Regex(@"^\s*{{#else}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// else 结束
+        /// </summary>
+        protected static readonly Regex IsENDELSERegex = new Regex(@"^\s*{{#/else}}\s*$");
+        /// <summary>
+        /// 针对each循环的匹配
+        /// </summary>
+        protected static readonly Regex IsEACHRegex = new Regex(@"^\s*{{#each\s+((?!{{|}}).)+}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对each结束的匹配
+        /// </summary>
+        protected static readonly Regex IsENDEACHRegex = new Regex(@"^\s*{{#/each}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对print的匹配
+        /// </summary>
+        protected static readonly Regex IsPRINTRegex = new Regex("({{[^{](((?!{{|}}).)+)}})+", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对define的匹配
+        /// </summary>
+        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s[a-zA-Z_][\w]+.+}}\s*$", RegexOptions.Compiled);
 
         /// <summary>
-        /// 获取代码节点的类型
-        /// [需要注意顺序]
+        /// 编译模板
         /// </summary>
-        /// <param name="code"></param>
+        /// <param name="reader"></param>
+        /// <param name="output"></param>
         /// <returns></returns>
-        public NodeType GetNodeType(string code)
-        {
-            return code switch
-            {
-                string msg when IsIFRegex.IsMatch(msg) => NodeType.IF,
-                string msg when IsENDIFRegex.IsMatch(msg) => NodeType.ENDIF,
-                string msg when IsELSEIFRegex.IsMatch(msg) => NodeType.ELSEIF,
-                string msg when IsENDELSEIFRegex.IsMatch(msg) => NodeType.ENDELSEIF,
-                string msg when IsELSERegex.IsMatch(msg) => NodeType.ELSE,
-                string msg when IsENDELSERegex.IsMatch(msg) => NodeType.ENDELSE,
-                string msg when IsEACHRegex.IsMatch(msg) => NodeType.EACH,
-                string msg when IsENDEACHRegex.IsMatch(msg) => NodeType.ENDEACH,
-                string msg when IsDEFINERegex.IsMatch(msg) => NodeType.DEFINE,
-                string msg when IsPRINTRegex.IsMatch(msg) => NodeType.PRINT,
-                _ => NodeType.STRING,
-            };
-        }
-
         public Expression<Action<DynamicModel>> BuildTemplateByReader(StreamReader reader, OutPutProvide output)
         {
             var scope = new ScopeBlockContext();
@@ -61,12 +75,24 @@ namespace QiQiTemplate.Provide
             return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
         }
 
+        /// <summary>
+        /// 编译模板
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
         public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, OutPutProvide output)
         {
             var reader = new StreamReader(path);
             return BuildTemplateByReader(reader, output);
         }
 
+        /// <summary>
+        /// 编译模板
+        /// </summary>
+        /// <param name="template"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
         public Expression<Action<DynamicModel>> BuildTemplateByString(string template, OutPutProvide output)
         {
             using var memory = new MemoryStream();
@@ -82,7 +108,7 @@ namespace QiQiTemplate.Provide
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="ParentNode"></param>
-        /// <param name="coder"></param>
+        /// <param name="output"></param>
         private void CreateNodeContextRange(StreamReader reader, NodeBlockContext ParentNode, OutPutProvide output)
         {
             while (true)
@@ -187,5 +213,30 @@ namespace QiQiTemplate.Provide
                 }
             }
         }
+
+        /// <summary>
+        /// 获取代码节点的类型
+        /// [需要注意顺序]
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        protected NodeType GetNodeType(string code)
+        {
+            return code switch
+            {
+                string msg when IsIFRegex.IsMatch(msg) => NodeType.IF,
+                string msg when IsENDIFRegex.IsMatch(msg) => NodeType.ENDIF,
+                string msg when IsELSEIFRegex.IsMatch(msg) => NodeType.ELSEIF,
+                string msg when IsENDELSEIFRegex.IsMatch(msg) => NodeType.ENDELSEIF,
+                string msg when IsELSERegex.IsMatch(msg) => NodeType.ELSE,
+                string msg when IsENDELSERegex.IsMatch(msg) => NodeType.ENDELSE,
+                string msg when IsEACHRegex.IsMatch(msg) => NodeType.EACH,
+                string msg when IsENDEACHRegex.IsMatch(msg) => NodeType.ENDEACH,
+                string msg when IsDEFINERegex.IsMatch(msg) => NodeType.DEFINE,
+                string msg when IsPRINTRegex.IsMatch(msg) => NodeType.PRINT,
+                _ => NodeType.STRING,
+            };
+        }
+
     }
 }

@@ -6,8 +6,15 @@ using System.Linq.Expressions;
 
 namespace QiQiTemplate.Test
 {
+    /// <summary>
+    /// 测试
+    /// </summary>
     public class BuilderTest
     {
+        /// <summary>
+        /// 测试
+        /// </summary>
+        /// <returns></returns>
         public static Action<DynamicModel> Builder()
         {
             ParameterExpression _data = Expression.Parameter(typeof(DynamicModel), "_data");
@@ -36,7 +43,7 @@ namespace QiQiTemplate.Test
             LabelTarget label = Expression.Label();
             MemberExpression count = Expression.Property(root, "Count");
 
-            CoderExpressionProvide coder = new CoderExpressionProvide(new OutPutProvide());
+            PrintExpressionProvide coder = new PrintExpressionProvide(new OutPutProvide());
             MethodCallExpression print1 = coder.ExpressionPrintLine(Expression.Constant("using "));
             MethodCallExpression print2 = coder.ExpressionPrint(val);
             MethodCallExpression print3 = coder.ExpressionPrint(Expression.Constant(";"));

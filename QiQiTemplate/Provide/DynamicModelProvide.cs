@@ -6,8 +6,16 @@ using static System.Text.Json.JsonElement;
 
 namespace QiQiTemplate.Provide
 {
+    /// <summary>
+    /// 数据提供类
+    /// </summary>
     public class DynamicModelProvide
     {
+        /// <summary>
+        /// 从json字符串加载数据
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public DynamicModel CreateByJson(string json)
         {
             var model = new DynamicModel();
@@ -30,6 +38,11 @@ namespace QiQiTemplate.Provide
             return model;
         }
 
+        /// <summary>
+        /// 从json文件加载数据
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public DynamicModel CreateByFilePath(string path)
         {
             using var reader = new StreamReader(path);

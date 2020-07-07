@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="qiqitemplate" Version="1.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\QiQiTemplate\QiQiTemplate.csproj" />
   </ItemGroup>
 
