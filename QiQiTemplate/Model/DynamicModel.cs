@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Xml.Schema;
 
 namespace QiQiTemplate.Model
 {
@@ -137,6 +139,78 @@ namespace QiQiTemplate.Model
         /// <param name="field2"></param>
         /// <returns></returns>
         public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() != field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator +(DynamicModel field1, DynamicModel field2)
+        {
+            if (field1.FdValue is string)
+            {
+                field1.FdValue = field1.ToString() + field2.ToString();
+            }
+            else
+            {
+                var allow = new[] { typeof(int), typeof(decimal) };
+                if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 + 运算");
+                field1.FdValue = (decimal)field1.FdValue + (decimal)field2.FdValue;
+            }
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator -(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 - 运算");
+            field1.FdValue = (decimal)field1.FdValue - (decimal)field2.FdValue;
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator *(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 * 运算");
+            field1.FdValue = (decimal)field1.FdValue * (decimal)field2.FdValue;
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator /(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 / 运算");
+            field1.FdValue = (decimal)field1.FdValue / (decimal)field2.FdValue;
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator %(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 - 运算");
+            field1.FdValue = (decimal)field1.FdValue % (decimal)field2.FdValue;
+            return field1;
+        }
         /// <summary>
         /// 重载操作符
         /// </summary>
