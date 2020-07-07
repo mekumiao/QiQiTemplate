@@ -12,4 +12,14 @@
     {{val.name}} 中年 {{val.age}}
     {{#/else}}
 {{#/each}}
-------------------------\{\{ xxx \}\}
+------------------------\{\{ {{name}} \}\}
+
+{{#if _data.fields.Exits("name")}}
+
+{{#/if}}
+
+
+public class Model
+{
+    public string Name \{ get;set; \} = "{{name}}";
+}

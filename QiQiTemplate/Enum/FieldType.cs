@@ -22,8 +22,8 @@
         /// </summary>
         Bool,
         /// <summary>
-        /// 变量
+        /// 访问路径
         /// </summary>
-        Variable,
+        SourcePath,
     }
 }

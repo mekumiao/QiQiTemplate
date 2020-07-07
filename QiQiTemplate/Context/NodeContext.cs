@@ -136,7 +136,7 @@ namespace QiQiTemplate.Context
                 FieldType.Decimal => (param, InitParame(Convert.ToDecimal(fdValue))),
                 FieldType.String => (param, InitParame(fdValue)),
                 FieldType.Bool => (param, InitParame(Convert.ToBoolean(fdValue))),
-                FieldType.Variable => this.SearchPath(fdValue),
+                FieldType.SourcePath => this.SearchPath(fdValue),
                 _ => throw new Exception($"{fdType}是不受支持的字段类型"),
             };
             BinaryExpression InitParame<TValue>(TValue value)
