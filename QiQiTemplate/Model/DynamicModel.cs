@@ -31,9 +31,14 @@ namespace QiQiTemplate.Model
             this.FdDict = new Dictionary<string, DynamicModel>(10);
         }
 
-        private DynamicModel Get(object key)
+        /// <summary>
+        /// 根据名称获取子节点
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public DynamicModel Get(DynamicModel model)
         {
-            if (key is string fdName)
+            if (model.FdValue is string fdName)
             {
                 if (FdDict.TryGetValue(fdName, out var result))
                 {
@@ -44,37 +49,15 @@ namespace QiQiTemplate.Model
                     throw new Exception($"对象没有{fdName}属性");
                 }
             }
-            else if (key is int idx)
+            else if (model.FdValue is int idx)
             {
                 var result = FdDict.Values.ToArray()[idx];
                 return result;
             }
             else
             {
-                throw new Exception($"{key}是不受支持的键类型");
+                throw new Exception($"{model.FdValue}是不受支持的键类型");
             }
-        }
-
-        /// <summary>
-        /// 根据名称获取子节点
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public DynamicModel Get(string key)
-        {
-            object prm = key;
-            return Get(prm);
-        }
-
-        /// <summary>
-        /// 根据索引获取子节点
-        /// </summary>
-        /// <param name="idx"></param>
-        /// <returns></returns>
-        public DynamicModel Get(int idx)
-        {
-            object prm = idx;
-            return Get(prm);
         }
 
         /// <summary>
@@ -137,6 +120,100 @@ namespace QiQiTemplate.Model
         /// <param name="field2"></param>
         /// <returns></returns>
         public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() != field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator +(DynamicModel field1, DynamicModel field2)
+        {
+            if (field1.FdValue is string)
+            {
+                field1.FdValue = field1.ToString() + field2.ToString();
+            }
+            else
+            {
+                var type1 = field2.FdValue.GetType();
+                var type2 = field2.FdValue.GetType();
+                var allow = new[] { typeof(int), typeof(decimal) };
+                if (!allow.Contains(type1) || !allow.Contains(type2)) throw new Exception($"{type1.Name}与{type2.Name}不能进行 + 运算");
+                field1.FdValue = Convert.ToDecimal(field1.FdValue) + Convert.ToDecimal(field2.FdValue);
+            }
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator -(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 - 运算");
+            field1.FdValue = Convert.ToDecimal(field1.FdValue) - Convert.ToDecimal(field2.FdValue);
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator *(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 * 运算");
+            field1.FdValue = Convert.ToDecimal(field1.FdValue) * Convert.ToDecimal(field2.FdValue);
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator /(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 / 运算");
+            field1.FdValue = Convert.ToDecimal(field1.FdValue) / Convert.ToDecimal(field2.FdValue);
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static DynamicModel operator %(DynamicModel field1, DynamicModel field2)
+        {
+            var allow = new[] { typeof(int), typeof(decimal) };
+            if (!allow.Contains(field1.GetType()) || !allow.Contains(field2.GetType())) throw new Exception($"{field1.FdValue.GetType().Name}与{field2.FdValue.GetType().Name}不能进行 - 运算");
+            field1.FdValue = Convert.ToDecimal(field1.FdValue) % Convert.ToDecimal(field2.FdValue);
+            return field1;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public static DynamicModel operator ++(DynamicModel field)
+        {
+            field.FdValue = Convert.ToDecimal(field.FdValue) + 1;
+            return field;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public static DynamicModel operator --(DynamicModel field)
+        {
+            field.FdValue = Convert.ToDecimal(field.FdValue) - 1;
+            return field;
+        }
         /// <summary>
         /// 重载操作符
         /// </summary>

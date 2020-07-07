@@ -97,21 +97,19 @@ namespace QiQiTemplate.Context
             for (int i = 1; i < paths.Length; i++)
             {
                 SourcePathModel item = paths[i];
-                Expression exppath;
+                ;
                 MethodCallExpression getCall;
                 switch (item.PathType)
                 {
                     case SourcePathType.Index:
-                        exppath = Expression.Constant(Convert.ToInt32(item.SourcePath));
-                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), exppath);
+                        getCall = ExpressionProvide.GetDynamicModelExpression(param, Convert.ToInt32(item.SourcePath));
                         break;
                     case SourcePathType.Attribute:
-                        exppath = Expression.Constant(item.SourcePath);
-                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(string) }), exppath);
+                        getCall = ExpressionProvide.GetDynamicModelExpression(param, item.SourcePath);
                         break;
                     case SourcePathType.Variable:
-                        exppath = this.ParentNode.SearchVariable(item.SourcePath);
-                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { exppath.Type }), exppath);
+                        Expression exppath = this.ParentNode.SearchVariable(item.SourcePath);
+                        getCall = ExpressionProvide.GetDynamicModelExpression(param, item.SourcePath);
                         break;
                     default:
                         throw new Exception($"不支持{item.PathType}类型的访问路径");

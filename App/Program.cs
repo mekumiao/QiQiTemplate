@@ -1,4 +1,5 @@
 ﻿using QiQiTemplate;
+using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
 using System;
 using System.Text;
@@ -9,6 +10,8 @@ namespace App
     {
         static void Main(string[] args)
         {
+            var s = new DynamicModel { FdValue = 0 } + new DynamicModel { FdValue = 2 };
+
             var dyProvide = new DynamicModelProvide();//数据加载类
             var outProvide = new OutPutProvide();//输出类
             var ndProvide = new NodeContextProvide();//模板编译类

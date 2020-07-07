@@ -75,12 +75,19 @@ namespace QiQiTemplate.Context
             var val = this.SearchVariable(this.Model.ValName) as ParameterExpression;
             var idx = this.SearchVariable(this.Model.IdxName) as ParameterExpression;
 
-            BinaryExpression init_idx = Expression.Assign(this.SearchVariable(this.Model.IdxName), Expression.Constant(0));
-            MethodCallExpression init_arr = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), idx);
+            BinaryExpression init_idx = Expression.Assign(this.SearchVariable(this.Model.IdxName), Expression.Constant(new DynamicModel
+            {
+                FdName = this.Model.IdxName,
+                FdValue = 0,
+            }));
+
+            MethodCallExpression init_arr = ExpressionProvide.GetDynamicModelExpression(param, idx);
+
             BinaryExpression init_val = Expression.Assign(val, init_arr);
 
             LabelTarget label = Expression.Label();
             MemberExpression count = Expression.Property(param, "Count");
+            ExpressionProvide.GetDynamicModelExpression(param, count);
 
             this.NdExpression = Expression.Block(
                 new[] { param, val, idx },
