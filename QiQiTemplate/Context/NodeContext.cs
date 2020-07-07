@@ -130,10 +130,6 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         protected (ParameterExpression param, Expression init) CreateDynamicModel(FieldType fdType, string fdName, string fdValue)
         {
-            var (pr, exp) = this.SearchPath(fdValue);
-            var bk = Expression.Block();
-            var lambda = Expression.Lambda<Func<DynamicModel>>(exp);
-
             ParameterExpression param = Expression.Variable(typeof(DynamicModel));
             return fdType switch
             {
