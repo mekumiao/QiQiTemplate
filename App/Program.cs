@@ -21,7 +21,15 @@ namespace App
             //编译模板
             var action = ndProvide.BuildTemplateByPath(@"Temp.txt", outProvide).Compile();
             //执行
-            action.Invoke(model);
+            try
+            {
+                action.Invoke(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
             //输出到文件
             outProvide.OutPut(@"output.txt");
             //输出到控制台

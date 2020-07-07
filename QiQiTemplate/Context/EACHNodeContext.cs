@@ -59,7 +59,7 @@ namespace QiQiTemplate.Context
         private void BuildEachVariable()
         {
             ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model.ValName);
-            ParameterExpression idx = Expression.Variable(typeof(int), this.Model.IdxName);
+            ParameterExpression idx = Expression.Variable(typeof(DynamicModel), this.Model.IdxName);
             this.Scope.Add(this.Model.ValName, val);
             this.Scope.Add(this.Model.IdxName, idx);
         }
@@ -86,8 +86,8 @@ namespace QiQiTemplate.Context
             BinaryExpression init_val = Expression.Assign(val, init_arr);
 
             LabelTarget label = Expression.Label();
-            MemberExpression count = Expression.Property(param, "Count");
-            ExpressionProvide.GetDynamicModelExpression(param, count);
+
+            MemberInitExpression count = ExpressionProvide.CreateDynamicModelExpression(Expression.Property(param, "Count"));
 
             this.NdExpression = Expression.Block(
                 new[] { param, val, idx },

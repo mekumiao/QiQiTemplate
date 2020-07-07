@@ -47,10 +47,17 @@ namespace QiQiTemplate.Provide
                 FdValue = value
             }));
         }
-
-        public static void CreateDynamicModelExpression()
+        /// <summary>
+        /// 创建DynamicModel实例表达式
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static MemberInitExpression CreateDynamicModelExpression(Expression value, string name = "")
         {
-            MemberExpression property = Expression.Property(parameterExpression, typeof(TIn).GetProperty(item.Name));
+            MemberAssignment bind1 = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(name));
+            MemberAssignment bind2 = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), value);
+            return Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind1, bind2);
         }
     }
 }
