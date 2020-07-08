@@ -82,10 +82,11 @@ namespace QiQiTemplate.Context
             else if (root.Type == typeof(int))
             {
                 ParameterExpression idx = root as ParameterExpression;
-                MemberAssignment bind1 = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(idx.Name));
-                MemberAssignment bind2 = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(idx, typeof(object)));
-                MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind1, bind2);
-                init_param = Expression.Assign(param, init);
+                init_param = Expression.Assign(param, Expression.Constant(new DynamicModel
+                {
+                    FdName = idx.Name,
+                    FdValue = idx
+                }));
                 exps.Add(init_param);
             }
             else
@@ -136,15 +137,17 @@ namespace QiQiTemplate.Context
                 FieldType.Decimal => (param, InitParame(Convert.ToDecimal(fdValue))),
                 FieldType.String => (param, InitParame(fdValue)),
                 FieldType.Bool => (param, InitParame(Convert.ToBoolean(fdValue))),
-                FieldType.Variable => this.SearchPath(fdValue),
+                FieldType.SourcePath => this.SearchPath(fdValue),
                 _ => throw new Exception($"{fdType}是不受支持的字段类型"),
             };
             BinaryExpression InitParame<TValue>(TValue value)
             {
-                MemberAssignment bind1 = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(fdName));
-                MemberAssignment bind2 = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(Expression.Constant(value), typeof(object)));
-                MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind1, bind2);
-                return Expression.Assign(param, init);
+                return Expression.Assign(param,
+                    Expression.Constant(new DynamicModel
+                    {
+                        FdName = fdName,
+                        FdValue = value,
+                    }));
             }
         }
     }

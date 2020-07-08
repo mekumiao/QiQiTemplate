@@ -16,6 +16,10 @@
         /// <summary>
         /// 变量
         /// </summary>
-        Variable
+        Variable,
+        /// <summary>
+        /// 方法
+        /// </summary>
+        Func,
     }
 }
