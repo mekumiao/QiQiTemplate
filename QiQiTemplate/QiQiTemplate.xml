@@ -404,9 +404,9 @@
             bool
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.Variable">
+        <member name="F:QiQiTemplate.Enum.FieldType.SourcePath">
             <summary>
-            变量
+            访问路径
             </summary>
         </member>
         <member name="T:QiQiTemplate.Enum.NodeType">
@@ -504,6 +504,11 @@
             变量
             </summary>
         </member>
+        <member name="F:QiQiTemplate.Enum.SourcePathType.Func">
+            <summary>
+            方法
+            </summary>
+        </member>
         <member name="T:QiQiTemplate.Model.DeFineModel">
             <summary>
             变量定义节点
@@ -544,6 +549,11 @@
             子节点数量
             </summary>
         </member>
+        <member name="P:QiQiTemplate.Model.DynamicModel.ValueType">
+            <summary>
+            值类型
+            </summary>
+        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.#ctor">
             <summary>
             构造
@@ -553,7 +563,7 @@
             <summary>
             根据名称获取子节点
             </summary>
-            <param name="key"></param>
+            <param name="fdName"></param>
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.Get(System.Int32)">
@@ -719,6 +729,11 @@
         <member name="P:QiQiTemplate.Model.SourcePathModel.SourcePath">
             <summary>
             值
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Model.SourcePathModel.FuncParames">
+            <summary>
+            方法参数
             </summary>
         </member>
         <member name="T:QiQiTemplate.Provide.DynamicModelProvide">

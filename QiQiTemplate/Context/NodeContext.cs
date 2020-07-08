@@ -79,19 +79,13 @@ namespace QiQiTemplate.Context
                 init_param = Expression.Assign(param, root);
                 exps.Add(init_param);
             }
-            else if (root.Type == typeof(int))
-            {
-                ParameterExpression idx = root as ParameterExpression;
-                init_param = Expression.Assign(param, Expression.Constant(new DynamicModel
-                {
-                    FdName = idx.Name,
-                    FdValue = idx
-                }));
-                exps.Add(init_param);
-            }
             else
             {
-                throw new Exception($"不支持{root.Type}类型的访问路径搜索");
+                ParameterExpression rootparame = root as ParameterExpression;
+                MemberAssignment bind = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(rootparame, typeof(object)));
+                MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind);
+                init_param = Expression.Assign(param, init);
+                exps.Add(init_param);
             }
 
             for (int i = 1; i < paths.Length; i++)

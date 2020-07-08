@@ -21,6 +21,10 @@ namespace QiQiTemplate.Model
         /// 子节点数量
         /// </summary>
         public int Count { get { return this.FdDict.Count; } }
+        /// <summary>
+        /// 值类型
+        /// </summary>
+        public Type ValueType { get { return this.FdValue.GetType(); } }
 
         private readonly Dictionary<string, DynamicModel> FdDict;
         /// <summary>
