@@ -31,39 +31,18 @@ namespace QiQiTemplate.Model
             this.FdDict = new Dictionary<string, DynamicModel>(10);
         }
 
-        private DynamicModel Get(object key)
-        {
-            if (key is string fdName)
-            {
-                if (FdDict.TryGetValue(fdName, out var result))
-                {
-                    return result;
-                }
-                else
-                {
-                    throw new Exception($"对象没有{fdName}属性");
-                }
-            }
-            else if (key is int idx)
-            {
-                var result = FdDict.Values.ToArray()[idx];
-                return result;
-            }
-            else
-            {
-                throw new Exception($"{key}是不受支持的键类型");
-            }
-        }
-
         /// <summary>
         /// 根据名称获取子节点
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="fdName"></param>
         /// <returns></returns>
-        public DynamicModel Get(string key)
+        public DynamicModel Get(string fdName)
         {
-            object prm = key;
-            return Get(prm);
+            if (FdDict.TryGetValue(fdName, out var result))
+            {
+                return result;
+            }
+            throw new Exception($"对象没有{fdName}属性");
         }
 
         /// <summary>
@@ -73,8 +52,8 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public DynamicModel Get(int idx)
         {
-            object prm = idx;
-            return Get(prm);
+            if (idx > FdDict.Count - 1) throw new Exception("索引超出界限");
+            return FdDict.Values.ToArray()[idx];
         }
 
         /// <summary>
