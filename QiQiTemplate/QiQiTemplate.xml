@@ -356,6 +356,34 @@
             解析
             </summary>
         </member>
+        <member name="T:QiQiTemplate.Context.SETNodeContext">
+            <summary>
+            变量计算和赋值节点
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Context.SETNodeContext.Model">
+            <summary>
+            节点信息
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Context.SETNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+            <summary>
+            构造
+            </summary>
+            <param name="code"></param>
+            <param name="parent"></param>
+            <param name="output"></param>
+        </member>
+        <member name="M:QiQiTemplate.Context.SETNodeContext.ConvertToExpression">
+            <summary>
+            转换表达式
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Context.SETNodeContext.ParsingModel">
+            <summary>
+            解析语句
+            </summary>
+        </member>
         <member name="T:QiQiTemplate.Context.STRINGNodeContext">
             <summary>
             String 节点
@@ -467,6 +495,11 @@
         <member name="F:QiQiTemplate.Enum.NodeType.STRING">
             <summary>
             字符串节点
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Enum.NodeType.SET">
+            <summary>
+            变量计算和赋值节点
             </summary>
         </member>
         <member name="T:QiQiTemplate.Enum.PrintType">
@@ -633,6 +666,20 @@
             <param name="field2"></param>
             <returns></returns>
         </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Increment(QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Decrement(QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field"></param>
+            <returns></returns>
+        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.GetHashCode">
             <summary>
             重载操作符
@@ -714,6 +761,22 @@
         <member name="P:QiQiTemplate.Model.PrintModel.SourcePath">
             <summary>
             值
+            </summary>
+        </member>
+        <member name="T:QiQiTemplate.Model.SetModel">
+            <summary>
+            变量赋值和计算model
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Model.SetModel.Name">
+            <summary>
+            变量名称
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Model.SetModel.Oper">
+            <summary>
+            运算符号,
+            暂时只支持++,--
             </summary>
         </member>
         <member name="T:QiQiTemplate.Model.SourcePathModel">
@@ -813,6 +876,11 @@
         <member name="F:QiQiTemplate.Provide.NodeContextProvide.IsDEFINERegex">
             <summary>
             针对define的匹配
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Provide.NodeContextProvide.IsSETRegex">
+            <summary>
+            针对set的匹配
             </summary>
         </member>
         <member name="M:QiQiTemplate.Provide.NodeContextProvide.BuildTemplateByReader(System.IO.StreamReader,QiQiTemplate.Provide.OutPutProvide)">
