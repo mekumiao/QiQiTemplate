@@ -25,7 +25,7 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         protected override string FormatCode()
         {
-            return this.CodeString.Trim().Replace("{{#else if", "");
+            return this.CodeString.Trim().Replace("{{#elseif", "");
         }
     }
 }

@@ -29,11 +29,11 @@ namespace QiQiTemplate.Provide
         /// <summary>
         /// 针对else if的匹配
         /// </summary>
-        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#else\s+if\s+.+}}\s*$", RegexOptions.Compiled);
+        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#elseif\s+.+}}\s*$", RegexOptions.Compiled);
         /// <summary>
         /// else if 结束
         /// </summary>
-        protected static readonly Regex IsENDELSEIFRegex = new Regex(@"^\s*{{#/else if}}\s*$");
+        protected static readonly Regex IsENDELSEIFRegex = new Regex(@"^\s*{{#/elseif}}\s*$");
         /// <summary>
         /// 针对else的匹配
         /// </summary>
