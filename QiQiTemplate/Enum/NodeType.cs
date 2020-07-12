@@ -49,5 +49,9 @@
         /// 字符串节点
         /// </summary>
         STRING,
+        /// <summary>
+        /// 变量计算和赋值节点
+        /// </summary>
+        SET,
     }
 }

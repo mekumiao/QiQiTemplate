@@ -37,7 +37,6 @@ namespace QiQiTemplate.Context
         public EACHNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            ParsingModel();
             this.NdType = NodeType.EACH;
             this.BuildEachVariable();
         }

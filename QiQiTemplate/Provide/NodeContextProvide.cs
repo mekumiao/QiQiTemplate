@@ -58,6 +58,10 @@ namespace QiQiTemplate.Provide
         /// 针对define的匹配
         /// </summary>
         protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s[a-zA-Z_][\w]+.+}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对set的匹配
+        /// </summary>
+        protected static readonly Regex IsSETRegex = new Regex(@"^{{#set\s[a-zA-Z_][\w]*([+][+]|--)}}$");
 
         /// <summary>
         /// 编译模板
@@ -203,6 +207,11 @@ namespace QiQiTemplate.Provide
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;
+                    case NodeType.SET:
+                        node = new SETNodeContext(line, ParentNode, output);
+                        node.ConvertToExpression();
+                        ParentNode.Nodes.Add(node);
+                        break;
                     case NodeType.ENDIF:
                     case NodeType.ENDELSEIF:
                     case NodeType.ENDELSE:
@@ -233,6 +242,7 @@ namespace QiQiTemplate.Provide
                 string msg when IsEACHRegex.IsMatch(msg) => NodeType.EACH,
                 string msg when IsENDEACHRegex.IsMatch(msg) => NodeType.ENDEACH,
                 string msg when IsDEFINERegex.IsMatch(msg) => NodeType.DEFINE,
+                string msg when IsSETRegex.IsMatch(msg) => NodeType.SET,
                 string msg when IsPRINTRegex.IsMatch(msg) => NodeType.PRINT,
                 _ => NodeType.STRING,
             };

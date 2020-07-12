@@ -33,7 +33,6 @@ namespace QiQiTemplate.Context
         public DEFINENodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            ParsingModel();
             this.NdType = NodeType.DEFINE;
         }
         /// <summary>

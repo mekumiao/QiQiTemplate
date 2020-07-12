@@ -36,7 +36,6 @@ namespace QiQiTemplate.Context
         public PRINTNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            ParsingModel();
             this.NdType = NodeType.PRINT;
         }
 

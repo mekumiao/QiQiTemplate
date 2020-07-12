@@ -18,3 +18,7 @@ public class Model
 {
     public string Name \{ get;set; \} = "{{name}}";
 }
+
+{{#define age = 12}}
+{{#set age++}}
+{{age}}

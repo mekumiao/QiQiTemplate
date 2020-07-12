@@ -48,19 +48,20 @@ namespace QiQiTemplate.Context
             this.NodeId = Guid.NewGuid().ToString("N");
             this.CodeString = code;
             this.ParentNode = parent;
+            this.ParsingModel();
         }
-
         /// <summary>
         /// 解析Code
         /// </summary>
-        protected abstract void ParsingModel();
+        protected virtual void ParsingModel()
+        {
 
+        }
         /// <summary>
         /// 将节点转为Expression
         /// </summary>
         /// <returns></returns>
         public abstract void ConvertToExpression();
-
         /// <summary>
         /// 根据对象访问路径构建表达式
         /// </summary>
@@ -70,6 +71,7 @@ namespace QiQiTemplate.Context
         {
             var exps = new List<Expression>(10);
             var paths = SourcePathProvider.CreateSourcePath(sourcePath);
+            if (paths.Length < 1) throw new Exception($"{sourcePath}访问路径不存在,或附近有语法错误");
             ParameterExpression param = Expression.Variable(typeof(DynamicModel));
 
             Expression root = this.ParentNode.SearchVariable(paths[0].SourcePath);
@@ -124,7 +126,11 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         protected (ParameterExpression param, Expression init) CreateDynamicModel(FieldType fdType, string fdName, string fdValue)
         {
-            ParameterExpression param = Expression.Variable(typeof(DynamicModel));
+            ParameterExpression param = default;
+            if (string.IsNullOrWhiteSpace(fdName))
+                param = Expression.Variable(typeof(DynamicModel));
+            else
+                param = Expression.Variable(typeof(DynamicModel), fdName);
             return fdType switch
             {
                 FieldType.Int32 => (param, InitParame(Convert.ToInt32(fdValue))),

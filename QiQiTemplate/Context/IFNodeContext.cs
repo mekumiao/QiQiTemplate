@@ -35,7 +35,6 @@ namespace QiQiTemplate.Context
         public IFNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            ParsingModel();
             this.NdType = NodeType.IF;
         }
         /// <summary>

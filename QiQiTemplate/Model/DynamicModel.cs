@@ -123,6 +123,26 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 重载操作符
         /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public static DynamicModel operator ++(DynamicModel field)
+        {
+            field.FdValue = Convert.ToDecimal(field.FdValue) + 1;
+            return field;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public static DynamicModel operator --(DynamicModel field)
+        {
+            field.FdValue = Convert.ToDecimal(field.FdValue) - 1;
+            return field;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
         /// <returns></returns>
         public override int GetHashCode() => this.FdValue.ToString().GetHashCode();
         /// <summary>

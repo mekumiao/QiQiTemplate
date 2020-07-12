@@ -1,4 +1,5 @@
 ﻿using QiQiTemplate;
+using QiQiTemplate.Context;
 using QiQiTemplate.Provide;
 using System;
 using System.Collections.Generic;
