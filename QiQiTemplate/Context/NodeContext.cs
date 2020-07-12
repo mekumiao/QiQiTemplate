@@ -66,13 +66,15 @@ namespace QiQiTemplate.Context
         /// 根据对象访问路径构建表达式
         /// </summary>
         /// <param name="sourcePath"></param>
+        /// <param name="param"></param>
         /// <returns></returns>
-        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath)
+        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath, ParameterExpression param = null)
         {
             var exps = new List<Expression>(10);
             var paths = SourcePathProvider.CreateSourcePath(sourcePath);
             if (paths.Length < 1) throw new Exception($"{sourcePath}访问路径不存在,或附近有语法错误");
-            ParameterExpression param = Expression.Variable(typeof(DynamicModel));
+            if (param == null)
+                param = Expression.Variable(typeof(DynamicModel));
 
             Expression root = this.ParentNode.SearchVariable(paths[0].SourcePath);
             BinaryExpression init_param;
@@ -89,7 +91,6 @@ namespace QiQiTemplate.Context
                 init_param = Expression.Assign(param, init);
                 exps.Add(init_param);
             }
-
             for (int i = 1; i < paths.Length; i++)
             {
                 SourcePathModel item = paths[i];
@@ -121,33 +122,25 @@ namespace QiQiTemplate.Context
         /// 根据访问路径创建数据
         /// </summary>
         /// <param name="fdType"></param>
-        /// <param name="fdName"></param>
         /// <param name="fdValue"></param>
+        /// <param name="param"></param>
         /// <returns></returns>
-        protected (ParameterExpression param, Expression init) CreateDynamicModel(FieldType fdType, string fdName, string fdValue)
+        protected (Expression value, Expression init) GetConstByFd(FieldType fdType, string fdValue, ParameterExpression param = null)
         {
-            ParameterExpression param = default;
-            if (string.IsNullOrWhiteSpace(fdName))
-                param = Expression.Variable(typeof(DynamicModel));
-            else
-                param = Expression.Variable(typeof(DynamicModel), fdName);
-            return fdType switch
+            switch (fdType)
             {
-                FieldType.Int32 => (param, InitParame(Convert.ToInt32(fdValue))),
-                FieldType.Decimal => (param, InitParame(Convert.ToDecimal(fdValue))),
-                FieldType.String => (param, InitParame(fdValue)),
-                FieldType.Bool => (param, InitParame(Convert.ToBoolean(fdValue))),
-                FieldType.SourcePath => this.SearchPath(fdValue),
-                _ => throw new Exception($"{fdType}是不受支持的字段类型"),
-            };
-            BinaryExpression InitParame<TValue>(TValue value)
-            {
-                return Expression.Assign(param,
-                    Expression.Constant(new DynamicModel
-                    {
-                        FdName = fdName,
-                        FdValue = value,
-                    }));
+                case FieldType.Decimal:
+                    return (Expression.Constant(Convert.ToDecimal(fdValue)), null);
+                case FieldType.String:
+                    return (Expression.Constant(Convert.ToBoolean(fdValue)), null);
+                case FieldType.Bool:
+                    return (Expression.Constant(fdValue), null);
+                case FieldType.SourcePath:
+                    if (param == null)
+                        param = Expression.Variable(typeof(DynamicModel));
+                    return this.SearchPath(fdValue, param);
+                default:
+                    throw new Exception($"{fdType}是不受支持的字段类型");
             }
         }
     }

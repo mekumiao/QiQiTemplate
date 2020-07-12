@@ -4,44 +4,6 @@
         <name>QiQiTemplate</name>
     </assembly>
     <members>
-        <member name="T:QiQiTemplate.Context.DEFINENodeContext">
-            <summary>
-            定义变量节点
-            </summary>
-        </member>
-        <member name="F:QiQiTemplate.Context.DEFINENodeContext.ParsingRegex">
-            <summary>
-            正则
-            </summary>
-        </member>
-        <member name="F:QiQiTemplate.Context.DEFINENodeContext.RegexValue">
-            <summary>
-            正则
-            </summary>
-        </member>
-        <member name="P:QiQiTemplate.Context.DEFINENodeContext.Model">
-            <summary>
-            信息
-            </summary>
-        </member>
-        <member name="M:QiQiTemplate.Context.DEFINENodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
-            <summary>
-            构造
-            </summary>
-            <param name="code"></param>
-            <param name="parent"></param>
-            <param name="output"></param>
-        </member>
-        <member name="M:QiQiTemplate.Context.DEFINENodeContext.ParsingModel">
-            <summary>
-            解析
-            </summary>
-        </member>
-        <member name="M:QiQiTemplate.Context.DEFINENodeContext.ConvertToExpression">
-            <summary>
-            转换表达式
-            </summary>
-        </member>
         <member name="T:QiQiTemplate.Context.EACHNodeContext">
             <summary>
             each 循环节点
@@ -78,6 +40,11 @@
         <member name="M:QiQiTemplate.Context.EACHNodeContext.ParsingModel">
             <summary>
             解析节点
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Context.EACHNodeContext.EachVars">
+            <summary>
+            循环变量
             </summary>
         </member>
         <member name="M:QiQiTemplate.Context.EACHNodeContext.ConvertToExpression">
@@ -272,21 +239,50 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:QiQiTemplate.Context.NodeContext.SearchPath(System.String)">
+        <member name="M:QiQiTemplate.Context.NodeContext.SearchPath(System.String,System.Linq.Expressions.ParameterExpression)">
             <summary>
             根据对象访问路径构建表达式
             </summary>
             <param name="sourcePath"></param>
+            <param name="param"></param>
             <returns></returns>
         </member>
-        <member name="M:QiQiTemplate.Context.NodeContext.CreateDynamicModel(QiQiTemplate.Enum.FieldType,System.String,System.String)">
+        <member name="M:QiQiTemplate.Context.NodeContext.GetConstByFd(QiQiTemplate.Enum.FieldType,System.String,System.Linq.Expressions.ParameterExpression)">
             <summary>
             根据访问路径创建数据
             </summary>
             <param name="fdType"></param>
-            <param name="fdName"></param>
             <param name="fdValue"></param>
+            <param name="param"></param>
             <returns></returns>
+        </member>
+        <member name="T:QiQiTemplate.Context.OperNodeContext">
+            <summary>
+            运算
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Context.OperNodeContext.Model">
+            <summary>
+            节点信息
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Context.OperNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+            <summary>
+            构造
+            </summary>
+            <param name="code"></param>
+            <param name="parent"></param>
+            <param name="output"></param>
+        </member>
+        <member name="M:QiQiTemplate.Context.OperNodeContext.ConvertToExpression">
+            <summary>
+            转换表达式
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Context.OperNodeContext.ParsingModel">
+            <summary>
+            解析语句
+            </summary>
         </member>
         <member name="T:QiQiTemplate.Context.PRINTNodeContext">
             <summary>
@@ -358,12 +354,22 @@
         </member>
         <member name="T:QiQiTemplate.Context.SETNodeContext">
             <summary>
-            变量计算和赋值节点
+            定义变量节点
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Context.SETNodeContext.ParsingRegex">
+            <summary>
+            正则
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Context.SETNodeContext.RegexValue">
+            <summary>
+            正则
             </summary>
         </member>
         <member name="P:QiQiTemplate.Context.SETNodeContext.Model">
             <summary>
-            节点信息
+            信息
             </summary>
         </member>
         <member name="M:QiQiTemplate.Context.SETNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
@@ -374,14 +380,14 @@
             <param name="parent"></param>
             <param name="output"></param>
         </member>
+        <member name="M:QiQiTemplate.Context.SETNodeContext.ParsingModel">
+            <summary>
+            解析
+            </summary>
+        </member>
         <member name="M:QiQiTemplate.Context.SETNodeContext.ConvertToExpression">
             <summary>
             转换表达式
-            </summary>
-        </member>
-        <member name="M:QiQiTemplate.Context.SETNodeContext.ParsingModel">
-            <summary>
-            解析语句
             </summary>
         </member>
         <member name="T:QiQiTemplate.Context.STRINGNodeContext">
@@ -410,11 +416,6 @@
         <member name="T:QiQiTemplate.Enum.FieldType">
             <summary>
             字段类型
-            </summary>
-        </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.Int32">
-            <summary>
-            整数
             </summary>
         </member>
         <member name="F:QiQiTemplate.Enum.FieldType.Decimal">
@@ -487,9 +488,9 @@
             print 打印节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.DEFINE">
+        <member name="F:QiQiTemplate.Enum.NodeType.SET">
             <summary>
-            define 变量节点
+            set 定义变量节点
             </summary>
         </member>
         <member name="F:QiQiTemplate.Enum.NodeType.STRING">
@@ -497,9 +498,9 @@
             字符串节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.SET">
+        <member name="F:QiQiTemplate.Enum.NodeType.OPER">
             <summary>
-            变量计算和赋值节点
+            运算
             </summary>
         </member>
         <member name="T:QiQiTemplate.Enum.PrintType">
@@ -634,6 +635,38 @@
             <param name="field2"></param>
             <returns></returns>
         </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThan(System.Decimal,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThan(System.Decimal,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThan(QiQiTemplate.Model.DynamicModel,System.Decimal)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThan(QiQiTemplate.Model.DynamicModel,System.Decimal)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThanOrEqual(QiQiTemplate.Model.DynamicModel,QiQiTemplate.Model.DynamicModel)">
             <summary>
             重载操作符
@@ -650,6 +683,38 @@
             <param name="field2"></param>
             <returns></returns>
         </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThanOrEqual(System.Decimal,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThanOrEqual(System.Decimal,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThanOrEqual(QiQiTemplate.Model.DynamicModel,System.Decimal)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThanOrEqual(QiQiTemplate.Model.DynamicModel,System.Decimal)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,QiQiTemplate.Model.DynamicModel)">
             <summary>
             重载操作符
@@ -659,6 +724,102 @@
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(System.Decimal,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(System.Decimal,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,System.Decimal)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,System.Decimal)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(System.String,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(System.String,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,System.String)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,System.String)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,System.Boolean)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,System.Boolean)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(System.Boolean,QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            重载操作符
+            </summary>
+            <param name="field1"></param>
+            <param name="field2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(System.Boolean,QiQiTemplate.Model.DynamicModel)">
             <summary>
             重载操作符
             </summary>
@@ -875,12 +1036,12 @@
         </member>
         <member name="F:QiQiTemplate.Provide.NodeContextProvide.IsDEFINERegex">
             <summary>
-            针对define的匹配
+            针对set的匹配
             </summary>
         </member>
         <member name="F:QiQiTemplate.Provide.NodeContextProvide.IsSETRegex">
             <summary>
-            针对set的匹配
+            针对oper的匹配
             </summary>
         </member>
         <member name="M:QiQiTemplate.Provide.NodeContextProvide.BuildTemplateByReader(System.IO.StreamReader,QiQiTemplate.Provide.OutPutProvide)">

@@ -55,13 +55,13 @@ namespace QiQiTemplate.Provide
         /// </summary>
         protected static readonly Regex IsPRINTRegex = new Regex("({{[^{](((?!{{|}}).)+)}})+", RegexOptions.Compiled);
         /// <summary>
-        /// 针对define的匹配
-        /// </summary>
-        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#define\s[a-zA-Z_][\w]+.+}}\s*$", RegexOptions.Compiled);
-        /// <summary>
         /// 针对set的匹配
         /// </summary>
-        protected static readonly Regex IsSETRegex = new Regex(@"^{{#set\s[a-zA-Z_][\w]*([+][+]|--)}}$");
+        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#set\s[a-zA-Z_][\w]+.+}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对oper的匹配
+        /// </summary>
+        protected static readonly Regex IsSETRegex = new Regex(@"^\s*{{#oper\s[a-zA-Z_][\w]*([+][+]|--)}}\s*$");
 
         /// <summary>
         /// 编译模板
@@ -202,13 +202,13 @@ namespace QiQiTemplate.Provide
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;
-                    case NodeType.DEFINE:
-                        node = new DEFINENodeContext(line, ParentNode, output);
+                    case NodeType.SET:
+                        node = new SETNodeContext(line, ParentNode, output);
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;
-                    case NodeType.SET:
-                        node = new SETNodeContext(line, ParentNode, output);
+                    case NodeType.OPER:
+                        node = new OperNodeContext(line, ParentNode, output);
                         node.ConvertToExpression();
                         ParentNode.Nodes.Add(node);
                         break;
@@ -241,8 +241,8 @@ namespace QiQiTemplate.Provide
                 string msg when IsENDELSERegex.IsMatch(msg) => NodeType.ENDELSE,
                 string msg when IsEACHRegex.IsMatch(msg) => NodeType.EACH,
                 string msg when IsENDEACHRegex.IsMatch(msg) => NodeType.ENDEACH,
-                string msg when IsDEFINERegex.IsMatch(msg) => NodeType.DEFINE,
-                string msg when IsSETRegex.IsMatch(msg) => NodeType.SET,
+                string msg when IsDEFINERegex.IsMatch(msg) => NodeType.SET,
+                string msg when IsSETRegex.IsMatch(msg) => NodeType.OPER,
                 string msg when IsPRINTRegex.IsMatch(msg) => NodeType.PRINT,
                 _ => NodeType.STRING,
             };

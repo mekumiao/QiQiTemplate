@@ -42,16 +42,16 @@
         /// </summary>
         PRINT,
         /// <summary>
-        /// define 变量节点
+        /// set 定义变量节点
         /// </summary>
-        DEFINE,
+        SET,
         /// <summary>
         /// 字符串节点
         /// </summary>
         STRING,
         /// <summary>
-        /// 变量计算和赋值节点
+        /// 运算
         /// </summary>
-        SET,
+        OPER,
     }
 }

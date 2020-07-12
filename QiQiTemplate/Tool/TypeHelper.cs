@@ -18,7 +18,6 @@ namespace QiQiTemplate.Tool
         {
             return value switch
             {
-                string msg when Regex.IsMatch(msg, @"^[-]?[\d]+$") => FieldType.Int32,
                 string msg when Regex.IsMatch(msg, @"^[-]?[\d][\d]*([.][\d]+)?$") => FieldType.Decimal,
                 string msg when Regex.IsMatch(msg, "^\".*\"$") => FieldType.String,
                 string msg when Regex.IsMatch(msg, @"^(true|false)$") => FieldType.Bool,

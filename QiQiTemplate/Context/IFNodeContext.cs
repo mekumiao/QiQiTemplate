@@ -111,10 +111,17 @@ namespace QiQiTemplate.Context
                 }
                 Expression GetExpressionByIFModel(FieldType type, string value)
                 {
-                    var (param, init) = this.CreateDynamicModel(type, string.Empty, value);
-                    parames.Add(param);
-                    inits.Add(init);
-                    return param;
+                    if (type == FieldType.SourcePath)
+                    {
+                        var (param, init) = this.GetConstByFd(type, value);
+                        parames.Add(param as ParameterExpression);
+                        inits.Add(init);
+                        return param;
+                    }
+                    else
+                    {
+                        return this.GetConstByFd(type, value).value;
+                    }
                 }
             }
             return (parme, Expression.Block(parames, inits));

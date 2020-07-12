@@ -1,24 +1,30 @@
 ﻿using QiQiTemplate.Enum;
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
+using QiQiTemplate.Tool;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Context
 {
     /// <summary>
-    /// 变量计算和赋值节点
+    /// 定义变量节点
     /// </summary>
     public class SETNodeContext : NodeContext
     {
-        private static readonly Regex SetRegex = new Regex(@"^{{#set\s(?<name>[a-zA-Z_][\w]*)(?<oper>([+][+]|--))}}$", RegexOptions.Compiled);
         /// <summary>
-        /// 节点信息
+        /// 正则
         /// </summary>
-        public SetModel Model { get; private set; }
+        protected static readonly Regex ParsingRegex = new Regex(@"{{#set\s(?<name>[a-zA-Z_][\w]+)\s=\s(?<value>.+)}}", RegexOptions.Compiled);
+        /// <summary>
+        /// 正则
+        /// </summary>
+        protected static readonly Regex RegexValue = new Regex("(?<=\")(.*)(?=\")", RegexOptions.Compiled);
+        /// <summary>
+        /// 信息
+        /// </summary>
+        public DeFineModel Model { get; private set; }
         /// <summary>
         /// 构造
         /// </summary>
@@ -31,31 +37,81 @@ namespace QiQiTemplate.Context
             this.NdType = NodeType.SET;
         }
         /// <summary>
+        /// 解析
+        /// </summary>
+        protected override void ParsingModel()
+        {
+            var mth = ParsingRegex.Match(this.CodeString);
+            this.Model = new DeFineModel
+            {
+                FdType = TypeHelper.GetFieldTypeByValue(mth.Groups["value"].Value.Trim()),
+                ArgName = mth.Groups["name"].Value.Trim().Replace("\"", ""),
+                ArgValue = mth.Groups["value"].Value.Trim(),
+            };
+            if (this.Model.FdType == FieldType.String)
+            {
+                this.Model.ArgValue = RegexValue.Match(this.Model.ArgValue).Value;
+            }
+        }
+        /// <summary>
         /// 转换表达式
         /// </summary>
         public override void ConvertToExpression()
         {
-            var name = this.ParentNode.SearchVariable(this.Model.Name);
-            if (this.Model.Oper == "++")
+            //将变量表达式加入到作用域中
+            if (this.ParentNode is NodeBlockContext block)
             {
-                this.NdExpression = Expression.PostIncrementAssign(name);
+                if (!block.Scope.TryGetValue(this.Model.ArgName, out var expression))
+                {
+                    ParameterExpression param;
+                    if (this.Model.FdType == FieldType.SourcePath)
+                    {
+                        param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
+                        var (_, init) = this.SearchPath(this.Model.ArgValue, param);
+                        this.NdExpression = init;
+                    }
+                    else
+                    {
+                        var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
+                        param = Expression.Variable(value.Type, this.Model.ArgName);
+                        if (this.ParentNode is EACHNodeContext each)
+                        {
+                            each.DefineParams.Add(param);
+                            each.EachVars.Add(Expression.Assign(param, value));
+                        }
+                        else
+                        {
+                            block.DefineParams.Add(param);
+                            this.NdExpression = Expression.Assign(param, value);
+                        }
+                    }
+                    block.Scope.Add(this.Model.ArgName, param);
+                }
+                else
+                {
+                    if (this.Model.FdType == FieldType.SourcePath)
+                    {
+                        var (_, init) = this.SearchPath(this.Model.ArgValue, expression as ParameterExpression);
+                        this.NdExpression = init;
+                    }
+                    else
+                    {
+                        var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
+                        if (this.ParentNode is EACHNodeContext each)
+                        {
+                            each.EachVars.Add(Expression.Assign(expression, value));
+                        }
+                        else
+                        {
+                            this.NdExpression = Expression.Assign(expression, value);
+                        }
+                    }
+                }
             }
             else
             {
-                this.NdExpression = Expression.PostDecrementAssign(name);
+                throw new Exception($"defind节点的父节点必须是块级节点");
             }
-        }
-        /// <summary>
-        /// 解析语句
-        /// </summary>
-        protected override void ParsingModel()
-        {
-            var gp = SetRegex.Match(this.CodeString);
-            this.Model = new SetModel
-            {
-                Name = gp.Groups["name"].Value,
-                Oper = gp.Groups["oper"].Value,
-            };
         }
     }
 }

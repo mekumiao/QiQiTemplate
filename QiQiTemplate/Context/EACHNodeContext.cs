@@ -1,6 +1,7 @@
 ﻿using QiQiTemplate.Enum;
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
@@ -37,6 +38,7 @@ namespace QiQiTemplate.Context
         public EACHNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
+            this.EachVars = new List<Expression>(10);
             this.NdType = NodeType.EACH;
             this.BuildEachVariable();
         }
@@ -64,6 +66,11 @@ namespace QiQiTemplate.Context
         }
 
         /// <summary>
+        /// 循环变量
+        /// </summary>
+        public List<Expression> EachVars { get; set; }
+
+        /// <summary>
         /// 转换为表达式
         /// </summary>
         public override void ConvertToExpression()
@@ -80,19 +87,22 @@ namespace QiQiTemplate.Context
 
             LabelTarget label = Expression.Label();
             MemberExpression count = Expression.Property(param, "Count");
-
-            this.NdExpression = Expression.Block(
-                new[] { param, val, idx },
+            this.EachVars.AddRange(new Expression[]
+            {
                 init_idx,
                 path,
                 Expression.Loop(
-                    Expression.IfThenElse(
-                        Expression.LessThan(idx, count),
-                        Expression.Block(init_val, block, Expression.PostIncrementAssign(idx)),
-                        Expression.Break(label)
-                    ),
-                    label
-                )
+                        Expression.IfThenElse(
+                            Expression.LessThan(idx, count),
+                            Expression.Block(init_val, block, Expression.PostIncrementAssign(idx)),
+                            Expression.Break(label)
+                        ),
+                        label
+                    )
+            });
+            this.NdExpression = Expression.Block(
+                new[] { param, val, idx },
+                EachVars
             );
         }
     }

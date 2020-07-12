@@ -1,6 +1,8 @@
-﻿{{#define name = "x"xx"}}
-{{name}}
-------------------------
+﻿
+{{#set index = 1}}
+{{index}}
+{{#set index = 10}}
+{{index}}
 {{#each _data.people val idx}}
     {{#if val.age > 0 & val.age <= 10}}
     {{idx}}.{{val.name}} 儿童 {{val.age}}
@@ -11,14 +13,10 @@
     {{#else}}
     {{idx}}.{{val.name}} 中年 {{val.age}}
     {{#/else}}
+    {{#each val.tel tl idx2}}
+        {{index}}.{{tl}}
+        {{#oper index++}}
+        {{#set index = 1}}
+    {{#/each}}
+    {{#set index = 1}}
 {{#/each}}
-------------------------\{\{ {{name}} \}\}
-
-public class Model
-{
-    public string Name \{ get;set; \} = "{{name}}";
-}
-
-{{#define age = 12}}
-{{#set age++}}
-{{age}}

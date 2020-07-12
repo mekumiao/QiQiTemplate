@@ -98,6 +98,34 @@ namespace QiQiTemplate.Model
         /// <param name="field1"></param>
         /// <param name="field2"></param>
         /// <returns></returns>
+        public static bool operator >(decimal field1, DynamicModel field2) => field1 > Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator <(decimal field1, DynamicModel field2) => field1 < Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator >(DynamicModel field1, decimal field2) => Convert.ToDecimal(field1.FdValue) > field2;
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator <(DynamicModel field1, decimal field2) => Convert.ToDecimal(field1.FdValue) < field2;
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
         public static bool operator >=(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) >= Convert.ToDecimal(field2.FdValue);
         /// <summary>
         /// 重载操作符
@@ -112,6 +140,34 @@ namespace QiQiTemplate.Model
         /// <param name="field1"></param>
         /// <param name="field2"></param>
         /// <returns></returns>
+        public static bool operator <=(decimal field1, DynamicModel field2) => field1 <= Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator >=(decimal field1, DynamicModel field2) => field1 >= Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator <=(DynamicModel field1, decimal field2) => Convert.ToDecimal(field1.FdValue) <= field2;
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator >=(DynamicModel field1, decimal field2) => Convert.ToDecimal(field1.FdValue) >= field2;
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
         public static bool operator ==(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() == field2.FdValue.ToString();
         /// <summary>
         /// 重载操作符
@@ -120,6 +176,90 @@ namespace QiQiTemplate.Model
         /// <param name="field2"></param>
         /// <returns></returns>
         public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() != field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator ==(decimal field1, DynamicModel field2) => field1.ToString() == field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator !=(decimal field1, DynamicModel field2) => field1.ToString() != field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator ==(DynamicModel field1, decimal field2) => field1.FdValue.ToString() == field2.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator !=(DynamicModel field1, decimal field2) => field1.FdValue.ToString() != field2.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator ==(string field1, DynamicModel field2) => field1.ToString() == field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator !=(string field1, DynamicModel field2) => field1.ToString() != field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator ==(DynamicModel field1, string field2) => field1.FdValue.ToString() == field2.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator !=(DynamicModel field1, string field2) => field1.FdValue.ToString() != field2.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator ==(DynamicModel field1, bool field2) => field1.FdValue.ToString() == field2.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator !=(DynamicModel field1, bool field2) => field1.FdValue.ToString() != field2.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator ==(bool field1, DynamicModel field2) => field1.ToString() == field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator !=(bool field1, DynamicModel field2) => field1.ToString() != field2.FdValue.ToString();
         /// <summary>
         /// 重载操作符
         /// </summary>

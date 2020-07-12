@@ -55,7 +55,8 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         protected BlockExpression MergeNodes()
         {
-            var lst = this.Nodes.Where(x => x.NdType != NodeType.ELSEIF && x.NdType != NodeType.ELSE).Select(x => x.NdExpression);
+            var lst = this.Nodes.Where(x => x.NdType != NodeType.ELSEIF && x.NdType != NodeType.ELSE && x.NdExpression != null)
+                .Select(x => x.NdExpression);
             return Expression.Block(this.DefineParams, lst);
         }
 
