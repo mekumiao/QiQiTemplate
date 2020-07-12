@@ -3,7 +3,7 @@
 # QiQiTemplate
 
 #### 介绍
-基于lambda表达式的模板代码工具
+基于lambda表达式树实现的轻量级模板工具
 
 ## 安装
 
@@ -55,23 +55,15 @@
 {{str}} // 将输出 "
 ~~~
 
-### 运算
+### 赋值
 
-> 下个版本
-
-~~~html
-{{#oper num += 1}}
-{{#oper num -= 2}}
-{{#oper num *= num}}
-{{#oper num /= 3}}
-~~~
-
-### 三元表达式
-
-> 下个版本
+> 仅支持 ++ 和 --
+>
+> 注: 作者已经懒成猪了
 
 ~~~html
-{{#cond num > 2 ? num : "..."}}
+{{#set num++}}
+{{#set num--}}
 ~~~
 
 ### 根节点
@@ -92,7 +84,7 @@
 }
 ~~~
 
-### 输出 {{ 与 }}
+### 输出 '{{' 或者 '}}'
 
 > 使用 \ 来进行转义
 
@@ -104,22 +96,22 @@
 //将输出 {{ 我是wyl }}
 ~~~
 
-
-
 ## 调用
 
 ~~~c#
-var ndProvide = new NodeContextProvide();
-var cdProvide = new CoderExpressionProvide();
-var dyProvide = new DynamicModelProvide();
+var dyProvide = new DynamicModelProvide();//数据加载类
+var outProvide = new OutPutProvide();//输出类
+var ndProvide = new NodeContextProvide();//模板编译类
 
 //加载数据
-var model = dyProvide.CreateByFilePath(@"Temp.json");
+var data = dyProvide.CreateByFilePath(@"Temp.json");
 //编译模板
-var action = ndProvide.BuildTemplateByPath(@"Temp.txt", cdProvide).Compile();
+var action = ndProvide.BuildTemplateByPath(@"Temp.txt", outProvide).Compile();
 //执行
-action.Invoke(model);
-//输出
-Console.WriteLine(cdProvide.GetCode());
+action.Invoke(data);
+//输出到文件
+outProvide.OutPut(@"output.txt");
+//输出到控制台
+Console.Write(outProvide.ToString());
 ~~~
 
