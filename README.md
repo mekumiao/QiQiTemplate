@@ -75,7 +75,7 @@
 
 ~~~html
 {{_data.name}}
-{{#define name = _data.name}}
+{{#set name = _data.name}}
 ~~~
 
 > json数据示例
