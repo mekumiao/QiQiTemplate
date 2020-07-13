@@ -38,7 +38,6 @@ namespace QiQiTemplate.Context
         public EACHNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.EachVars = new List<Expression>(10);
             this.NdType = NodeType.EACH;
             this.BuildEachVariable();
         }
@@ -64,12 +63,6 @@ namespace QiQiTemplate.Context
             this.Scope.Add(this.Model.ValName, val);
             this.Scope.Add(this.Model.IdxName, idx);
         }
-
-        /// <summary>
-        /// 循环变量
-        /// </summary>
-        public List<Expression> EachVars { get; set; }
-
         /// <summary>
         /// 转换为表达式
         /// </summary>
@@ -87,22 +80,18 @@ namespace QiQiTemplate.Context
 
             LabelTarget label = Expression.Label();
             MemberExpression count = Expression.Property(param, "Count");
-            this.EachVars.AddRange(new Expression[]
-            {
+            this.NdExpression = Expression.Block(
+                new[] { param, val, idx },
                 init_idx,
                 path,
                 Expression.Loop(
-                        Expression.IfThenElse(
-                            Expression.LessThan(idx, count),
-                            Expression.Block(init_val, block, Expression.PostIncrementAssign(idx)),
-                            Expression.Break(label)
-                        ),
-                        label
-                    )
-            });
-            this.NdExpression = Expression.Block(
-                new[] { param, val, idx },
-                EachVars
+                    Expression.IfThenElse(
+                        Expression.LessThan(idx, count),
+                        Expression.Block(init_val, block, Expression.PostIncrementAssign(idx)),
+                        Expression.Break(label)
+                    ),
+                    label
+                )
             );
         }
     }

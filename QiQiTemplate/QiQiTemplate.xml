@@ -42,11 +42,6 @@
             解析节点
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Context.EACHNodeContext.EachVars">
-            <summary>
-            循环变量
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Context.EACHNodeContext.ConvertToExpression">
             <summary>
             转换为表达式

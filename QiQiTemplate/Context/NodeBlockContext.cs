@@ -73,7 +73,8 @@ namespace QiQiTemplate.Context
                     return SearchVariable(name, node.ParentNode);
                 }
             }
-            throw new Exception($"作用域中没有找到{name}变量");
+            return null;
+            //throw new Exception($"作用域中没有找到{name}变量");
         }
     }
 }
