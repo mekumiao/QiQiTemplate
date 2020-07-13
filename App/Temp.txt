@@ -1,5 +1,14 @@
-﻿{{#each _data.people val idx}}
-    {{#set index = 1}}
+﻿{{#set index = 1}}
+{{#each _data.people val idx}}
+    {{#if val.age > 0 & val.age <= 10}}
+    {{idx}}.{{val.name}} 儿童 {{val.age}}
+    {{#/if}}
+    {{#elseif val.age > 10 & val.age < 25}}
+    {{idx}}.{{val.name}} 青少年 {{val.age}}
+    {{#/elseif}}
+    {{#else}}
+    {{idx}}.{{val.name}} 中年 {{val.age}}
+    {{#/else}}
     {{#each val.tel tl idx2}}
         {{index}}.{{tl}}
         {{#oper index++}}
