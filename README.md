@@ -11,6 +11,10 @@
 
 ## 语法
 
+> 注意: 下列语法都有严格的空格要求
+>
+> 因为作者以及懒成猪了,所以没有做适配
+
 ### print 输出
 
 ~~~html
@@ -39,31 +43,30 @@
 {{#/each}}
 ~~~
 
-### define 变量
+### set 定义\赋值
 
-> 用法
+> 如果作用域中不存在变量,则声明变量并且赋值
 
 ~~~html
-{{#define name = "wyl"}}
-{{name}}
+{{#set index = 1}}
 ~~~
 
 > 小技巧
 
 ~~~html
-{{#define str = """}}
+{{#set str = """}}
 {{str}} // 将输出 "
 ~~~
 
-### 赋值
+### oper 运算符
 
 > 仅支持 ++ 和 --
 >
 > 注: 作者已经懒成猪了
 
 ~~~html
-{{#set num++}}
-{{#set num--}}
+{{#oper num++}}
+{{#oper num--}}
 ~~~
 
 ### 根节点
@@ -95,6 +98,84 @@
 
 //将输出 {{ 我是wyl }}
 ~~~
+
+### 完整案例
+
+> 模板 => temp.txt
+
+~~~html
+{{#set index = 1}}
+{{#each _data.people val idx}}
+    {{#if val.age > 0 & val.age <= 10}}
+    {{idx}}.{{val.name}} 儿童 {{val.age}}
+    {{#/if}}
+    {{#elseif val.age > 10 & val.age < 25}}
+    {{idx}}.{{val.name}} 青少年 {{val.age}}
+    {{#/elseif}}
+    {{#else}}
+    {{idx}}.{{val.name}} 中年 {{val.age}}
+    {{#/else}}
+    {{#each val.tel tl idx2}}
+        {{index}}.{{tl}}
+        {{#oper index++}}
+    {{#/each}}
+{{#/each}}
+~~~
+
+> json => temp.json
+
+~~~json
+{
+  "people": [
+    {
+      "name": "wyl",
+      "age": 10,
+      "sex": "男",
+      "tel": [
+        "xxx",
+        "xxx",
+        "xxx"
+      ]
+    },
+    {
+      "name": "wyl",
+      "age": 2,
+      "sex": "男",
+      "tel": [
+        "xxx",
+        "xxx",
+        "xxx"
+      ]
+    },
+    {
+      "name": "wyl",
+      "age": 30,
+      "sex": "男",
+      "tel": [
+        "xxx",
+        "xxx",
+        "xxx"
+      ]
+    },
+    {
+      "name": "wyl",
+      "age": 22,
+      "sex": "男",
+      "tel": [
+        "xxx",
+        "xxx",
+        "xxx"
+      ]
+    }
+  ]
+}
+~~~
+
+### 另外
+
+> 项目源码中有完整案例可以参考
+>
+> 作者是个小菜鸟
 
 ## 调用
 
