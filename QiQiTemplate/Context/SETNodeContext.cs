@@ -61,6 +61,7 @@ namespace QiQiTemplate.Context
             //将变量表达式加入到作用域中
             if (this.ParentNode is NodeBlockContext block)
             {
+                block.SearchVariable(this.Model.ArgName);
                 if (!block.Scope.TryGetValue(this.Model.ArgName, out var expression))
                 {
                     ParameterExpression param;
@@ -74,16 +75,8 @@ namespace QiQiTemplate.Context
                     {
                         var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
                         param = Expression.Variable(value.Type, this.Model.ArgName);
-                        if (this.ParentNode is EACHNodeContext each)
-                        {
-                            each.DefineParams.Add(param);
-                            each.EachVars.Add(Expression.Assign(param, value));
-                        }
-                        else
-                        {
-                            block.DefineParams.Add(param);
-                            this.NdExpression = Expression.Assign(param, value);
-                        }
+                        block.DefineParams.Add(param);
+                        this.NdExpression = Expression.Assign(param, value);
                     }
                     block.Scope.Add(this.Model.ArgName, param);
                 }
