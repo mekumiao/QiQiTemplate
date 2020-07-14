@@ -54,16 +54,17 @@ namespace QiQiTemplate.Context
             var lst = new List<IFModel>(10);
             foreach (Match item in mths)
             {
-                var md = new IFModel
+                var left = item.Groups["left"].Value.Trim();
+                var right = item.Groups["right"].Value.Trim();
+                lst.Add(new IFModel
                 {
+                    LeftType = TypeHelper.GetFieldTypeByValue(ref left),
+                    RightType = TypeHelper.GetFieldTypeByValue(ref right),
                     LogOper = item.Groups["logoper"].Value.Trim(),
-                    Left = item.Groups["left"].Value.Trim(),
-                    Right = item.Groups["right"].Value.Trim(),
-                    Oper = item.Groups["oper"].Value.Trim(),
-                };
-                md.LeftType = TypeHelper.GetFieldTypeByValue(md.Left);
-                md.RightType = TypeHelper.GetFieldTypeByValue(md.Right);
-                lst.Add(md);
+                    Oper = item.Groups["oper"].Value,
+                    Left = left,
+                    Right = right
+                });
             }
             this.Model = lst;
         }

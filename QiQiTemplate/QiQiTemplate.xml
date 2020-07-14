@@ -284,16 +284,6 @@
             输出节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Context.PRINTNodeContext.ParsingRegex1">
-            <summary>
-            正则1
-            </summary>
-        </member>
-        <member name="F:QiQiTemplate.Context.PRINTNodeContext.ParsingReges2">
-            <summary>
-            正则1
-            </summary>
-        </member>
         <member name="P:QiQiTemplate.Context.PRINTNodeContext.Model">
             <summary>
             节点信息
@@ -357,11 +347,6 @@
             正则
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Context.SETNodeContext.RegexValue">
-            <summary>
-            正则
-            </summary>
-        </member>
         <member name="P:QiQiTemplate.Context.SETNodeContext.Model">
             <summary>
             信息
@@ -421,6 +406,11 @@
         <member name="F:QiQiTemplate.Enum.FieldType.String">
             <summary>
             字符串
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Enum.FieldType.Char">
+            <summary>
+            字符
             </summary>
         </member>
         <member name="F:QiQiTemplate.Enum.FieldType.Bool">
@@ -548,9 +538,27 @@
             过滤器名称
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Filter.IFilter.Filter(System.String,System.Object[])">
+        <member name="M:QiQiTemplate.Filter.IFilter.Filter(System.Object,System.Object[])">
             <summary>
             过滤抽象方法
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:QiQiTemplate.Filter.IsNullFilter">
+            <summary>
+            空值过滤器
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.IsNullFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.IsNullFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            过滤
             </summary>
             <param name="code"></param>
             <param name="args"></param>
@@ -566,7 +574,7 @@
             名称
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Filter.PadLeftFilter.Filter(System.String,System.Object[])">
+        <member name="M:QiQiTemplate.Filter.PadLeftFilter.Filter(System.Object,System.Object[])">
             <summary>
             过滤
             </summary>
@@ -584,7 +592,7 @@
             名称
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Filter.PadRightFilter.Filter(System.String,System.Object[])">
+        <member name="M:QiQiTemplate.Filter.PadRightFilter.Filter(System.Object,System.Object[])">
             <summary>
             过滤
             </summary>
@@ -923,6 +931,21 @@
             循环索引
             </summary>
         </member>
+        <member name="T:QiQiTemplate.Model.FieldModel">
+            <summary>
+            字段实体
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Model.FieldModel.FdType">
+            <summary>
+            字段类型
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Model.FieldModel.FdValue">
+            <summary>
+            字段值
+            </summary>
+        </member>
         <member name="T:QiQiTemplate.Model.IFModel">
             <summary>
             IF 节点
@@ -971,6 +994,16 @@
         <member name="P:QiQiTemplate.Model.PrintModel.SourcePath">
             <summary>
             值
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Model.PrintModel.FilterName">
+            <summary>
+            过滤器名称
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Model.PrintModel.Args">
+            <summary>
+            参数
             </summary>
         </member>
         <member name="T:QiQiTemplate.Model.SetModel">
@@ -1038,11 +1071,17 @@
             构造
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Provide.FilterProvide.RegisFilter(QiQiTemplate.Filter.IFilter)">
+        <member name="M:QiQiTemplate.Provide.FilterProvide.RegisFilter``1">
             <summary>
             注册过滤器
             </summary>
-            <param name="filter"></param>
+        </member>
+        <member name="M:QiQiTemplate.Provide.FilterProvide.GetFilter(System.String)">
+            <summary>
+            根据名称获取过滤器
+            </summary>
+            <param name="filterName">过滤器名称</param>
+            <returns></returns>
         </member>
         <member name="T:QiQiTemplate.Provide.NodeContextProvide">
             <summary>
@@ -1171,6 +1210,14 @@
             </summary>
             <param name="code"></param>
         </member>
+        <member name="M:QiQiTemplate.Provide.OutPutProvide.Print(System.Object,System.String,System.Object[])">
+            <summary>
+            输出,带过滤器
+            </summary>
+            <param name="code"></param>
+            <param name="filter"></param>
+            <param name="args"></param>
+        </member>
         <member name="M:QiQiTemplate.Provide.OutPutProvide.PrintLine(System.Object)">
             <summary>
             输出并换行
@@ -1212,16 +1259,25 @@
         </member>
         <member name="M:QiQiTemplate.Provide.PrintExpressionProvide.ExpressionPrint(System.Linq.Expressions.Expression)">
             <summary>
-            不换行
+            不换行输出
             </summary>
-            <param name="exp"></param>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Provide.PrintExpressionProvide.ExpressionPrint(System.Linq.Expressions.Expression,System.String,System.Linq.Expressions.Expression[])">
+            <summary>
+            不换行输出,带过滤器
+            </summary>
+            <param name="code"></param>
+            <param name="filterName"></param>
+            <param name="args"></param>
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Provide.PrintExpressionProvide.ExpressionPrintLine(System.Linq.Expressions.Expression)">
             <summary>
-            换行
+            换行输出
             </summary>
-            <param name="exp"></param>
+            <param name="code"></param>
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Provide.PrintExpressionProvide.ExpressionPrintLine">
@@ -1269,7 +1325,7 @@
             类型辅助
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Tool.TypeHelper.GetFieldTypeByValue(System.String)">
+        <member name="M:QiQiTemplate.Tool.TypeHelper.GetFieldTypeByValue(System.String@)">
             <summary>
             获取字符串的类型
             </summary>

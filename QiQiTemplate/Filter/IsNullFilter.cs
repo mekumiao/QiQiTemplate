@@ -5,14 +5,14 @@ using System.Text;
 namespace QiQiTemplate.Filter
 {
     /// <summary>
-    /// 向右补位
+    /// 空值过滤器
     /// </summary>
-    public class PadRightFilter : IFilter
+    public class IsNullFilter : IFilter
     {
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name => "padright";
+        public string Name => "isnull";
         /// <summary>
         /// 过滤
         /// </summary>
@@ -21,9 +21,11 @@ namespace QiQiTemplate.Filter
         /// <returns></returns>
         public string Filter(object code, object[] args)
         {
-            int width = Convert.ToInt32(args[0]);
-            char padding = Convert.ToChar(args[1]);
-            return code.ToString().PadRight(width, padding);
+            if (code == null || string.IsNullOrWhiteSpace(code.ToString()))
+            {
+                return args[0].ToString();
+            }
+            return code.ToString();
         }
     }
 }

@@ -132,9 +132,11 @@ namespace QiQiTemplate.Context
                 case FieldType.Decimal:
                     return (Expression.Constant(Convert.ToDecimal(fdValue)), null);
                 case FieldType.String:
-                    return (Expression.Constant(Convert.ToBoolean(fdValue)), null);
-                case FieldType.Bool:
                     return (Expression.Constant(fdValue), null);
+                case FieldType.Bool:
+                    return (Expression.Constant(Convert.ToBoolean(fdValue)), null);
+                case FieldType.Char:
+                    return (Expression.Constant(Convert.ToChar(fdValue)), null);
                 case FieldType.SourcePath:
                     if (param == null)
                         param = Expression.Variable(typeof(DynamicModel));

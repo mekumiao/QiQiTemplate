@@ -16,11 +16,7 @@ namespace QiQiTemplate.Context
         /// <summary>
         /// 正则
         /// </summary>
-        protected static readonly Regex ParsingRegex = new Regex(@"{{#set\s(?<name>[a-zA-Z_][\w]+)\s=\s(?<value>.+)}}", RegexOptions.Compiled);
-        /// <summary>
-        /// 正则
-        /// </summary>
-        protected static readonly Regex RegexValue = new Regex("(?<=\")(.*)(?=\")", RegexOptions.Compiled);
+        private static readonly Regex ParsingRegex = new Regex(@"{{#set\s(?<name>[a-zA-Z_][\w]+)\s=\s(?<value>.+)}}", RegexOptions.Compiled);
         /// <summary>
         /// 信息
         /// </summary>
@@ -42,16 +38,13 @@ namespace QiQiTemplate.Context
         protected override void ParsingModel()
         {
             var mth = ParsingRegex.Match(this.CodeString);
+            var value = mth.Groups["value"].Value;
             this.Model = new DeFineModel
             {
-                FdType = TypeHelper.GetFieldTypeByValue(mth.Groups["value"].Value.Trim()),
-                ArgName = mth.Groups["name"].Value.Trim().Replace("\"", ""),
-                ArgValue = mth.Groups["value"].Value.Trim(),
+                FdType = TypeHelper.GetFieldTypeByValue(ref value),
+                ArgName = mth.Groups["name"].Value,
+                ArgValue = value,
             };
-            if (this.Model.FdType == FieldType.String)
-            {
-                this.Model.ArgValue = RegexValue.Match(this.Model.ArgValue).Value;
-            }
         }
         /// <summary>
         /// 转换表达式

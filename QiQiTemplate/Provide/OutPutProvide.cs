@@ -21,7 +21,6 @@ namespace QiQiTemplate.Provide
             this._filterProvide = new FilterProvide();
             this._stringBuilder = new StringBuilder();
         }
-
         /// <summary>
         /// 根据StringBuilder构造
         /// </summary>
@@ -34,25 +33,28 @@ namespace QiQiTemplate.Provide
         /// 输出
         /// </summary>
         /// <param name="code"></param>
+        public void Print(object code)
+        {
+            this._stringBuilder.Append(code.ToString());
+        }
+        /// <summary>
+        /// 输出,带过滤器
+        /// </summary>
+        /// <param name="code"></param>
         /// <param name="filter"></param>
         /// <param name="args"></param>
-        public void Print(object code, string filter, params object[] args)
+        public void Print(object code, string filter, object[] args)
         {
-            var msg = this._filterProvide.GetFilter(filter)?.Filter(code.ToString(), args);
-            msg ??= code.ToString();
+            string msg = this._filterProvide.GetFilter(filter).Filter(code, args);
             this._stringBuilder.Append(msg);
         }
         /// <summary>
         /// 输出并换行
         /// </summary>
         /// <param name="code"></param>
-        /// <param name="filter"></param>
-        /// <param name="args"></param>
-        public void PrintLine(object code, string filter, params object[] args)
+        public void PrintLine(object code)
         {
-            var msg = this._filterProvide.GetFilter(filter)?.Filter(code.ToString(), args);
-            msg ??= code.ToString();
-            this._stringBuilder.AppendLine(msg);
+            this._stringBuilder.AppendLine(code.ToString());
         }
         /// <summary>
         /// 输出换行

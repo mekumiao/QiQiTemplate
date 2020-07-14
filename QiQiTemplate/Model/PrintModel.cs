@@ -15,5 +15,13 @@ namespace QiQiTemplate.Model
         /// 值
         /// </summary>
         public string SourcePath { get; set; }
+        /// <summary>
+        /// 过滤器名称
+        /// </summary>
+        public string FilterName { get; set; }
+        /// <summary>
+        /// 参数
+        /// </summary>
+        public FieldModel[] Args { get; set; }
     }
 }

@@ -14,14 +14,8 @@ namespace QiQiTemplate.Context
     /// </summary>
     public class PRINTNodeContext : NodeContext
     {
-        /// <summary>
-        /// 正则1
-        /// </summary>
-        protected static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(.+?)(?=}})", RegexOptions.Compiled);
-        /// <summary>
-        /// 正则1
-        /// </summary>
-        protected static readonly Regex ParsingReges2 = new Regex(@"{{", RegexOptions.Compiled);
+        private static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(?<code>[^\s}]+)(\s+(?<filtername>[\w]+)\((?<args>.+?)\))?(?=}})", RegexOptions.Compiled);
+        private static readonly Regex ParsingReges2 = new Regex(@"{{", RegexOptions.Compiled);
         /// <summary>
         /// 节点信息
         /// </summary>
@@ -68,7 +62,9 @@ namespace QiQiTemplate.Context
                         prints.Add(new PrintModel
                         {
                             PtType = PrintType.Variable,
-                            SourcePath = mth.Value,
+                            SourcePath = mth.Groups["code"].Value,
+                            FilterName = mth.Groups["filtername"].Value,
+                            Args = CreateModel(mth.Groups["args"].Value),
                         });
                         builder.Remove(0, mth.Length + 4);
                         if (builder.Length > 0) MatchPrint(builder, prints);
@@ -81,6 +77,21 @@ namespace QiQiTemplate.Context
                 PtType = PrintType.String,
                 SourcePath = builder.ToString(),
             });
+            static FieldModel[] CreateModel(string code)
+            {
+                var arr = code.Trim().Split(",", System.StringSplitOptions.RemoveEmptyEntries);
+                var fds = new List<FieldModel>(10);
+                foreach (var item in arr)
+                {
+                    string value = item.Trim();
+                    fds.Add(new FieldModel
+                    {
+                        FdType = TypeHelper.GetFieldTypeByValue(ref value),
+                        FdValue = value,
+                    });
+                }
+                return fds.ToArray();
+            }
         }
         /// <summary>
         /// 解析
@@ -110,9 +121,31 @@ namespace QiQiTemplate.Context
                         break;
                     case PrintType.Variable:
                         var (param, path) = this.SearchPath(item.SourcePath);
-                        print = this.PrintProvide.ExpressionPrint(param);
                         pars.Add(param);
                         exps.Add(path);
+                        if (string.IsNullOrWhiteSpace(item.FilterName))
+                        {
+                            print = this.PrintProvide.ExpressionPrint(param);
+                        }
+                        else
+                        {
+                            var argsex = new List<Expression>(5);
+                            foreach (var arg in item.Args)
+                            {
+                                var (value, init) = this.GetConstByFd(arg.FdType, arg.FdValue);
+                                if (arg.FdType == FieldType.SourcePath)
+                                {
+                                    pars.Add(value as ParameterExpression);
+                                    exps.Add(init);
+                                    argsex.Add(value);
+                                }
+                                else
+                                {
+                                    argsex.Add(Expression.Convert(value, typeof(object)));
+                                }
+                            }
+                            print = this.PrintProvide.ExpressionPrint(param, item.FilterName, argsex.ToArray());
+                        }
                         exps.Add(print);
                         break;
                     default:

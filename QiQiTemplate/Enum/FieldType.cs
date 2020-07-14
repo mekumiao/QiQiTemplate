@@ -14,6 +14,10 @@
         /// </summary>
         String,
         /// <summary>
+        /// 字符
+        /// </summary>
+        Char,
+        /// <summary>
         /// bool
         /// </summary>
         Bool,

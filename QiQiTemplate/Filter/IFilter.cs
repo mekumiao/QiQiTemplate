@@ -19,6 +19,6 @@ namespace QiQiTemplate.Filter
         /// <param name="code"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public string Filter(string code, params object[] args);
+        public string Filter(object code, object[] args);
     }
 }

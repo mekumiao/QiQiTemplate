@@ -22,26 +22,27 @@ namespace QiQiTemplate.Provide
         /// <summary>
         /// 注册过滤器
         /// </summary>
-        /// <param name="filter"></param>
-        public void RegisFilter(IFilter filter)
+        public void RegisFilter<T>()
+            where T : IFilter, new()
         {
+            var filter = new T();
             this._filters.Add(filter.Name, filter);
         }
         /// <summary>
         /// 根据名称获取过滤器
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="filterName">过滤器名称</param>
         /// <returns></returns>
-        public IFilter GetFilter(string name)
+        public IFilter GetFilter(string filterName)
         {
-            this._filters.TryGetValue(name, out var filter);
+            this._filters.TryGetValue(filterName.ToLower(), out var filter);
             return filter;
         }
-
         private void RegisFilter()
         {
-            this.RegisFilter(new PadLeftFilter());
-            this.RegisFilter(new PadRightFilter());
+            this.RegisFilter<PadLeftFilter>();
+            this.RegisFilter<PadRightFilter>();
+            this.RegisFilter<IsNullFilter>();
         }
     }
 }

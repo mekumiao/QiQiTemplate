@@ -10,7 +10,9 @@
     {{idx}}.{{val.name}} 中年 {{val.age}}
     {{#/else}}
     {{#each val.tel tl idx2}}
-        {{index}}.{{tl}}
+        {{index PadLeft(3,'0')}}.{{tl}}
         {{#oper index++}}
     {{#/each}}
 {{#/each}}
+{{#set name = ""}}
+{{name isnull("***")}}

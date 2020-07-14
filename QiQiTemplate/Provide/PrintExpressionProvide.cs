@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace QiQiTemplate.Provide
@@ -18,27 +19,40 @@ namespace QiQiTemplate.Provide
         {
             this._outPut = outPut;
         }
-
         /// <summary>
-        /// 不换行
+        /// 不换行输出
         /// </summary>
-        /// <param name="exp"></param>
+        /// <param name="code"></param>
         /// <returns></returns>
-        public MethodCallExpression ExpressionPrint(Expression exp)
+        public MethodCallExpression ExpressionPrint(Expression code)
         {
-            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("Print"), exp);
+            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("Print", new[] { typeof(object) }), code);
         }
-
         /// <summary>
-        /// 换行
+        /// 不换行输出,带过滤器
         /// </summary>
-        /// <param name="exp"></param>
+        /// <param name="code"></param>
+        /// <param name="filterName"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
-        public MethodCallExpression ExpressionPrintLine(Expression exp)
+        public MethodCallExpression ExpressionPrint(Expression code, string filterName, Expression[] args)
         {
-            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("PrintLine", new[] { typeof(object) }), exp);
+            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("Print", new[] { typeof(object), typeof(string), typeof(object[]) }), new[]
+            {
+                code,
+                Expression.Constant(filterName),
+                Expression.NewArrayInit(typeof(object), args)
+            });
         }
-
+        /// <summary>
+        /// 换行输出
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public MethodCallExpression ExpressionPrintLine(Expression code)
+        {
+            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("PrintLine", new[] { typeof(object) }), code);
+        }
         /// <summary>
         /// 空行
         /// </summary>

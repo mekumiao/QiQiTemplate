@@ -12,16 +12,18 @@ namespace QiQiTemplate.Filter
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name => "PadLeft";
+        public string Name => "padleft";
         /// <summary>
         /// 过滤
         /// </summary>
         /// <param name="code"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public string Filter(string code, params object[] args)
+        public string Filter(object code, object[] args)
         {
-            return code.PadLeft((int)args[0], (char)args[1]);
+            int width = Convert.ToInt32(args[0]);
+            char padding = Convert.ToChar(args[1]);
+            return code.ToString().PadLeft(width, padding);
         }
     }
 }
