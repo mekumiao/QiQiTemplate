@@ -1,3 +1,24 @@
 ﻿--嵌套测试
 {{#set arg = _data.people[_data.people[0].age].name}}
 {{arg}}
+--嵌套测试
+{{#set index = 0}}
+{{#set name = ""}}
+{{name isnull(_data.people[_data.people[index].age].name)}}
+
+{{#set index = 1}}
+{{#each _data.people val idx}}
+    {{#if val.age > 0 & val.age <= 10}}
+    {{idx}}.{{val.name}} 儿童 {{val.age}}
+    {{#/if}}
+    {{#elseif val.age > 10 & val.age < 25}}
+    {{idx}}.{{val.name}} 青少年 {{val.age}}
+    {{#/elseif}}
+    {{#else}}
+    {{idx}}.{{val.name}} 中年 {{val.age}}
+    {{#/else}}
+    {{#each val.tel tl idx2}}
+        {{index PadLeft(3,'0')}}.{{tl}}
+        {{#oper index++}}
+    {{#/each}}
+{{#/each}}
