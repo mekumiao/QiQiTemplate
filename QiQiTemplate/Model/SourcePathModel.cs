@@ -22,6 +22,6 @@ namespace QiQiTemplate.Model
         /// 2.其中arr[0].value就是变量节点.
         /// 3.这样的情况还能无限的嵌套下去.
         /// </summary>
-        public SourcePathModel[] ChildPath { get; set; }
+        public SourcePathModel[] ChildSourcePathModel { get; set; }
     }
 }

@@ -63,63 +63,75 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         public abstract void ConvertToExpression();
         /// <summary>
-        /// 根据对象访问路径构建表达式
+        /// 将int,string,bool,char,decimal转为DynamicModel类型的表达式树
         /// </summary>
-        /// <param name="sourcePath"></param>
-        /// <param name="param"></param>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath, ParameterExpression param = null)
+        protected Expression ConvertToDynamicModel(Expression value, string name = "")
         {
-            var exps = new List<Expression>(10);
-            var paths = SourcePathProvider.CreateSourcePath(sourcePath);
-            if (paths.Length < 1) throw new Exception($"{sourcePath}访问路径不存在,或附近有语法错误");
-            if (param == null)
-                param = Expression.Variable(typeof(DynamicModel));
-
-            Expression root = this.ParentNode.SearchVariable(paths[0].SourcePath);
-            BinaryExpression init_param;
-            if (root.Type == typeof(DynamicModel))
+            if (value.Type == typeof(DynamicModel))
             {
-                init_param = Expression.Assign(param, root);
-                exps.Add(init_param);
+                return value;
             }
             else
             {
-                ParameterExpression rootparame = root as ParameterExpression;
-                MemberAssignment bind = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(rootparame, typeof(object)));
-                MemberInitExpression init = Expression.MemberInit(Expression.New(typeof(DynamicModel)), bind);
-                init_param = Expression.Assign(param, init);
-                exps.Add(init_param);
+                ParameterExpression rootparame = value as ParameterExpression;
+                MemberAssignment bindName = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(name));
+                MemberAssignment bindValue = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(rootparame, typeof(object)));
+                return Expression.MemberInit(Expression.New(typeof(DynamicModel)), bindName, bindValue);
             }
-            for (int i = 1; i < paths.Length; i++)
+        }
+        /// <summary>
+        /// 根据对象访问路径构建表达式
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="param_root"></param>
+        /// <returns></returns>
+        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath, ParameterExpression param_root = null)
+        {
+            var blockparams = new List<ParameterExpression>(10);
+            var inits = new List<Expression>(10);
+
+            var paths = SourcePathProvider.CreateSourcePath(sourcePath);
+            if (paths.Length < 1) throw new Exception($"{sourcePath}访问路径不存在,或附近有语法错误");
+            if (param_root == null) param_root = Expression.Variable(typeof(DynamicModel));
+            GetPath(paths, param_root);
+            return (param_root, Expression.Block(blockparams, inits));
+
+            void GetPath(SourcePathModel[] spt, ParameterExpression param_bk)
             {
-                SourcePathModel item = paths[i];
-                Expression exppath;
-                MethodCallExpression getCall;
-                switch (item.PathType)
+                foreach (var item in spt)
                 {
-                    case SourcePathType.Variable:
-                        exppath = this.ParentNode.SearchVariable(item.SourcePath);
-                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { exppath.Type }), exppath);
-                        break;
-                    case SourcePathType.Index:
-                        exppath = Expression.Constant(Convert.ToInt32(item.SourcePath));
-                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), exppath);
-                        break;
-                    case SourcePathType.Attribute:
-                        exppath = Expression.Constant(item.SourcePath);
-                        getCall = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(string) }), exppath);
-                        break;
-                    case SourcePathType.SourcePath:
-                        getCall = default;
-                        break;
-                    default:
-                        throw new Exception($"不支持{item.PathType}类型的访问路径");
+                    switch (item.PathType)
+                    {
+                        case SourcePathType.Variable:
+                            Expression exppath = this.ParentNode.SearchVariable(item.SourcePath);
+                            Expression getCall = this.ConvertToDynamicModel(exppath);
+                            inits.Add(Expression.Assign(param_bk, getCall));
+                            break;
+                        case SourcePathType.Index:
+                            exppath = Expression.Constant(Convert.ToInt32(item.SourcePath));
+                            getCall = Expression.Call(param_bk, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), exppath);
+                            inits.Add(Expression.Assign(param_bk, getCall));
+                            break;
+                        case SourcePathType.Attribute:
+                            exppath = Expression.Constant(item.SourcePath);
+                            getCall = Expression.Call(param_bk, typeof(DynamicModel).GetMethod("Get", new[] { typeof(string) }), exppath);
+                            inits.Add(Expression.Assign(param_bk, getCall));
+                            break;
+                        case SourcePathType.SourcePath:
+                            ParameterExpression param_bkc = Expression.Variable(typeof(DynamicModel));
+                            blockparams.Add(param_bkc);
+                            GetPath(item.ChildSourcePathModel, param_bkc);
+                            getCall = Expression.Call(param_bk, typeof(DynamicModel).GetMethod("Get", new[] { param_bkc.Type }), param_bkc);
+                            inits.Add(Expression.Assign(param_bk, getCall));
+                            break;
+                        default:
+                            throw new Exception($"不支持{item.PathType}类型的访问路径");
+                    }
                 }
-                init_param = Expression.Assign(param, getCall);
-                exps.Add(init_param);
             }
-            return (param, Expression.Block(exps));
         }
         /// <summary>
         /// 根据访问路径创建数据

@@ -1,7 +1,7 @@
 ﻿--嵌套测试
+{{#set index = 0}}
 {{#set name = ""}}
-{{name isnull(_data.people[_data.people[_data.people[0].age].age].name)}}
-{{name isnull(_data.people[0].age)}}
+{{name isnull(_data.people[_data.people[index].age].name)}}
 
 {{#set index = 1}}
 {{#each _data.people val idx}}

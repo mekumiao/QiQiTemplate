@@ -242,12 +242,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:QiQiTemplate.Context.NodeContext.ConvertToDynamicModel(System.Linq.Expressions.Expression,System.String)">
+            <summary>
+            将int,string,bool,char,decimal转为DynamicModel类型的表达式树
+            </summary>
+            <param name="value"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
         <member name="M:QiQiTemplate.Context.NodeContext.SearchPath(System.String,System.Linq.Expressions.ParameterExpression)">
             <summary>
             根据对象访问路径构建表达式
             </summary>
             <param name="sourcePath"></param>
-            <param name="param"></param>
+            <param name="param_root"></param>
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Context.NodeContext.GetConstByFd(QiQiTemplate.Enum.FieldType,System.String,System.Linq.Expressions.ParameterExpression)">
@@ -672,6 +680,20 @@
             <param name="idx"></param>
             <returns></returns>
         </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.Get(System.Decimal)">
+            <summary>
+            获取子节点
+            </summary>
+            <param name="idx"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.Get(QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            获取子节点
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.Set(QiQiTemplate.Model.DynamicModel)">
             <summary>
             添加节点
@@ -1045,7 +1067,7 @@
             值
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Model.SourcePathModel.ChildPath">
+        <member name="P:QiQiTemplate.Model.SourcePathModel.ChildSourcePathModel">
             <summary>
             当访问节点是一个变量时,记录它的访问路径.
             例如:

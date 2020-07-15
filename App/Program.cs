@@ -14,7 +14,8 @@ namespace App
             //加载数据
             var model = dyProvide.CreateByFilePath(@"Temp.json");
             //编译模板
-            var action = ndProvide.BuildTemplateByPath(@"Temp.txt", outProvide).Compile();
+            var lambda = ndProvide.BuildTemplateByPath(@"Temp.txt", outProvide);
+            var action = lambda.Compile();
             //执行
             action.Invoke(model);
             //输出到文件

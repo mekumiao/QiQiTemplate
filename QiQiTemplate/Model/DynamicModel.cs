@@ -48,7 +48,6 @@ namespace QiQiTemplate.Model
             }
             throw new Exception($"对象没有{fdName}属性");
         }
-
         /// <summary>
         /// 根据索引获取子节点
         /// </summary>
@@ -59,7 +58,30 @@ namespace QiQiTemplate.Model
             if (idx > FdDict.Count - 1) throw new Exception("索引超出界限");
             return FdDict.Values.ToArray()[idx];
         }
-
+        /// <summary>
+        /// 获取子节点
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
+        public DynamicModel Get(decimal idx)
+        {
+            return Get((int)idx);
+        }
+        /// <summary>
+        /// 获取子节点
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public DynamicModel Get(DynamicModel model)
+        {
+            return model.FdValue switch
+            {
+                object msg when msg is string val => Get(val),
+                object msg when msg is int val => Get(val),
+                object msg when msg is decimal val => Get(val),
+                _ => throw new Exception($"{model.FdValue}不是有效类型"),
+            };
+        }
         /// <summary>
         /// 添加节点
         /// </summary>

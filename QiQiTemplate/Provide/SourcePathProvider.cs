@@ -67,7 +67,7 @@ namespace QiQiTemplate.Provide
                     PathType = pathType,
                     SourcePath = mh.Groups["value"].Value,
                 };
-                if (pathType == SourcePathType.SourcePath) md.ChildPath = CreateSourcePath(md.SourcePath);
+                if (pathType == SourcePathType.SourcePath) md.ChildSourcePathModel = CreateSourcePath(md.SourcePath);
                 list.Add(md);
                 if (builder.Length > 0) MatchPath(builder, list);
             }
