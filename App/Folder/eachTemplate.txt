@@ -1,3 +1,7 @@
 ﻿{{#each _data.students val idx}}
+{{#set index = idx}}
 {{idx}}.{{val.name}}
+{{#oper index++}}
+index-{{index}}
+----{{_data.students[idx].name}}
 {{#/each}}

@@ -1,2 +1,12 @@
 ﻿{{#set name = _data.students[0].name}}
 {{name}}
+{{#set num = 100.056}}
+{{num}}
+{{#set num = -52}}
+{{num}}
+{{#set num = true}}
+{{num}}
+{{#set num = "xxxxxxwfsdfsd"}}
+{{num}}
+{{#set num = 'c'}}
+{{num}}
