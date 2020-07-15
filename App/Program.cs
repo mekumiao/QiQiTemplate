@@ -7,9 +7,9 @@ namespace App
     {
         static void Main(string[] args)
         {
-            var dyProvide = new DynamicModelProvide();//数据加载类
-            var outProvide = new OutPutProvide();//输出类
-            var ndProvide = new NodeContextProvide();//模板编译类
+            var dyProvide = new DynamicModelProvide();//数据加载提供类
+            var outProvide = new OutPutProvide();//输出提供类
+            var ndProvide = new NodeContextProvide();//模板编译提供类
 
             //加载数据
             var model = dyProvide.CreateByFilePath(@"Temp.json");
