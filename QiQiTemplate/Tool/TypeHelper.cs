@@ -22,6 +22,7 @@ namespace QiQiTemplate.Tool
                 string msg when Regex.IsMatch(msg, "^\".*\"$") => FieldType.String,
                 string msg when Regex.IsMatch(msg, "^'.+'$") => FieldType.Char,
                 string msg when Regex.IsMatch(msg, @"^(true|false)$") => FieldType.Bool,
+                string msg when Regex.IsMatch(msg, @"^[-]?\d+$") => FieldType.Int,
                 string msg when Regex.IsMatch(msg, @"^[a-zA-Z_][\w]*([.][\w\[\]]+)*$") => FieldType.SourcePath,
                 _ => throw new Exception($"{value}是不受支持的类型"),
             };

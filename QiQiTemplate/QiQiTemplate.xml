@@ -259,13 +259,12 @@
             <param name="param_out"></param>
             <returns></returns>
         </member>
-        <member name="M:QiQiTemplate.Context.NodeContext.GetConstByFd(QiQiTemplate.Enum.FieldType,System.String,System.Linq.Expressions.ParameterExpression)">
+        <member name="M:QiQiTemplate.Context.NodeContext.CreateConstExpression(QiQiTemplate.Enum.FieldType,System.String)">
             <summary>
-            根据访问路径创建数据
+            创建常量表达式
             </summary>
             <param name="fdType"></param>
             <param name="fdValue"></param>
-            <param name="param"></param>
             <returns></returns>
         </member>
         <member name="T:QiQiTemplate.Context.OperNodeContext">
@@ -413,6 +412,11 @@
         <member name="T:QiQiTemplate.Enum.FieldType">
             <summary>
             字段类型
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Enum.FieldType.Int">
+            <summary>
+            整数
             </summary>
         </member>
         <member name="F:QiQiTemplate.Enum.FieldType.Decimal">
@@ -657,11 +661,6 @@
             子节点数量
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Model.DynamicModel.ValueType">
-            <summary>
-            值类型
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.#ctor">
             <summary>
             构造
@@ -723,38 +722,6 @@
             <param name="field2"></param>
             <returns></returns>
         </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThan(System.Decimal,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThan(System.Decimal,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThan(QiQiTemplate.Model.DynamicModel,System.Decimal)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThan(QiQiTemplate.Model.DynamicModel,System.Decimal)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThanOrEqual(QiQiTemplate.Model.DynamicModel,QiQiTemplate.Model.DynamicModel)">
             <summary>
             重载操作符
@@ -771,38 +738,6 @@
             <param name="field2"></param>
             <returns></returns>
         </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThanOrEqual(System.Decimal,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThanOrEqual(System.Decimal,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_LessThanOrEqual(QiQiTemplate.Model.DynamicModel,System.Decimal)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_GreaterThanOrEqual(QiQiTemplate.Model.DynamicModel,System.Decimal)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,QiQiTemplate.Model.DynamicModel)">
             <summary>
             重载操作符
@@ -812,102 +747,6 @@
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(System.Decimal,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(System.Decimal,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,System.Decimal)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,System.Decimal)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(System.String,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(System.String,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,System.String)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,System.String)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(QiQiTemplate.Model.DynamicModel,System.Boolean)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(QiQiTemplate.Model.DynamicModel,System.Boolean)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Equality(System.Boolean,QiQiTemplate.Model.DynamicModel)">
-            <summary>
-            重载操作符
-            </summary>
-            <param name="field1"></param>
-            <param name="field2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:QiQiTemplate.Model.DynamicModel.op_Inequality(System.Boolean,QiQiTemplate.Model.DynamicModel)">
             <summary>
             重载操作符
             </summary>
@@ -1331,17 +1170,6 @@
             解析访问路径
             </summary>
             <param name="sourcePath"></param>
-            <returns></returns>
-        </member>
-        <member name="T:QiQiTemplate.Test.BuilderTest">
-            <summary>
-            测试
-            </summary>
-        </member>
-        <member name="M:QiQiTemplate.Test.BuilderTest.Builder">
-            <summary>
-            测试
-            </summary>
             <returns></returns>
         </member>
         <member name="T:QiQiTemplate.Tool.StringConvert">

@@ -108,8 +108,8 @@ namespace QiQiTemplate.Context
         /// </summary>
         public override void ConvertToExpression()
         {
-            var exps = new List<Expression>(10);
-            var pars = new List<ParameterExpression>(10);
+            var blockparames = new List<ParameterExpression>(10);
+            var inits = new List<Expression>(10);
 
             foreach (var item in this.Model)
             {
@@ -117,44 +117,45 @@ namespace QiQiTemplate.Context
                 {
                     case PrintType.String:
                         MethodCallExpression print = this.PrintProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
-                        exps.Add(print);
+                        inits.Add(print);
                         break;
                     case PrintType.Variable:
                         var (param, path) = this.SearchPath(item.SourcePath);
-                        pars.Add(param);
-                        exps.Add(path);
+                        blockparames.Add(param);
+                        inits.Add(path);
                         if (string.IsNullOrWhiteSpace(item.FilterName))
                         {
                             print = this.PrintProvide.ExpressionPrint(param);
                         }
                         else
                         {
-                            var argsex = new List<Expression>(5);
+                            var argsexpression = new List<Expression>(5);
                             foreach (var arg in item.Args)
                             {
-                                var (value, init) = this.GetConstByFd(arg.FdType, arg.FdValue);
                                 if (arg.FdType == FieldType.SourcePath)
                                 {
-                                    pars.Add(value as ParameterExpression);
-                                    exps.Add(init);
-                                    argsex.Add(value);
+                                    var (parame, init) = this.SearchPath(arg.FdValue);
+                                    blockparames.Add(parame);
+                                    inits.Add(init);
+                                    argsexpression.Add(parame);
                                 }
                                 else
                                 {
-                                    argsex.Add(Expression.Convert(value, typeof(object)));
+                                    var value = this.CreateConstExpression(arg.FdType, arg.FdValue);
+                                    argsexpression.Add(Expression.Convert(value, typeof(object)));
                                 }
                             }
-                            print = this.PrintProvide.ExpressionPrint(param, item.FilterName, argsex.ToArray());
+                            print = this.PrintProvide.ExpressionPrint(param, item.FilterName, argsexpression.ToArray());
                         }
-                        exps.Add(print);
+                        inits.Add(print);
                         break;
                     default:
                         break;
                 }
             }
             MethodCallExpression printLine = this.PrintProvide.ExpressionPrintLine();
-            exps.Add(printLine);
-            this.NdExpression = Expression.Block(pars, exps);
+            inits.Add(printLine);
+            this.NdExpression = Expression.Block(blockparames, inits);
         }
     }
 }

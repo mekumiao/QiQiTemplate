@@ -6,6 +6,10 @@
     public enum FieldType
     {
         /// <summary>
+        /// 整数
+        /// </summary>
+        Int,
+        /// <summary>
         /// 数字
         /// </summary>
         Decimal,

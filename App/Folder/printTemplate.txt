@@ -1,0 +1,3 @@
+﻿{{_data.students[0].age}}
+{{_data.students[0].name}}
+性别:{{_data.students[0].sex}} 姓名: {{_data.students[0].name}}

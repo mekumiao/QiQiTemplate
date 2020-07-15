@@ -1,0 +1,2 @@
+﻿{{#set name = _data.students[0].name}}
+{{name}}

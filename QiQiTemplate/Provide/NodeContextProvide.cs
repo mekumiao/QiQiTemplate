@@ -74,11 +74,9 @@ namespace QiQiTemplate.Provide
             var scope = new ScopeBlockContext();
             using var _reader = reader;
             CreateNodeContextRange(_reader, scope, output);
-            var node = scope.Nodes;
             scope.ConvertToExpression();
             return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
         }
-
         /// <summary>
         /// 编译模板
         /// </summary>
@@ -87,10 +85,8 @@ namespace QiQiTemplate.Provide
         /// <returns></returns>
         public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, OutPutProvide output)
         {
-            var reader = new StreamReader(path);
-            return BuildTemplateByReader(reader, output);
+            return BuildTemplateByReader(new StreamReader(path), output);
         }
-
         /// <summary>
         /// 编译模板
         /// </summary>
@@ -103,10 +99,8 @@ namespace QiQiTemplate.Provide
             using var writer = new StreamWriter(memory);
             writer.Write(template);
             memory.Seek(0, SeekOrigin.Begin);
-            using var reader = new StreamReader(memory);
-            return BuildTemplateByReader(reader, output);
+            return BuildTemplateByReader(new StreamReader(memory), output);
         }
-
         /// <summary>
         /// 将语法解析为节点树
         /// </summary>
@@ -222,14 +216,13 @@ namespace QiQiTemplate.Provide
                 }
             }
         }
-
         /// <summary>
         /// 获取代码节点的类型
         /// [需要注意顺序]
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        protected NodeType GetNodeType(string code)
+        private NodeType GetNodeType(string code)
         {
             return code switch
             {

@@ -62,7 +62,7 @@ namespace QiQiTemplate.Context
                     }
                     else
                     {
-                        var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
+                        var value = this.CreateConstExpression(this.Model.FdType, this.Model.ArgValue);
                         this.NdExpression = Expression.Assign(paramExpression, this.ConvertToDynamicModel(value));
                     }
                 }
@@ -79,7 +79,7 @@ namespace QiQiTemplate.Context
                     }
                     else
                     {
-                        var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
+                        var value = this.CreateConstExpression(this.Model.FdType, this.Model.ArgValue);
                         ParameterExpression param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
                         block.DefineParams.Add(param);
                         this.NdExpression = Expression.Assign(param, this.ConvertToDynamicModel(value));

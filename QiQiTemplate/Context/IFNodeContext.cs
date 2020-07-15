@@ -72,7 +72,7 @@ namespace QiQiTemplate.Context
         /// 创建条件表达式
         /// </summary>
         /// <returns></returns>
-        protected (ParameterExpression parme, Expression init) CreateConditionExpression()
+        private (ParameterExpression parme, Expression init) CreateConditionExpression()
         {
             ParameterExpression parme = Expression.Variable(typeof(bool));
             BinaryExpression init_comp = Expression.Assign(parme, Expression.Constant(true));
@@ -114,14 +114,15 @@ namespace QiQiTemplate.Context
                 {
                     if (type == FieldType.SourcePath)
                     {
-                        var (param, init) = this.GetConstByFd(type, value);
-                        parames.Add(param as ParameterExpression);
+                        var (param, init) = this.SearchPath(value);
+                        parames.Add(param);
                         inits.Add(init);
                         return param;
                     }
                     else
                     {
-                        return this.GetConstByFd(type, value).value;
+                        var expressValue = this.CreateConstExpression(type, value);
+                        return this.ConvertToDynamicModel(expressValue);
                     }
                 }
             }

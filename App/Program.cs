@@ -8,20 +8,18 @@ namespace App
         static void Main(string[] args)
         {
             var dyProvide = new DynamicModelProvide();//数据加载提供类
-            var outProvide = new OutPutProvide();//输出提供类
             var ndProvide = new NodeContextProvide();//模板编译提供类
+            var outProvide = new OutPutProvide();//输出提供类
 
             //加载数据
-            var model = dyProvide.CreateByFilePath(@"Temp.json");
-            //编译模板
-            var lambda = ndProvide.BuildTemplateByPath(@"Temp.txt", outProvide);
-            var action = lambda.Compile();
-            //执行
-            action.Invoke(model);
-            //输出到文件
-            outProvide.OutPut(@"output.txt");
-            //输出到控制台
-            Console.Write(outProvide.ToString());
+            var model = dyProvide.CreateByFilePath("folder/data.json");
+            ndProvide.BuildTemplateByPath("folder/alltemplate.txt", outProvide).Compile().Invoke(model);
+            ndProvide.BuildTemplateByPath("folder/eachtemplate.txt", outProvide).Compile().Invoke(model);
+            ndProvide.BuildTemplateByPath("folder/iftemplate.txt", outProvide).Compile().Invoke(model);
+            ndProvide.BuildTemplateByPath("folder/nestedtemplate.txt", outProvide).Compile().Invoke(model);
+            ndProvide.BuildTemplateByPath("folder/printtemplate.txt", outProvide).Compile().Invoke(model);
+            ndProvide.BuildTemplateByPath("folder/settemplate.txt", outProvide).Compile().Invoke(model);
+            Console.WriteLine(outProvide.ToString());
         }
     }
 }

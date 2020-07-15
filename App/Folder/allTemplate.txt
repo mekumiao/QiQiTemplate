@@ -1,0 +1,17 @@
+﻿{{#each _data.students val idx}}
+    {{#if val.age > 0 & val.age <= 18}}
+    {{val.name}}是学生!
+    {{#/if}}
+    {{#elseif val.age > 18 & val.age < 30}}
+    {{val.name}}是青年!
+    {{#/elseif}}
+    {{#else}}
+    {{val.name}}是中年!
+    {{#/else}}
+    爱好分别是
+    \{\{
+    {{#each val.like lk idx2}}
+        {{idx2 PadLeft(3,'0')}}.{{lk}}
+    {{#/each}}
+    \}\}
+{{#/each}}

@@ -136,31 +136,22 @@ namespace QiQiTemplate.Context
             }
         }
         /// <summary>
-        /// 根据访问路径创建数据
+        /// 创建常量表达式
         /// </summary>
         /// <param name="fdType"></param>
         /// <param name="fdValue"></param>
-        /// <param name="param"></param>
         /// <returns></returns>
-        protected (Expression value, Expression init) GetConstByFd(FieldType fdType, string fdValue, ParameterExpression param = null)
+        protected Expression CreateConstExpression(FieldType fdType, string fdValue)
         {
-            switch (fdType)
+            return fdType switch
             {
-                case FieldType.Decimal:
-                    return (Expression.Constant(Convert.ToDecimal(fdValue)), null);
-                case FieldType.String:
-                    return (Expression.Constant(fdValue), null);
-                case FieldType.Bool:
-                    return (Expression.Constant(Convert.ToBoolean(fdValue)), null);
-                case FieldType.Char:
-                    return (Expression.Constant(Convert.ToChar(fdValue)), null);
-                case FieldType.SourcePath:
-                    if (param == null)
-                        param = Expression.Variable(typeof(DynamicModel));
-                    return this.SearchPath(fdValue, param);
-                default:
-                    throw new Exception($"{fdType}是不受支持的字段类型");
-            }
+                FieldType.Int => Expression.Constant(Convert.ToInt32(fdValue)),
+                FieldType.Decimal => Expression.Constant(Convert.ToDecimal(fdValue)),
+                FieldType.String => Expression.Constant(fdValue),
+                FieldType.Bool => Expression.Constant(Convert.ToBoolean(fdValue)),
+                FieldType.Char => Expression.Constant(Convert.ToChar(fdValue)),
+                _ => throw new Exception($"{fdType}是不受支持的字段类型"),
+            };
         }
     }
 }

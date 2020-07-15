@@ -1,0 +1,3 @@
+﻿{{#each _data.students val idx}}
+{{idx}}.{{val.name}}
+{{#/each}}
