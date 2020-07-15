@@ -520,12 +520,12 @@
         </member>
         <member name="F:QiQiTemplate.Enum.SourcePathType.Variable">
             <summary>
-            变量
+            变量(访问路径的第一个节点)
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.SourcePathType.Func">
+        <member name="F:QiQiTemplate.Enum.SourcePathType.SourcePath">
             <summary>
-            方法
+            访问路径
             </summary>
         </member>
         <member name="T:QiQiTemplate.Filter.IFilter">
@@ -1037,9 +1037,13 @@
             值
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Model.SourcePathModel.FuncParames">
+        <member name="P:QiQiTemplate.Model.SourcePathModel.ChildPath">
             <summary>
-            方法参数
+            当访问节点是一个变量时,记录它的访问路径.
+            例如:
+            1._data.people[arr[0].value].name.
+            2.其中arr[0].value就是变量节点.
+            3.这样的情况还能无限的嵌套下去.
             </summary>
         </member>
         <member name="T:QiQiTemplate.Provide.DynamicModelProvide">

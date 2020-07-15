@@ -14,12 +14,12 @@
         /// </summary>
         Attribute,
         /// <summary>
-        /// 变量
+        /// 变量(访问路径的第一个节点)
         /// </summary>
         Variable,
         /// <summary>
-        /// 方法
+        /// 访问路径
         /// </summary>
-        Func,
+        SourcePath,
     }
 }

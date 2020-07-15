@@ -16,8 +16,12 @@ namespace QiQiTemplate.Model
         /// </summary>
         public string SourcePath { get; set; }
         /// <summary>
-        /// 方法参数
+        /// 当访问节点是一个变量时,记录它的访问路径.
+        /// 例如:
+        /// 1._data.people[arr[0].value].name.
+        /// 2.其中arr[0].value就是变量节点.
+        /// 3.这样的情况还能无限的嵌套下去.
         /// </summary>
-        public SourcePathModel[] FuncParames { get; set; }
+        public SourcePathModel[] ChildPath { get; set; }
     }
 }

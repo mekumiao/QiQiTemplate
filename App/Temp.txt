@@ -1,4 +1,8 @@
-﻿{{#set index = 1}}
+﻿--嵌套测试
+{{#set name = ""}}
+{{name isnull(_data.people[0].age)}}
+
+{{#set index = 1}}
 {{#each _data.people val idx}}
     {{#if val.age > 0 & val.age <= 10}}
     {{idx}}.{{val.name}} 儿童 {{val.age}}
@@ -14,5 +18,3 @@
         {{#oper index++}}
     {{#/each}}
 {{#/each}}
-{{#set name = ""}}
-{{name isnull("***")}}

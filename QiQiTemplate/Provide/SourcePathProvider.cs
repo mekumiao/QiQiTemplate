@@ -1,6 +1,8 @@
 ﻿using QiQiTemplate.Enum;
 using QiQiTemplate.Model;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -26,44 +28,47 @@ namespace QiQiTemplate.Provide
 
         private static void MatchPath(StringBuilder builder, List<SourcePathModel> list)
         {
-            Match mh = Regex.Match(builder.ToString(), @"^[a-zA-Z_][\w]*");
+            Match mh = Regex.Match(builder.ToString(), @"^(?<value>[a-zA-Z_][\w]*)");
             if (mh.Success)
             {
-                MatchFunc(SourcePathType.Variable);//Var
+                MatchFunc(SourcePathType.Variable);//变量
                 return;
             }
-            mh = Regex.Match(builder.ToString(), @"(?<=[.])[a-zA-Z_][\w]*");
+            mh = Regex.Match(builder.ToString(), @"^[.](?<value>[a-zA-Z_][\w]*)");
             if (mh.Success)
             {
-                MatchFunc(SourcePathType.Attribute);//Attr
+                MatchFunc(SourcePathType.Attribute);//属性
                 return;
             }
-            mh = Regex.Match(builder.ToString(), @"(?<=[\[])([\d]+?)(?=[\]])");
+            mh = Regex.Match(builder.ToString(), @"^[\[](?<value>[\d]+)[\]]");
             if (mh.Success)
             {
-                MatchFunc(SourcePathType.Index);//Index
+                MatchFunc(SourcePathType.Index);//索引
                 return;
             }
-            mh = Regex.Match(builder.ToString(), "(?<=[\\[])(\"[\\w]*?\")(?=[\\]])");
+            mh = Regex.Match(builder.ToString(), "^[\\[]\"(?<value>[\\w]+)\"[\\]]");
             if (mh.Success)
             {
-                MatchFunc(SourcePathType.Attribute);//Attr
+                MatchFunc(SourcePathType.Attribute);//属性
                 return;
             }
-            mh = Regex.Match(builder.ToString(), @"^(?<=[\[])([a-zA-Z_][\w]*?)(?=[\]])");
+            mh = Regex.Match(builder.ToString(), @"^[\[](?<value>.+)[\]]");
             if (mh.Success)
             {
-                MatchFunc(SourcePathType.Variable);//Var
+                MatchFunc(SourcePathType.SourcePath);//嵌套访问路径
                 return;
             }
+            throw new Exception($"访问路径{builder}无效");
             void MatchFunc(SourcePathType pathType)
             {
                 builder.Remove(mh.Index, mh.Length);
-                list.Add(new SourcePathModel
+                var md = new SourcePathModel
                 {
                     PathType = pathType,
-                    SourcePath = mh.Value
-                });
+                    SourcePath = mh.Groups["value"].Value,
+                };
+                if (pathType == SourcePathType.SourcePath) md.ChildPath = CreateSourcePath(md.SourcePath);
+                list.Add(md);
                 if (builder.Length > 0) MatchPath(builder, list);
             }
         }
