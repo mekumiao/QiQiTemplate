@@ -12,7 +12,7 @@ namespace QiQiTemplate.Context
     /// <summary>
     /// 输出节点
     /// </summary>
-    public class PrintNodeContext : NodeContext
+    public class PRINTNodeContext : NodeContext
     {
         private static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(?<code>[^\s}]+)(\s+(?<filtername>[\w]+)\((?<args>.+?)\))?(?=}})", RegexOptions.Compiled);
         private static readonly Regex ParsingReges2 = new Regex(@"{{", RegexOptions.Compiled);
@@ -27,7 +27,7 @@ namespace QiQiTemplate.Context
         /// <param name="code"></param>
         /// <param name="parent"></param>
         /// <param name="output"></param>
-        public PrintNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
+        public PRINTNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
             this.NdType = NodeType.PRINT;

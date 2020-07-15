@@ -8,7 +8,7 @@ namespace QiQiTemplate.Context
     /// <summary>
     /// String 节点
     /// </summary>
-    public class StringNodeContext : NodeContext
+    public class STRINGNodeContext : NodeContext
     {
         /// <summary>
         /// 构造
@@ -16,7 +16,7 @@ namespace QiQiTemplate.Context
         /// <param name="code"></param>
         /// <param name="parent"></param>
         /// <param name="output"></param>
-        public StringNodeContext(string code, NodeBlockContext parent, OutPutProvide output) :
+        public STRINGNodeContext(string code, NodeBlockContext parent, OutPutProvide output) :
             base(code, parent, output)
         {
             this.NdType = NodeType.STRING;
