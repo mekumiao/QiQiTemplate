@@ -54,8 +54,7 @@ namespace QiQiTemplate.Context
             //将变量表达式加入到作用域中
             if (this.ParentNode is NodeBlockContext block)
             {
-                var expression = block.SearchVariable(this.Model.ArgName);
-                if (expression == null)
+                if (block.TrySearchVariable(this.Model.ArgName, out var expression))
                 {
                     ParameterExpression param;
                     if (this.Model.FdType == FieldType.SourcePath)

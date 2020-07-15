@@ -1,12 +1,5 @@
-﻿using QiQiTemplate;
-using QiQiTemplate.Context;
-using QiQiTemplate.Provide;
+﻿using QiQiTemplate.Provide;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace App
 {
