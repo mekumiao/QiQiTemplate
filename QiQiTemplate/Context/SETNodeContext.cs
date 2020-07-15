@@ -51,38 +51,40 @@ namespace QiQiTemplate.Context
         /// </summary>
         public override void ConvertToExpression()
         {
-            //将变量表达式加入到作用域中
             if (this.ParentNode is NodeBlockContext block)
             {
-                if (block.TrySearchVariable(this.Model.ArgName, out var expression))
+                if (block.TrySearchVariable(this.Model.ArgName, out var paramExpression))
                 {
-                    ParameterExpression param;
                     if (this.Model.FdType == FieldType.SourcePath)
                     {
-                        param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
-                        var (_, init) = this.SearchPath(this.Model.ArgValue, param);
+                        var (_, init) = this.SearchPath(this.Model.ArgValue, paramExpression);
                         this.NdExpression = init;
                     }
                     else
                     {
                         var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
-                        param = Expression.Variable(value.Type, this.Model.ArgName);
-                        block.DefineParams.Add(param);
-                        this.NdExpression = Expression.Assign(param, value);
+                        this.NdExpression = Expression.Assign(paramExpression, value);
                     }
-                    block.Scope.Add(this.Model.ArgName, param);
                 }
                 else
                 {
+                    //将变量表达式加入到作用域中
                     if (this.Model.FdType == FieldType.SourcePath)
                     {
-                        var (_, init) = this.SearchPath(this.Model.ArgValue, expression as ParameterExpression);
+                        ParameterExpression param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
+                        var (_, init) = this.SearchPath(this.Model.ArgValue, param);
                         this.NdExpression = init;
+                        block.DefineParams.Add(param);
+                        block.Scope.Add(this.Model.ArgName, param);
                     }
                     else
                     {
                         var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
-                        this.NdExpression = Expression.Assign(expression, value);
+                        ParameterExpression param = Expression.Variable(value.Type, this.Model.ArgName);
+                        block.DefineParams.Add(param);
+                        this.NdExpression = Expression.Assign(param, value);
+                        block.DefineParams.Add(param);
+                        block.Scope.Add(this.Model.ArgName, param);
                     }
                 }
             }

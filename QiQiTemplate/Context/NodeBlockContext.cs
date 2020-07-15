@@ -54,10 +54,10 @@ namespace QiQiTemplate.Context
         /// <param name="name"></param>
         /// <param name="variable"></param>
         /// <returns></returns>
-        public bool TrySearchVariable(string name, out Expression variable)
+        public bool TrySearchVariable(string name, out ParameterExpression variable)
         {
             variable = SearchVariable(name, this);
-            return variable == null;
+            return variable != null;
         }
         /// <summary>
         /// 合并当前块节点
@@ -70,13 +70,13 @@ namespace QiQiTemplate.Context
             return Expression.Block(this.DefineParams, lst);
         }
 
-        private Expression SearchVariable(string name, NodeContext node)
+        private ParameterExpression SearchVariable(string name, NodeContext node)
         {
             if (node != null && node is NodeBlockContext block)
             {
                 if (block.Scope.TryGetValue(name, out var exp))
                 {
-                    return exp;
+                    return exp as ParameterExpression;
                 }
                 else
                 {

@@ -174,7 +174,7 @@
             <param name="name"></param>
             <returns></returns>
         </member>
-        <member name="M:QiQiTemplate.Context.NodeBlockContext.TrySearchVariable(System.String,System.Linq.Expressions.Expression@)">
+        <member name="M:QiQiTemplate.Context.NodeBlockContext.TrySearchVariable(System.String,System.Linq.Expressions.ParameterExpression@)">
             <summary>
             尝试递归的在父节点上搜索变量
             </summary>
