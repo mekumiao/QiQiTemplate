@@ -1,2 +1,2 @@
-﻿{{#name = _data.students[_data.tag[0]].name}}
+﻿{{#set name = _data.students[_data.tag[0]].name}}
 {{name}}

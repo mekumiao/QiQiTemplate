@@ -30,7 +30,6 @@ namespace QiQiTemplate.Model
         {
             this.FdDict = new Dictionary<string, DynamicModel>(10);
         }
-
         /// <summary>
         /// 根据名称获取子节点
         /// </summary>
@@ -87,14 +86,13 @@ namespace QiQiTemplate.Model
             FdDict.Remove(model.FdName);
             FdDict.TryAdd(model.FdName, model);
         }
-
         /// <summary>
         /// 将值转为String
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return FdValue?.ToString();
+            return FdValue?.ToString() ?? string.Empty;
         }
         /// <summary>
         /// 重载操作符

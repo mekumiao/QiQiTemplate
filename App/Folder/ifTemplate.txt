@@ -1,4 +1,4 @@
-﻿{{set obj = _data.students[0]}}
+﻿{{#set obj = _data.students[0]}}
 {{#if obj.age > 20}}
 姓名:{{obj.name}}
 {{#/if}}

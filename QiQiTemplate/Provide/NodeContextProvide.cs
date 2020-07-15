@@ -57,7 +57,7 @@ namespace QiQiTemplate.Provide
         /// <summary>
         /// 针对set的匹配
         /// </summary>
-        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#set\s[a-zA-Z_][\w]+.+}}\s*$", RegexOptions.Compiled);
+        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#set\s[a-zA-Z_][\w]+\s=\s.+?}}\s*$", RegexOptions.Compiled);
         /// <summary>
         /// 针对oper的匹配
         /// </summary>
