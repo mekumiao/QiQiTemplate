@@ -6,7 +6,7 @@ namespace QiQiTemplate.Context
     /// <summary>
     /// elae 节点
     /// </summary>
-    public class ELSENodeContext : NodeBlockContext
+    public class ElseNodeContext : NodeBlockContext
     {
         /// <summary>
         /// 构造
@@ -14,7 +14,7 @@ namespace QiQiTemplate.Context
         /// <param name="code"></param>
         /// <param name="parent"></param>
         /// <param name="output"></param>
-        public ELSENodeContext(string code, NodeBlockContext parent, OutPutProvide output)
+        public ElseNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
             this.NdType = NodeType.ELSE;

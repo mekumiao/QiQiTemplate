@@ -11,7 +11,7 @@ namespace QiQiTemplate.Context
     /// <summary>
     /// 定义变量节点
     /// </summary>
-    public class SETNodeContext : NodeContext
+    public class SetNodeContext : NodeContext
     {
         /// <summary>
         /// 正则
@@ -27,7 +27,7 @@ namespace QiQiTemplate.Context
         /// <param name="code"></param>
         /// <param name="parent"></param>
         /// <param name="output"></param>
-        public SETNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
+        public SetNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
             this.NdType = NodeType.SET;
@@ -63,7 +63,7 @@ namespace QiQiTemplate.Context
                     else
                     {
                         var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
-                        this.NdExpression = Expression.Assign(paramExpression, value);
+                        this.NdExpression = Expression.Assign(paramExpression, this.ConvertToDynamicModel(value));
                     }
                 }
                 else
@@ -73,17 +73,16 @@ namespace QiQiTemplate.Context
                     {
                         ParameterExpression param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
                         var (_, init) = this.SearchPath(this.Model.ArgValue, param);
-                        this.NdExpression = init;
                         block.DefineParams.Add(param);
+                        this.NdExpression = init;
                         block.Scope.Add(this.Model.ArgName, param);
                     }
                     else
                     {
                         var (value, _) = this.GetConstByFd(this.Model.FdType, this.Model.ArgValue);
-                        ParameterExpression param = Expression.Variable(value.Type, this.Model.ArgName);
+                        ParameterExpression param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
                         block.DefineParams.Add(param);
-                        this.NdExpression = Expression.Assign(param, value);
-                        block.DefineParams.Add(param);
+                        this.NdExpression = Expression.Assign(param, this.ConvertToDynamicModel(value));
                         block.Scope.Add(this.Model.ArgName, param);
                     }
                 }

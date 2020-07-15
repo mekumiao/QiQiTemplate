@@ -17,9 +17,10 @@ namespace QiQiTemplate.Context
         /// </summary>
         public List<NodeContext> Nodes { get; set; }
         /// <summary>
-        /// 存放变量的作用域
+        /// 存放变量的作用域.
+        /// 变量值类型统一转为 DynmicModel,Each的索引除外
         /// </summary>
-        public Dictionary<string, Expression> Scope { get; }
+        public Dictionary<string, ParameterExpression> Scope { get; }
         /// <summary>
         /// 存放范围内需要声明的变量
         /// </summary>
@@ -34,7 +35,7 @@ namespace QiQiTemplate.Context
         public NodeBlockContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.Scope = new Dictionary<string, Expression>(10);
+            this.Scope = new Dictionary<string, ParameterExpression>(10);
             this.Nodes = new List<NodeContext>(10);
             this.DefineParams = new List<ParameterExpression>(10);
         }
@@ -69,14 +70,13 @@ namespace QiQiTemplate.Context
                 .Select(x => x.NdExpression);
             return Expression.Block(this.DefineParams, lst);
         }
-
         private ParameterExpression SearchVariable(string name, NodeContext node)
         {
             if (node != null && node is NodeBlockContext block)
             {
-                if (block.Scope.TryGetValue(name, out var exp))
+                if (block.Scope.TryGetValue(name, out var parame))
                 {
-                    return exp as ParameterExpression;
+                    return parame;
                 }
                 else
                 {

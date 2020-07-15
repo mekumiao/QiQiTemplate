@@ -76,9 +76,8 @@ namespace QiQiTemplate.Context
             }
             else
             {
-                ParameterExpression rootparame = value as ParameterExpression;
                 MemberAssignment bindName = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(name));
-                MemberAssignment bindValue = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(rootparame, typeof(object)));
+                MemberAssignment bindValue = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(value, typeof(object)));
                 return Expression.MemberInit(Expression.New(typeof(DynamicModel)), bindName, bindValue);
             }
         }
@@ -86,18 +85,21 @@ namespace QiQiTemplate.Context
         /// 根据对象访问路径构建表达式
         /// </summary>
         /// <param name="sourcePath"></param>
-        /// <param name="param_root"></param>
+        /// <param name="param_out"></param>
         /// <returns></returns>
-        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath, ParameterExpression param_root = null)
+        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath, ParameterExpression param_out = null)
         {
             var blockparams = new List<ParameterExpression>(10);
             var inits = new List<Expression>(10);
 
             var paths = SourcePathProvider.CreateSourcePath(sourcePath);
             if (paths.Length < 1) throw new Exception($"{sourcePath}访问路径不存在,或附近有语法错误");
-            if (param_root == null) param_root = Expression.Variable(typeof(DynamicModel));
+            if (param_out == null) param_out = Expression.Variable(typeof(DynamicModel));
+            var param_root = Expression.Variable(typeof(DynamicModel));
             GetPath(paths, param_root);
-            return (param_root, Expression.Block(blockparams, inits));
+            blockparams.Add(param_root);
+            inits.Add(Expression.Assign(param_out, param_root));
+            return (param_out, Expression.Block(blockparams, inits));
 
             void GetPath(SourcePathModel[] spt, ParameterExpression param_bk)
             {

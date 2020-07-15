@@ -10,7 +10,7 @@ namespace QiQiTemplate.Context
     /// <summary>
     /// each 循环节点
     /// </summary>
-    public class EACHNodeContext : NodeBlockContext
+    public class EachNodeContext : NodeBlockContext
     {
         /// <summary>
         /// 解析语法正则
@@ -35,7 +35,7 @@ namespace QiQiTemplate.Context
         /// <param name="code"></param>
         /// <param name="parent"></param>
         /// <param name="output"></param>
-        public EACHNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
+        public EachNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
             this.NdType = NodeType.EACH;
