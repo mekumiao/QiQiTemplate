@@ -78,6 +78,14 @@ namespace QiQiTemplate.Model
             };
         }
         /// <summary>
+        /// 获取所有子节点
+        /// </summary>
+        /// <returns></returns>
+        public List<DynamicModel> GetValues()
+        {
+            return this.FdDict.Values.ToList();
+        }
+        /// <summary>
         /// 添加节点
         /// </summary>
         /// <param name="model"></param>

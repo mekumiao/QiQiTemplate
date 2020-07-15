@@ -585,6 +585,24 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="T:QiQiTemplate.Filter.JoinFilter">
+            <summary>
+            拼接数组
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.JoinFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.JoinFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            拼接
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
         <member name="T:QiQiTemplate.Filter.PadLeftFilter">
             <summary>
             向左补位
@@ -692,6 +710,12 @@
             获取子节点
             </summary>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.GetValues">
+            <summary>
+            获取所有子节点
+            </summary>
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.Set(QiQiTemplate.Model.DynamicModel)">

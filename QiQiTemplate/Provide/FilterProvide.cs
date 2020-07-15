@@ -43,6 +43,7 @@ namespace QiQiTemplate.Provide
             this.RegisFilter<PadLeftFilter>();
             this.RegisFilter<PadRightFilter>();
             this.RegisFilter<IsNullFilter>();
+            this.RegisFilter<JoinFilter>();
         }
     }
 }

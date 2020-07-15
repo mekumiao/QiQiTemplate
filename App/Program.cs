@@ -14,12 +14,13 @@ namespace App
             var outProvide = new OutPutProvide();//输出提供类
             var model = dyProvide.CreateByFilePath("folder/data.json");//加载数据
 
-            Print("folder/alltemplate.txt", ndProvide, outProvide, model);
-            Print("folder/eachtemplate.txt", ndProvide, outProvide, model);
-            Print("folder/iftemplate.txt", ndProvide, outProvide, model);
-            Print("folder/nestedtemplate.txt", ndProvide, outProvide, model);
-            Print("folder/printtemplate.txt", ndProvide, outProvide, model);
-            Print("folder/settemplate.txt", ndProvide, outProvide, model);
+            Print("folder/filtertemplate.txt", ndProvide, outProvide, model);
+            //Print("folder/alltemplate.txt", ndProvide, outProvide, model);
+            //Print("folder/eachtemplate.txt", ndProvide, outProvide, model);
+            //Print("folder/iftemplate.txt", ndProvide, outProvide, model);
+            //Print("folder/nestedtemplate.txt", ndProvide, outProvide, model);
+            //Print("folder/printtemplate.txt", ndProvide, outProvide, model);
+            //Print("folder/settemplate.txt", ndProvide, outProvide, model);
 
             Console.WriteLine(outProvide);
 
