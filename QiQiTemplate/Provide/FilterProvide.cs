@@ -48,6 +48,7 @@ namespace QiQiTemplate.Provide
             this.RegisFilter<ToLowerFilter>();
             this.RegisFilter<ToUpperFilter>();
             this.RegisFilter<ToUpperCaseFilter>();
+            this.RegisFilter<ThenFilter>();
         }
     }
 }
