@@ -1,1 +1,2 @@
-﻿{{_data.tag join(',')}}
+﻿{{#set tag = ","}}
+{{_data.tag join(tag)}}

@@ -4,32 +4,32 @@
         <name>QiQiTemplate</name>
     </assembly>
     <members>
-        <member name="T:QiQiTemplate.Context.EachNodeContext">
+        <member name="T:QiQiTemplate.Context.EACHNodeContext">
             <summary>
             each 循环节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Context.EachNodeContext.ParsingRegex">
+        <member name="F:QiQiTemplate.Context.EACHNodeContext.ParsingRegex">
             <summary>
             解析语法正则
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Context.EachNodeContext._val">
+        <member name="F:QiQiTemplate.Context.EACHNodeContext._val">
             <summary>
             循环值
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Context.EachNodeContext._idx">
+        <member name="F:QiQiTemplate.Context.EACHNodeContext._idx">
             <summary>
             循环索引
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Context.EachNodeContext.Model">
+        <member name="P:QiQiTemplate.Context.EACHNodeContext.Model">
             <summary>
             节点信息
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.EachNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+        <member name="M:QiQiTemplate.Context.EACHNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
             <summary>
             构造
             </summary>
@@ -37,22 +37,22 @@
             <param name="parent"></param>
             <param name="output"></param>
         </member>
-        <member name="M:QiQiTemplate.Context.EachNodeContext.ParsingModel">
+        <member name="M:QiQiTemplate.Context.EACHNodeContext.ParsingModel">
             <summary>
             解析节点
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.EachNodeContext.ConvertToExpression">
+        <member name="M:QiQiTemplate.Context.EACHNodeContext.ConvertToExpression">
             <summary>
             转换为表达式
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Context.ElseIfNodeContext">
+        <member name="T:QiQiTemplate.Context.ELSEIFNodeContext">
             <summary>
             ElseIf 节点
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.ElseIfNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+        <member name="M:QiQiTemplate.Context.ELSEIFNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
             <summary>
             构造
             </summary>
@@ -60,18 +60,18 @@
             <param name="parent"></param>
             <param name="output"></param>
         </member>
-        <member name="M:QiQiTemplate.Context.ElseIfNodeContext.FormatCode">
+        <member name="M:QiQiTemplate.Context.ELSEIFNodeContext.FormatCode">
             <summary>
             格式化code
             </summary>
             <returns></returns>
         </member>
-        <member name="T:QiQiTemplate.Context.ElseNodeContext">
+        <member name="T:QiQiTemplate.Context.ELSENodeContext">
             <summary>
             elae 节点
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.ElseNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+        <member name="M:QiQiTemplate.Context.ELSENodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
             <summary>
             构造
             </summary>
@@ -79,12 +79,12 @@
             <param name="parent"></param>
             <param name="output"></param>
         </member>
-        <member name="M:QiQiTemplate.Context.ElseNodeContext.ConvertToExpression">
+        <member name="M:QiQiTemplate.Context.ELSENodeContext.ConvertToExpression">
             <summary>
             转换表达式
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.ElseNodeContext.ParsingModel">
+        <member name="M:QiQiTemplate.Context.ELSENodeContext.ParsingModel">
             <summary>
             解析
             </summary>
@@ -295,17 +295,17 @@
             解析语句
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Context.PrintNodeContext">
+        <member name="T:QiQiTemplate.Context.PRINTNodeContext">
             <summary>
             输出节点
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Context.PrintNodeContext.Model">
+        <member name="P:QiQiTemplate.Context.PRINTNodeContext.Model">
             <summary>
             节点信息
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.PrintNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+        <member name="M:QiQiTemplate.Context.PRINTNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
             <summary>
             构造
             </summary>
@@ -313,12 +313,12 @@
             <param name="parent"></param>
             <param name="output"></param>
         </member>
-        <member name="M:QiQiTemplate.Context.PrintNodeContext.ParsingModel">
+        <member name="M:QiQiTemplate.Context.PRINTNodeContext.ParsingModel">
             <summary>
             解析
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.PrintNodeContext.ConvertToExpression">
+        <member name="M:QiQiTemplate.Context.PRINTNodeContext.ConvertToExpression">
             <summary>
             转换表达式
             </summary>
@@ -353,22 +353,22 @@
             解析
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Context.SetNodeContext">
+        <member name="T:QiQiTemplate.Context.SETNodeContext">
             <summary>
             定义变量节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Context.SetNodeContext.ParsingRegex">
+        <member name="F:QiQiTemplate.Context.SETNodeContext.ParsingRegex">
             <summary>
             正则
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Context.SetNodeContext.Model">
+        <member name="P:QiQiTemplate.Context.SETNodeContext.Model">
             <summary>
             信息
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.SetNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+        <member name="M:QiQiTemplate.Context.SETNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
             <summary>
             构造
             </summary>
@@ -376,22 +376,22 @@
             <param name="parent"></param>
             <param name="output"></param>
         </member>
-        <member name="M:QiQiTemplate.Context.SetNodeContext.ParsingModel">
+        <member name="M:QiQiTemplate.Context.SETNodeContext.ParsingModel">
             <summary>
             解析
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.SetNodeContext.ConvertToExpression">
+        <member name="M:QiQiTemplate.Context.SETNodeContext.ConvertToExpression">
             <summary>
             转换表达式
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Context.StringNodeContext">
+        <member name="T:QiQiTemplate.Context.STRINGNodeContext">
             <summary>
             String 节点
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.StringNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
+        <member name="M:QiQiTemplate.Context.STRINGNodeContext.#ctor(System.String,QiQiTemplate.Context.NodeBlockContext,QiQiTemplate.Provide.OutPutProvide)">
             <summary>
             构造
             </summary>
@@ -399,12 +399,12 @@
             <param name="parent"></param>
             <param name="output"></param>
         </member>
-        <member name="M:QiQiTemplate.Context.StringNodeContext.ConvertToExpression">
+        <member name="M:QiQiTemplate.Context.STRINGNodeContext.ConvertToExpression">
             <summary>
             转为表达式
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.StringNodeContext.ParsingModel">
+        <member name="M:QiQiTemplate.Context.STRINGNodeContext.ParsingModel">
             <summary>
             解析
             </summary>

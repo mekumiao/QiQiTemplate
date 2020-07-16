@@ -62,7 +62,6 @@ namespace QiQiTemplate.Provide
         /// 针对oper的匹配
         /// </summary>
         protected static readonly Regex IsSETRegex = new Regex(@"^\s*{{#oper\s[a-zA-Z_][\w]*([+][+]|--)}}\s*$");
-
         /// <summary>
         /// 编译模板
         /// </summary>
@@ -149,7 +148,7 @@ namespace QiQiTemplate.Provide
                         }
                         else
                         {
-                            throw new Exception($"第{_lineNumber}行语法错误,else if必须在 if 或 else if 之后");
+                            throw new Exception($"第{_lineNumber}行语法错误,elseif必须在 if 或 elseif 之后");
                         }
                         ParentNode.Nodes.Add(block);
                         break;
@@ -167,9 +166,8 @@ namespace QiQiTemplate.Provide
                         }
                         else
                         {
-                            throw new Exception($"第{_lineNumber}行语法错误,else 必须在 if 或 else if之后");
+                            throw new Exception($"第{_lineNumber}行语法错误,else 必须在 if 或 elseif之后");
                         }
-
                         for (int i = ParentNode.Nodes.Count - 1; i >= 0; i--)
                         {
                             NodeContext item = ParentNode.Nodes[i];
@@ -177,7 +175,6 @@ namespace QiQiTemplate.Provide
                                 break;
                             item.ConvertToExpression();
                         }
-
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.EACH:
