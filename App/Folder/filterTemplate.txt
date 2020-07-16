@@ -1,2 +1,3 @@
 ﻿{{#set tag = ","}}
 {{_data.tag join(tag)}}
+{{_data.students[0]["name"]}}
