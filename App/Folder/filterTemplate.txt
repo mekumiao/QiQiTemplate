@@ -6,3 +6,4 @@
 {{index oper('+',10.01)}}
 {{#set name = "wyl"}}
 {{name toupper()}}
+{{name touppercase()}}
