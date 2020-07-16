@@ -561,7 +561,7 @@
         </member>
         <member name="M:QiQiTemplate.Filter.IFilter.Filter(System.Object,System.Object[])">
             <summary>
-            过滤抽象方法
+            执行过滤
             </summary>
             <param name="code"></param>
             <param name="args"></param>
@@ -603,6 +603,24 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="T:QiQiTemplate.Filter.OperFilter">
+            <summary>
+            运算过滤器
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.OperFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.OperFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            减法运算
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
         <member name="T:QiQiTemplate.Filter.PadLeftFilter">
             <summary>
             向左补位
@@ -634,6 +652,60 @@
         <member name="M:QiQiTemplate.Filter.PadRightFilter.Filter(System.Object,System.Object[])">
             <summary>
             过滤
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:QiQiTemplate.Filter.ToLowerFilter">
+            <summary>
+            转为小写
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.ToLowerFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.ToLowerFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            转为小写
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:QiQiTemplate.Filter.ToUpperCaseFilter">
+            <summary>
+            首字母大写
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.ToUpperCaseFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.ToUpperCaseFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            首字母大写
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:QiQiTemplate.Filter.ToUpperFilter">
+            <summary>
+            转为大写
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.ToUpperFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.ToUpperFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            转为大写
             </summary>
             <param name="code"></param>
             <param name="args"></param>

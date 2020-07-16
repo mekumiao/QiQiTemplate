@@ -5,29 +5,30 @@ using System.Text;
 namespace QiQiTemplate.Filter
 {
     /// <summary>
-    /// 空值过滤器
+    /// 首字母大写
     /// </summary>
-    public class IsNullFilter : IFilter
+    public class ToUpperCaseFilter : IFilter
     {
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name => "isnull";
+        public string Name => "touppercase";
         /// <summary>
-        /// 过滤
+        /// 首字母大写
         /// </summary>
         /// <param name="code"></param>
         /// <param name="args"></param>
         /// <returns></returns>
         public string Filter(object code, object[] args)
         {
-            _ = args ?? throw new ArgumentNullException(nameof(args));
-            _ = args.Length != 1 ? throw new ArgumentException(nameof(args)) : string.Empty;
-            if (code == null || string.IsNullOrWhiteSpace(code.ToString()))
+            string msg = code?.ToString() ?? string.Empty;
+            if (msg.Length > 0)
             {
-                return args[0].ToString();
+                string first = msg[0].ToString().ToUpper();
+                string other = msg.Remove(0, 1).ToLower();
+                return $"{first}{other}";
             }
-            return code.ToString();
+            return msg;
         }
     }
 }
