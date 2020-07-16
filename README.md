@@ -142,6 +142,7 @@
 {{#set index = 2}}
 {{#set obj = _data.people[0]}}
 {{obj.tel[index]}} //xxx
+{{obj["name"]}}//wyl
 ~~~
 
 > 中括号中可以是索引,属性名称,或者变量
