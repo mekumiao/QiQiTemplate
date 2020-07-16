@@ -100,7 +100,8 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public override string ToString()
         {
-            return FdValue?.ToString() ?? string.Empty;
+            if (this.FdValue == null && this.Count > 0) return $"[{string.Join(",", this.GetValues().Select(x => x.ToString()))}]";
+            return this.FdValue?.ToString() ?? string.Empty;
         }
         /// <summary>
         /// 重载操作符

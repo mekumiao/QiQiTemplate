@@ -657,6 +657,24 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="T:QiQiTemplate.Filter.ThenFilter">
+            <summary>
+            三元表达式
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.ThenFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.ThenFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            表达式
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
         <member name="T:QiQiTemplate.Filter.ToLowerFilter">
             <summary>
             转为小写
