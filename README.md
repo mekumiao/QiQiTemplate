@@ -35,6 +35,11 @@
 > + join  连接过滤器
 > + padleft   左侧补位过滤器
 > + padright  右侧补位过滤器
+> + toupper   转为大写
+> + tolower   转为小写
+> + touppercase 首字母大写
+> + oper      运算
+> + then      类似于三目运算  例如:{{_data.name then("wyl","好人","坏人")}}   如果name = "wyl" 则输出 好人  否则 输出坏人
 
 > 示例:
 
