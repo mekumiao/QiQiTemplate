@@ -57,7 +57,7 @@ namespace QiQiTemplate.Provide
                 switch (item.Value.ValueKind)
                 {
                     case JsonValueKind.Undefined:
-                        model.FdValue = item.Name;
+                        model.FdName = item.Name;
                         model.FdValue = item.Value.GetString();
                         parent.Set(model);
                         break;
@@ -92,7 +92,7 @@ namespace QiQiTemplate.Provide
                         parent.Set(model);
                         break;
                     case JsonValueKind.Null:
-                        model.FdValue = item.Name;
+                        model.FdName = item.Name;
                         model.FdValue = null;
                         parent.Set(model);
                         break;

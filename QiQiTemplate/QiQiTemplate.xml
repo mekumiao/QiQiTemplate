@@ -1230,10 +1230,18 @@
         </member>
         <member name="M:QiQiTemplate.Provide.OutPutProvide.OutPut(System.String,System.Boolean)">
             <summary>
-            输出到文件
+            输出到文件.
+            默认采用utf8
             </summary>
             <param name="path"></param>
             <param name="withbom">utf8格式是否带bom</param>
+        </member>
+        <member name="M:QiQiTemplate.Provide.OutPutProvide.OutPut(System.String,System.Text.Encoding)">
+            <summary>
+            指定编码输出
+            </summary>
+            <param name="path"></param>
+            <param name="encoding"></param>
         </member>
         <member name="T:QiQiTemplate.Provide.PrintExpressionProvide">
             <summary>
