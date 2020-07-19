@@ -1228,11 +1228,12 @@
             清空输出取
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Provide.OutPutProvide.OutPut(System.String)">
+        <member name="M:QiQiTemplate.Provide.OutPutProvide.OutPut(System.String,System.Boolean)">
             <summary>
             输出到文件
             </summary>
             <param name="path"></param>
+            <param name="withbom">utf8格式是否带bom</param>
         </member>
         <member name="T:QiQiTemplate.Provide.PrintExpressionProvide">
             <summary>
