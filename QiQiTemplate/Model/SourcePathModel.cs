@@ -1,4 +1,4 @@
-﻿using QiQiTemplate.Enum;
+﻿using QiQiTemplate.Enums;
 
 namespace QiQiTemplate.Model
 {

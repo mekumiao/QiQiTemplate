@@ -259,7 +259,7 @@
             <param name="param_out"></param>
             <returns></returns>
         </member>
-        <member name="M:QiQiTemplate.Context.NodeContext.CreateConstExpression(QiQiTemplate.Enum.FieldType,System.String)">
+        <member name="M:QiQiTemplate.Context.NodeContext.CreateConstExpression(QiQiTemplate.Enums.FieldType,System.String)">
             <summary>
             创建常量表达式
             </summary>
@@ -409,142 +409,152 @@
             解析
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Enum.FieldType">
+        <member name="T:QiQiTemplate.Enums.FieldType">
             <summary>
             字段类型
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.Int">
+        <member name="F:QiQiTemplate.Enums.FieldType.Int">
             <summary>
             整数
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.Decimal">
+        <member name="F:QiQiTemplate.Enums.FieldType.Decimal">
             <summary>
             数字
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.String">
+        <member name="F:QiQiTemplate.Enums.FieldType.String">
             <summary>
             字符串
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.Char">
+        <member name="F:QiQiTemplate.Enums.FieldType.Char">
             <summary>
             字符
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.Bool">
+        <member name="F:QiQiTemplate.Enums.FieldType.Bool">
             <summary>
             bool
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.FieldType.SourcePath">
+        <member name="F:QiQiTemplate.Enums.FieldType.SourcePath">
             <summary>
             访问路径
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Enum.NodeType">
+        <member name="F:QiQiTemplate.Enums.FieldType.Array">
+            <summary>
+            数组类型
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Enums.FieldType.Object">
+            <summary>
+            对象类型
+            </summary>
+        </member>
+        <member name="T:QiQiTemplate.Enums.NodeType">
             <summary>
             节点类型
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.IF">
+        <member name="F:QiQiTemplate.Enums.NodeType.IF">
             <summary>
             {{#if}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.ENDIF">
+        <member name="F:QiQiTemplate.Enums.NodeType.ENDIF">
             <summary>
             {{#/if}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.ELSEIF">
+        <member name="F:QiQiTemplate.Enums.NodeType.ELSEIF">
             <summary>
             {{#else if}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.ENDELSEIF">
+        <member name="F:QiQiTemplate.Enums.NodeType.ENDELSEIF">
             <summary>
             {{#/else if}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.ELSE">
+        <member name="F:QiQiTemplate.Enums.NodeType.ELSE">
             <summary>
             //{{#else}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.ENDELSE">
+        <member name="F:QiQiTemplate.Enums.NodeType.ENDELSE">
             <summary>
             {{#/else}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.EACH">
+        <member name="F:QiQiTemplate.Enums.NodeType.EACH">
             <summary>
             {{#each}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.ENDEACH">
+        <member name="F:QiQiTemplate.Enums.NodeType.ENDEACH">
             <summary>
             {{#/each}}
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.PRINT">
+        <member name="F:QiQiTemplate.Enums.NodeType.PRINT">
             <summary>
             print 打印节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.SET">
+        <member name="F:QiQiTemplate.Enums.NodeType.SET">
             <summary>
             set 定义变量节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.STRING">
+        <member name="F:QiQiTemplate.Enums.NodeType.STRING">
             <summary>
             字符串节点
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.NodeType.OPER">
+        <member name="F:QiQiTemplate.Enums.NodeType.OPER">
             <summary>
             运算
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Enum.PrintType">
+        <member name="T:QiQiTemplate.Enums.PrintType">
             <summary>
             输出类型
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.PrintType.String">
+        <member name="F:QiQiTemplate.Enums.PrintType.String">
             <summary>
             print语句 前的String
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.PrintType.Variable">
+        <member name="F:QiQiTemplate.Enums.PrintType.Variable">
             <summary>
             变量
             </summary>
         </member>
-        <member name="T:QiQiTemplate.Enum.SourcePathType">
+        <member name="T:QiQiTemplate.Enums.SourcePathType">
             <summary>
             访问路径类型
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.SourcePathType.Index">
+        <member name="F:QiQiTemplate.Enums.SourcePathType.Index">
             <summary>
             索引
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.SourcePathType.Attribute">
+        <member name="F:QiQiTemplate.Enums.SourcePathType.Attribute">
             <summary>
             属性
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.SourcePathType.Variable">
+        <member name="F:QiQiTemplate.Enums.SourcePathType.Variable">
             <summary>
             变量(访问路径的第一个节点)
             </summary>
         </member>
-        <member name="F:QiQiTemplate.Enum.SourcePathType.SourcePath">
+        <member name="F:QiQiTemplate.Enums.SourcePathType.SourcePath">
             <summary>
             访问路径
             </summary>
@@ -769,10 +779,26 @@
             子节点数量
             </summary>
         </member>
+        <member name="P:QiQiTemplate.Model.DynamicModel.FdType">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="F:QiQiTemplate.Model.DynamicModel.FdDict">
+            <summary>
+            子节点
+            </summary>
+        </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.#ctor">
             <summary>
             构造
             </summary>
+        </member>
+        <member name="M:QiQiTemplate.Model.DynamicModel.#ctor(QiQiTemplate.Enums.FieldType)">
+            <summary>
+            构造
+            </summary>
+            <param name="fdtype"></param>
         </member>
         <member name="M:QiQiTemplate.Model.DynamicModel.Get(System.String)">
             <summary>
@@ -1035,18 +1061,18 @@
             数据提供类
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Provide.DynamicModelProvide.CreateByJson(System.String)">
-            <summary>
-            从json字符串加载数据
-            </summary>
-            <param name="json"></param>
-            <returns></returns>
-        </member>
         <member name="M:QiQiTemplate.Provide.DynamicModelProvide.CreateByFilePath(System.String)">
             <summary>
             从json文件加载数据
             </summary>
             <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Provide.DynamicModelProvide.CreateByJson(System.String)">
+            <summary>
+            从json字符串加载数据
+            </summary>
+            <param name="json"></param>
             <returns></returns>
         </member>
         <member name="T:QiQiTemplate.Provide.FilterProvide">

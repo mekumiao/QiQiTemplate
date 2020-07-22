@@ -1,4 +1,4 @@
-﻿namespace QiQiTemplate.Enum
+﻿namespace QiQiTemplate.Enums
 {
     /// <summary>
     /// 节点类型

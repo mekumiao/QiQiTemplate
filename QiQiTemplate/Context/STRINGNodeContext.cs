@@ -1,4 +1,4 @@
-﻿using QiQiTemplate.Enum;
+﻿using QiQiTemplate.Enums;
 using QiQiTemplate.Provide;
 using QiQiTemplate.Tool;
 using System.Linq.Expressions;

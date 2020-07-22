@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
-    <Version>1.1.3-preview0.0.2</Version>
+    <Version>1.1.3-preview0.0.3</Version>
     <PackageOutputPath>E:/nuget</PackageOutputPath>
     <PackageId>QiQiTemplate</PackageId>
     <Title>QiQiTemplate</Title>

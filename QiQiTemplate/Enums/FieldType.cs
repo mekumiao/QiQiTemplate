@@ -1,9 +1,9 @@
-﻿namespace QiQiTemplate.Enum
+﻿namespace QiQiTemplate.Enums
 {
     /// <summary>
     /// 字段类型
     /// </summary>
-    public enum FieldType
+    public enum FieldType : byte
     {
         /// <summary>
         /// 整数
@@ -29,5 +29,13 @@
         /// 访问路径
         /// </summary>
         SourcePath,
+        /// <summary>
+        /// 数组类型
+        /// </summary>
+        Array,
+        /// <summary>
+        /// 对象类型
+        /// </summary>
+        Object,
     }
 }

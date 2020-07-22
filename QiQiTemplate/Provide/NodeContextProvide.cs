@@ -1,5 +1,5 @@
 ﻿using QiQiTemplate.Context;
-using QiQiTemplate.Enum;
+using QiQiTemplate.Enums;
 using QiQiTemplate.Model;
 using System;
 using System.IO;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QiQiTemplate.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,15 +21,26 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 子节点数量
         /// </summary>
-        public int Count { get { return this.FdDict.Count; } }
-
-        private readonly Dictionary<string, DynamicModel> FdDict;
+        public int Count { get { return this.FdDict?.Count ?? 0; } }
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public FieldType FdType { get; }
+        /// <summary>
+        /// 子节点
+        /// </summary>
+        private Dictionary<string, DynamicModel> FdDict;
         /// <summary>
         /// 构造
         /// </summary>
-        public DynamicModel()
+        public DynamicModel() { }
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="fdtype"></param>
+        public DynamicModel(FieldType fdtype)
         {
-            this.FdDict = new Dictionary<string, DynamicModel>(10);
+            this.FdType = fdtype;
         }
         /// <summary>
         /// 根据名称获取子节点
@@ -37,7 +49,8 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public DynamicModel Get(string fdName)
         {
-            if (FdDict.TryGetValue(fdName, out var result))
+            DynamicModel result = default;
+            if (FdDict?.TryGetValue(fdName, out result) ?? false)
             {
                 return result;
             }
@@ -50,8 +63,8 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public DynamicModel Get(int idx)
         {
-            if (idx > FdDict.Count - 1) throw new Exception("索引超出界限");
-            return FdDict.Values.ToArray()[idx];
+            if (idx > FdDict?.Count - 1) throw new Exception("索引超出界限");
+            return FdDict?.Values.ToArray()[idx];
         }
         /// <summary>
         /// 获取子节点
@@ -83,7 +96,7 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public List<DynamicModel> GetValues()
         {
-            return this.FdDict.Values.ToList();
+            return this.FdDict?.Values.ToList();
         }
         /// <summary>
         /// 添加节点
@@ -91,8 +104,8 @@ namespace QiQiTemplate.Model
         /// <param name="model"></param>
         public void Set(DynamicModel model)
         {
-            FdDict.Remove(model.FdName);
-            FdDict.TryAdd(model.FdName, model);
+            if (this.FdDict == null) this.FdDict = new Dictionary<string, DynamicModel>(20);
+            this.FdDict.TryAdd(model.FdName, model);
         }
         /// <summary>
         /// 将值转为String
