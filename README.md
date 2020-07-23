@@ -9,6 +9,14 @@
 
 > Install-Package QiQiTemplate
 
+## 语法高亮插件
+
+> vscode 插件:tpl-lang
+> 
+> 文件后缀 .tpl
+> 
+> [tpl-lang](https://gitee.com/qiqigouwo/tpl-lang.git)
+
 ## 语法
 
 > 注意: 下列语法都有严格的空格要求
@@ -228,7 +236,6 @@
 
 > 项目源码中有完整案例可以参考
 >
-> 作者是个小菜鸟
 
 ## 调用
 
