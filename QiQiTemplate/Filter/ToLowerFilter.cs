@@ -5,20 +5,23 @@ using System.Text;
 namespace QiQiTemplate.Filter
 {
     /// <summary>
-    /// 过滤器
+    /// 转为小写
     /// </summary>
-    public interface IFilter
+    public class ToLowerFilter : IFilter
     {
         /// <summary>
-        /// 过滤器名称
+        /// 名称
         /// </summary>
-        public string Name { get; }
+        public string Name => "tolower";
         /// <summary>
-        /// 执行过滤
+        /// 转为小写
         /// </summary>
         /// <param name="code"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public string Filter(object code, object[] args);
+        public string Filter(object code, object[] args)
+        {
+            return code?.ToString().ToLower() ?? string.Empty;
+        }
     }
 }

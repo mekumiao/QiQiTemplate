@@ -1,3 +1,10 @@
 ﻿{{#set tag = ","}}
 {{_data.tag join(tag)}}
 {{_data.students[0]["name"]}}
+{{#set index = 10}}
+{{index oper('+',10)}}
+{{index oper('+',10.01)}}
+{{#set name = "wyl"}}
+{{name toupper()}}
+{{name touppercase()}}
+{{name then("x","V","U")}}

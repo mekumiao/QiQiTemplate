@@ -1,9 +1,10 @@
-﻿using QiQiTemplate.Enum;
+﻿using QiQiTemplate.Enums;
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace QiQiTemplate.Context
 {
@@ -53,10 +54,7 @@ namespace QiQiTemplate.Context
         /// <summary>
         /// 解析Code
         /// </summary>
-        protected virtual void ParsingModel()
-        {
-
-        }
+        protected virtual void ParsingModel() { }
         /// <summary>
         /// 将节点转为Expression
         /// </summary>

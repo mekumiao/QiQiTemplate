@@ -79,12 +79,23 @@ namespace QiQiTemplate.Provide
             this._stringBuilder.Clear();
         }
         /// <summary>
-        /// 输出到文件
+        /// 输出到文件.
+        /// 默认采用utf8
         /// </summary>
         /// <param name="path"></param>
-        public void OutPut(string path)
+        /// <param name="withbom">utf8格式是否带bom</param>
+        public void OutPut(string path, bool withbom = false)
         {
-            using var writer = new StreamWriter(path);
+            this.OutPut(path, new UTF8Encoding(withbom));
+        }
+        /// <summary>
+        /// 指定编码输出
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="encoding"></param>
+        public void OutPut(string path, Encoding encoding)
+        {
+            using var writer = new StreamWriter(path, false, encoding);
             writer.Write(this.ToString());
         }
     }

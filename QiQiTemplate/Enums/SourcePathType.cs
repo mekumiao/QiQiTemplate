@@ -1,4 +1,4 @@
-﻿namespace QiQiTemplate.Enum
+﻿namespace QiQiTemplate.Enums
 {
     /// <summary>
     /// 访问路径类型

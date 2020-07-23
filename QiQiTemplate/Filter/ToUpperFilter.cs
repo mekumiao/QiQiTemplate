@@ -5,20 +5,23 @@ using System.Text;
 namespace QiQiTemplate.Filter
 {
     /// <summary>
-    /// 过滤器
+    /// 转为大写
     /// </summary>
-    public interface IFilter
+    public class ToUpperFilter : IFilter
     {
         /// <summary>
-        /// 过滤器名称
+        /// 名称
         /// </summary>
-        public string Name { get; }
+        public string Name => "toupper";
         /// <summary>
-        /// 执行过滤
+        /// 转为大写
         /// </summary>
         /// <param name="code"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public string Filter(object code, object[] args);
+        public string Filter(object code, object[] args)
+        {
+            return code?.ToString().ToUpper() ?? string.Empty;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace QiQiTemplate.Enum
+﻿namespace QiQiTemplate.Enums
 {
     /// <summary>
     /// 输出类型

@@ -44,6 +44,11 @@ namespace QiQiTemplate.Provide
             this.RegisFilter<PadRightFilter>();
             this.RegisFilter<IsNullFilter>();
             this.RegisFilter<JoinFilter>();
+            this.RegisFilter<OperFilter>();
+            this.RegisFilter<ToLowerFilter>();
+            this.RegisFilter<ToUpperFilter>();
+            this.RegisFilter<ToUpperCaseFilter>();
+            this.RegisFilter<ThenFilter>();
         }
     }
 }

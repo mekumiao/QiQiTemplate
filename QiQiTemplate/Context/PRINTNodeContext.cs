@@ -1,4 +1,4 @@
-﻿using QiQiTemplate.Enum;
+﻿using QiQiTemplate.Enums;
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
 using QiQiTemplate.Tool;
@@ -14,7 +14,7 @@ namespace QiQiTemplate.Context
     /// </summary>
     public class PRINTNodeContext : NodeContext
     {
-        private static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(?<code>[^\s}]+)(\s+(?<filtername>[\w]+)\((?<args>.+?)\))?(?=}})", RegexOptions.Compiled);
+        private static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(?<code>[^\s}]+)(\s+(?<filtername>[\w]+)\((?<args>.*?)\))?(?=}})", RegexOptions.Compiled);
         private static readonly Regex ParsingReges2 = new Regex(@"{{", RegexOptions.Compiled);
         /// <summary>
         /// 节点信息
