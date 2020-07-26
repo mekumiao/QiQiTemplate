@@ -11,7 +11,7 @@ namespace QiQiTemplate.Factory
     public class TemplateFactory
     {
         /// <summary>
-        /// 创建模板
+        /// 创建并编译模板
         /// </summary>
         /// <param name="tempstring"></param>
         /// <returns></returns>
@@ -22,7 +22,7 @@ namespace QiQiTemplate.Factory
             return temp;
         }
         /// <summary>
-        /// 创建模板
+        /// 创建并编译模板
         /// </summary>
         /// <param name="temppath"></param>
         /// <returns></returns>
@@ -30,6 +30,17 @@ namespace QiQiTemplate.Factory
         {
             var temp = new Template();
             temp.BuildByPath(temppath);
+            return temp;
+        }
+        /// <summary>
+        /// 创建并编译模板
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        public static Template CreateTemplateByReader(StreamReader reader)
+        {
+            var temp = new Template(reader);
+            temp.Build();
             return temp;
         }
     }
