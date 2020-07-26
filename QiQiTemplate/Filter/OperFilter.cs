@@ -11,10 +11,6 @@ namespace QiQiTemplate.Filter
     public class OperFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "oper";
-        /// <summary>
         /// 减法运算
         /// </summary>
         /// <param name="code"></param>

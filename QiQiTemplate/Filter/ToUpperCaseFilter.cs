@@ -10,10 +10,6 @@ namespace QiQiTemplate.Filter
     public class ToUpperCaseFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "touppercase";
-        /// <summary>
         /// 首字母大写
         /// </summary>
         /// <param name="code"></param>

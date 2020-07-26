@@ -566,16 +566,23 @@
         </member>
         <member name="M:QiQiTemplate.Factory.TemplateFactory.CreateTemplate(System.String)">
             <summary>
-            创建模板
+            创建并编译模板
             </summary>
             <param name="tempstring"></param>
             <returns></returns>
         </member>
         <member name="M:QiQiTemplate.Factory.TemplateFactory.CreateTemplateByPath(System.String)">
             <summary>
-            创建模板
+            创建并编译模板
             </summary>
             <param name="temppath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Factory.TemplateFactory.CreateTemplateByReader(System.IO.StreamReader)">
+            <summary>
+            创建并编译模板
+            </summary>
+            <param name="reader"></param>
             <returns></returns>
         </member>
         <member name="T:QiQiTemplate.Factory.Template">
@@ -630,11 +637,6 @@
             过滤器
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Filter.IFilter.Name">
-            <summary>
-            过滤器名称
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Filter.IFilter.Filter(System.Object,System.Object[])">
             <summary>
             执行过滤
@@ -646,11 +648,6 @@
         <member name="T:QiQiTemplate.Filter.IsNullFilter">
             <summary>
             空值过滤器
-            </summary>
-        </member>
-        <member name="P:QiQiTemplate.Filter.IsNullFilter.Name">
-            <summary>
-            名称
             </summary>
         </member>
         <member name="M:QiQiTemplate.Filter.IsNullFilter.Filter(System.Object,System.Object[])">
@@ -666,11 +663,6 @@
             拼接数组
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Filter.JoinFilter.Name">
-            <summary>
-            名称
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Filter.JoinFilter.Filter(System.Object,System.Object[])">
             <summary>
             拼接
@@ -682,11 +674,6 @@
         <member name="T:QiQiTemplate.Filter.OperFilter">
             <summary>
             运算过滤器
-            </summary>
-        </member>
-        <member name="P:QiQiTemplate.Filter.OperFilter.Name">
-            <summary>
-            名称
             </summary>
         </member>
         <member name="M:QiQiTemplate.Filter.OperFilter.Filter(System.Object,System.Object[])">
@@ -702,11 +689,6 @@
             向左补位
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Filter.PadLeftFilter.Name">
-            <summary>
-            名称
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Filter.PadLeftFilter.Filter(System.Object,System.Object[])">
             <summary>
             过滤
@@ -718,11 +700,6 @@
         <member name="T:QiQiTemplate.Filter.PadRightFilter">
             <summary>
             向右补位
-            </summary>
-        </member>
-        <member name="P:QiQiTemplate.Filter.PadRightFilter.Name">
-            <summary>
-            名称
             </summary>
         </member>
         <member name="M:QiQiTemplate.Filter.PadRightFilter.Filter(System.Object,System.Object[])">
@@ -738,11 +715,6 @@
             记录器
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Filter.RecorderFilter.Name">
-            <summary>
-            名称
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Filter.RecorderFilter.Filter(System.Object,System.Object[])">
             <summary>
             过滤
@@ -754,11 +726,6 @@
         <member name="T:QiQiTemplate.Filter.ThenFilter">
             <summary>
             三元表达式
-            </summary>
-        </member>
-        <member name="P:QiQiTemplate.Filter.ThenFilter.Name">
-            <summary>
-            名称
             </summary>
         </member>
         <member name="M:QiQiTemplate.Filter.ThenFilter.Filter(System.Object,System.Object[])">
@@ -774,11 +741,6 @@
             转为小写
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Filter.ToLowerFilter.Name">
-            <summary>
-            名称
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Filter.ToLowerFilter.Filter(System.Object,System.Object[])">
             <summary>
             转为小写
@@ -792,11 +754,6 @@
             首字母大写
             </summary>
         </member>
-        <member name="P:QiQiTemplate.Filter.ToUpperCaseFilter.Name">
-            <summary>
-            名称
-            </summary>
-        </member>
         <member name="M:QiQiTemplate.Filter.ToUpperCaseFilter.Filter(System.Object,System.Object[])">
             <summary>
             首字母大写
@@ -808,11 +765,6 @@
         <member name="T:QiQiTemplate.Filter.ToUpperFilter">
             <summary>
             转为大写
-            </summary>
-        </member>
-        <member name="P:QiQiTemplate.Filter.ToUpperFilter.Name">
-            <summary>
-            名称
             </summary>
         </member>
         <member name="M:QiQiTemplate.Filter.ToUpperFilter.Filter(System.Object,System.Object[])">

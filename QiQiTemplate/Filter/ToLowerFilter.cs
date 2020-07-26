@@ -10,10 +10,6 @@ namespace QiQiTemplate.Filter
     public class ToLowerFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "tolower";
-        /// <summary>
         /// 转为小写
         /// </summary>
         /// <param name="code"></param>

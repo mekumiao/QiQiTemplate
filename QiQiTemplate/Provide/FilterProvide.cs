@@ -50,8 +50,13 @@ namespace QiQiTemplate.Provide
             this._filters.Clear();
             FilterTypes.ToList().ForEach(x =>
             {
+                var name = x.Name;
+                if (name.EndsWith("Filter", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    name = name.Remove(name.Length - 6, 6).ToLower();
+                }
                 var obj = CreateFilter(x);
-                this._filters.Add(obj.Name, obj);
+                this._filters.Add(name, obj);
             });
         }
         /// <summary>

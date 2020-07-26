@@ -10,10 +10,6 @@ namespace QiQiTemplate.Filter
     public class ThenFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "then";
-        /// <summary>
         /// 表达式
         /// </summary>
         /// <param name="code"></param>

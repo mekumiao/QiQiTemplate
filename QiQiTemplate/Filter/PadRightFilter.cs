@@ -10,10 +10,6 @@ namespace QiQiTemplate.Filter
     public class PadRightFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "padright";
-        /// <summary>
         /// 过滤
         /// </summary>
         /// <param name="code"></param>

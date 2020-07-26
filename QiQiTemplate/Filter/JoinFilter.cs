@@ -12,10 +12,6 @@ namespace QiQiTemplate.Filter
     public class JoinFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "join";
-        /// <summary>
         /// 拼接
         /// </summary>
         /// <param name="code"></param>

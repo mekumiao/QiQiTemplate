@@ -12,10 +12,6 @@ namespace QiQiTemplate.Filter
     {
         private readonly Dictionary<string, int> recorderdict = new Dictionary<string, int>(10);
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "recorder";
-        /// <summary>
         /// 过滤
         /// </summary>
         /// <param name="code"></param>

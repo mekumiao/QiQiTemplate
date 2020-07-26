@@ -10,10 +10,6 @@ namespace QiQiTemplate.Filter
     public interface IFilter
     {
         /// <summary>
-        /// 过滤器名称
-        /// </summary>
-        public string Name { get; }
-        /// <summary>
         /// 执行过滤
         /// </summary>
         /// <param name="code"></param>

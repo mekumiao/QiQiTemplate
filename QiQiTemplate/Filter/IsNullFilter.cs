@@ -10,10 +10,6 @@ namespace QiQiTemplate.Filter
     public class IsNullFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "isnull";
-        /// <summary>
         /// 过滤
         /// </summary>
         /// <param name="code"></param>

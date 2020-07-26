@@ -10,10 +10,6 @@ namespace QiQiTemplate.Filter
     public class ToUpperFilter : IFilter
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name => "toupper";
-        /// <summary>
         /// 转为大写
         /// </summary>
         /// <param name="code"></param>
