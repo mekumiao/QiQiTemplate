@@ -1,7 +1,7 @@
 ﻿using QiQiTemplate.Filter;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace QiQiTemplate.Provide
 {
@@ -10,6 +10,7 @@ namespace QiQiTemplate.Provide
     /// </summary>
     public class FilterProvide
     {
+        private static readonly Dictionary<string, Type> FilterTypes = new Dictionary<string, Type>(20);
         private readonly Dictionary<string, IFilter> _filters;
         /// <summary>
         /// 构造
@@ -22,11 +23,14 @@ namespace QiQiTemplate.Provide
         /// <summary>
         /// 注册过滤器
         /// </summary>
-        public void RegisFilter<T>()
+        public static void RegisFilter<T>()
             where T : IFilter, new()
         {
-            var filter = new T();
-            this._filters.Add(filter.Name, filter);
+            FilterTypes.TryAdd(typeof(T).Name, typeof(T));
+        }
+        private static IFilter CreateFilter(Type type)
+        {
+            return Activator.CreateInstance(type) as IFilter;
         }
         /// <summary>
         /// 根据名称获取过滤器
@@ -38,17 +42,34 @@ namespace QiQiTemplate.Provide
             this._filters.TryGetValue(filterName.ToLower(), out var filter);
             return filter;
         }
+        /// <summary>
+        /// 重置filter
+        /// </summary>
+        public void Reset()
+        {
+            this._filters.Clear();
+            FilterTypes.Values.ToList().ForEach(x =>
+            {
+                var obj = CreateFilter(x);
+                this._filters.Add(obj.Name, obj);
+            });
+        }
+        /// <summary>
+        /// 注册内置过滤器
+        /// </summary>
         private void RegisFilter()
         {
-            this.RegisFilter<PadLeftFilter>();
-            this.RegisFilter<PadRightFilter>();
-            this.RegisFilter<IsNullFilter>();
-            this.RegisFilter<JoinFilter>();
-            this.RegisFilter<OperFilter>();
-            this.RegisFilter<ToLowerFilter>();
-            this.RegisFilter<ToUpperFilter>();
-            this.RegisFilter<ToUpperCaseFilter>();
-            this.RegisFilter<ThenFilter>();
+            RegisFilter<PadLeftFilter>();
+            RegisFilter<PadRightFilter>();
+            RegisFilter<IsNullFilter>();
+            RegisFilter<JoinFilter>();
+            RegisFilter<OperFilter>();
+            RegisFilter<ToLowerFilter>();
+            RegisFilter<ToUpperFilter>();
+            RegisFilter<ToUpperCaseFilter>();
+            RegisFilter<ThenFilter>();
+            RegisFilter<RecorderFilter>();
+            this.Reset();
         }
     }
 }

@@ -2,6 +2,7 @@
   "students": [
     {
       "name": "小张",
+      "test": "model",
       "age": 21,
       "sex": "女",
       "like": [
@@ -12,6 +13,7 @@
     },
     {
       "name": "小王",
+      "test": "model",
       "age": 18,
       "sex": "男",
       "like": [
@@ -22,6 +24,7 @@
     },
     {
       "name": "小李",
+      "test": "model",
       "age": 30,
       "sex": "男",
       "like": [
@@ -31,6 +34,7 @@
     },
     {
       "name": "小黑",
+      "test": "model",
       "age": 55,
       "sex": "女",
       "like": [

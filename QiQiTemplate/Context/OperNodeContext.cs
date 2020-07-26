@@ -1,10 +1,7 @@
 ﻿using QiQiTemplate.Enums;
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace QiQiTemplate.Context

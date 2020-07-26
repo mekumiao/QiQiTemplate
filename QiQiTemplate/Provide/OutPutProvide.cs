@@ -76,6 +76,7 @@ namespace QiQiTemplate.Provide
         /// </summary>
         public void Clear()
         {
+            this._filterProvide.Reset();
             this._stringBuilder.Clear();
         }
         /// <summary>

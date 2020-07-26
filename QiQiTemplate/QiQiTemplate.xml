@@ -559,6 +559,72 @@
             访问路径
             </summary>
         </member>
+        <member name="T:QiQiTemplate.Factory.TemplateFactory">
+            <summary>
+            编译模板
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Factory.TemplateFactory.CreateTemplate(System.String)">
+            <summary>
+            创建模板
+            </summary>
+            <param name="tempstring"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Factory.TemplateFactory.CreateTemplateByPath(System.String)">
+            <summary>
+            创建模板
+            </summary>
+            <param name="temppath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:QiQiTemplate.Factory.Template">
+            <summary>
+            模板
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Factory.Template.#ctor">
+            <summary>
+            构造
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Factory.Template.#ctor(System.String)">
+            <summary>
+            根据模板字符串创建模板
+            </summary>
+            <param name="tempstring"></param>
+        </member>
+        <member name="M:QiQiTemplate.Factory.Template.#ctor(System.IO.StreamReader)">
+            <summary>
+            根据模板reader创建模板
+            </summary>
+            <param name="tempreader"></param>
+        </member>
+        <member name="M:QiQiTemplate.Factory.Template.Build">
+            <summary>
+            编译模板
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Factory.Template.BuildByPath(System.String)">
+            <summary>
+            根据模板路径创建模板
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:QiQiTemplate.Factory.Template.Invoke(System.String)">
+            <summary>
+            执行模板
+            </summary>
+            <param name="json"></param>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Factory.Template.Invoke(QiQiTemplate.Model.DynamicModel)">
+            <summary>
+            执行模板
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:QiQiTemplate.Filter.IFilter">
             <summary>
             过滤器
@@ -660,6 +726,24 @@
             </summary>
         </member>
         <member name="M:QiQiTemplate.Filter.PadRightFilter.Filter(System.Object,System.Object[])">
+            <summary>
+            过滤
+            </summary>
+            <param name="code"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:QiQiTemplate.Filter.RecorderFilter">
+            <summary>
+            记录器
+            </summary>
+        </member>
+        <member name="P:QiQiTemplate.Filter.RecorderFilter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Filter.RecorderFilter.Filter(System.Object,System.Object[])">
             <summary>
             过滤
             </summary>
@@ -1096,6 +1180,16 @@
             </summary>
             <param name="filterName">过滤器名称</param>
             <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Provide.FilterProvide.Reset">
+            <summary>
+            重置filter
+            </summary>
+        </member>
+        <member name="M:QiQiTemplate.Provide.FilterProvide.RegisFilter">
+            <summary>
+            注册内置过滤器
+            </summary>
         </member>
         <member name="T:QiQiTemplate.Provide.NodeContextProvide">
             <summary>
