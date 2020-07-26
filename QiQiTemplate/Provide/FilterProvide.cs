@@ -10,7 +10,7 @@ namespace QiQiTemplate.Provide
     /// </summary>
     public class FilterProvide
     {
-        private static readonly Dictionary<string, Type> FilterTypes = new Dictionary<string, Type>(20);
+        private static readonly HashSet<Type> FilterTypes = new HashSet<Type>(20);
         private readonly Dictionary<string, IFilter> _filters;
         /// <summary>
         /// 构造
@@ -26,7 +26,7 @@ namespace QiQiTemplate.Provide
         public static void RegisFilter<T>()
             where T : IFilter, new()
         {
-            FilterTypes.TryAdd(typeof(T).Name, typeof(T));
+            FilterTypes.Add(typeof(T));
         }
         private static IFilter CreateFilter(Type type)
         {
@@ -48,7 +48,7 @@ namespace QiQiTemplate.Provide
         public void Reset()
         {
             this._filters.Clear();
-            FilterTypes.Values.ToList().ForEach(x =>
+            FilterTypes.ToList().ForEach(x =>
             {
                 var obj = CreateFilter(x);
                 this._filters.Add(obj.Name, obj);
