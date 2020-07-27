@@ -50,6 +50,10 @@ namespace QiQiTemplate.Model
         public DynamicModel Get(string fdName)
         {
             DynamicModel result = default;
+            if (fdName == "Count" && this.FdType == FieldType.Array)
+            {
+                return new DynamicModel(FieldType.Int) { FdValue = this.Count };
+            }
             if (FdDict?.TryGetValue(fdName, out result) ?? false)
             {
                 return result;
