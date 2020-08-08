@@ -84,11 +84,6 @@
             转换表达式
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.ELSENodeContext.ParsingModel">
-            <summary>
-            解析
-            </summary>
-        </member>
         <member name="T:QiQiTemplate.Context.IFNodeContext">
             <summary>
             if 节点
@@ -186,6 +181,14 @@
             <summary>
             合并当前块节点
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:QiQiTemplate.Context.NodeBlockContext.SearchVariable(System.String,QiQiTemplate.Context.NodeContext)">
+            <summary>
+            递归的在父节点上搜索变量
+            </summary>
+            <param name="name"></param>
+            <param name="node"></param>
             <returns></returns>
         </member>
         <member name="T:QiQiTemplate.Context.NodeContext">
@@ -347,11 +350,6 @@
             转换表达式
             </summary>
         </member>
-        <member name="M:QiQiTemplate.Context.ScopeBlockContext.ParsingModel">
-            <summary>
-            解析
-            </summary>
-        </member>
         <member name="T:QiQiTemplate.Context.SETNodeContext">
             <summary>
             定义变量节点
@@ -401,11 +399,6 @@
         <member name="M:QiQiTemplate.Context.STRINGNodeContext.ConvertToExpression">
             <summary>
             转为表达式
-            </summary>
-        </member>
-        <member name="M:QiQiTemplate.Context.STRINGNodeContext.ParsingModel">
-            <summary>
-            解析
             </summary>
         </member>
         <member name="T:QiQiTemplate.Enums.FieldType">

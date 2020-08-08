@@ -29,11 +29,5 @@ namespace QiQiTemplate.Context
         {
             this.NdExpression = this.PrintProvide.ExpressionPrintLine(Expression.Constant(StringConvert.Convert1(this.CodeString)));
         }
-        /// <summary>
-        /// 解析
-        /// </summary>
-        protected override void ParsingModel()
-        {
-        }
     }
 }

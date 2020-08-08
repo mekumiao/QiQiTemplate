@@ -38,12 +38,5 @@ namespace QiQiTemplate.Context
         {
             this.NdExpression = this.MergeNodes();
         }
-        /// <summary>
-        /// 解析
-        /// </summary>
-        protected override void ParsingModel()
-        {
-            //不需额外实现
-        }
     }
 }

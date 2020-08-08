@@ -67,6 +67,12 @@ namespace QiQiTemplate.Context
                 .Select(x => x.NdExpression);
             return Expression.Block(this.DefineParams, lst);
         }
+        /// <summary>
+        /// 递归的在父节点上搜索变量
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private ParameterExpression SearchVariable(string name, NodeContext node)
         {
             if (node != null && node is NodeBlockContext block)
@@ -80,7 +86,7 @@ namespace QiQiTemplate.Context
                     return SearchVariable(name, node.ParentNode);
                 }
             }
-            return null;
+            return default;
         }
     }
 }
