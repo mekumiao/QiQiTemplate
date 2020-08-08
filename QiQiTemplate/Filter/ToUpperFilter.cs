@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QiQiTemplate.Filter
+﻿namespace QiQiTemplate.Filter
 {
     /// <summary>
     /// 转为大写

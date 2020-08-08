@@ -34,7 +34,6 @@ namespace QiQiTemplate.Context
         /// </summary>
         protected override void ParsingModel()
         {
-            //
         }
     }
 }

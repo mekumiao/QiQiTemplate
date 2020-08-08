@@ -1,6 +1,4 @@
-﻿using QiQiTemplate.Filter;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace QiQiTemplate.Provide
@@ -80,8 +78,7 @@ namespace QiQiTemplate.Provide
             this._stringBuilder.Clear();
         }
         /// <summary>
-        /// 输出到文件.
-        /// 默认采用utf8
+        /// 输出到文件. 默认采用utf8
         /// </summary>
         /// <param name="path"></param>
         /// <param name="withbom">utf8格式是否带bom</param>

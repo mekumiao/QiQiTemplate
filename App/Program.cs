@@ -2,13 +2,12 @@
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
 using System;
-using System.Text.RegularExpressions;
 
 namespace App
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var dyProvide = new DynamicModelProvide();
             var model = dyProvide.CreateByFilePath("folder/data.json");

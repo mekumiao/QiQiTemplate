@@ -2,7 +2,6 @@
 using QiQiTemplate.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -72,6 +71,5 @@ namespace QiQiTemplate.Provide
                 if (builder.Length > 0) MatchPath(builder, list);
             }
         }
-
     }
 }

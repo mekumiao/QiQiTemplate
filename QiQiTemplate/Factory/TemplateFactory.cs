@@ -120,5 +120,4 @@ namespace QiQiTemplate.Factory
             return outstring;
         }
     }
-
 }

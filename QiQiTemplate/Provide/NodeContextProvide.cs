@@ -214,8 +214,7 @@ namespace QiQiTemplate.Provide
             }
         }
         /// <summary>
-        /// 获取代码节点的类型
-        /// [需要注意顺序]
+        /// 获取代码节点的类型 [需要注意顺序]
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
@@ -237,6 +236,5 @@ namespace QiQiTemplate.Provide
                 _ => NodeType.STRING,
             };
         }
-
     }
 }

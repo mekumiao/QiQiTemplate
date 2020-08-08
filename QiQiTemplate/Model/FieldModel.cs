@@ -1,7 +1,4 @@
 ﻿using QiQiTemplate.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace QiQiTemplate.Model
 {

@@ -1,7 +1,6 @@
 ﻿using QiQiTemplate.Enums;
 using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
@@ -24,7 +23,6 @@ namespace QiQiTemplate.Context
         /// 循环索引
         /// </summary>
         protected ParameterExpression _idx;
-
         /// <summary>
         /// 节点信息
         /// </summary>
@@ -41,7 +39,6 @@ namespace QiQiTemplate.Context
             this.NdType = NodeType.EACH;
             this.BuildEachVariable();
         }
-
         /// <summary>
         /// 解析节点
         /// </summary>
@@ -55,7 +52,6 @@ namespace QiQiTemplate.Context
                 IdxName = mth.Groups["idx"].Value,
             };
         }
-
         private void BuildEachVariable()
         {
             ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model.ValName);

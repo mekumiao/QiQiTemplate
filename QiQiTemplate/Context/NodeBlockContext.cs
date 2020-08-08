@@ -17,8 +17,7 @@ namespace QiQiTemplate.Context
         /// </summary>
         public List<NodeContext> Nodes { get; set; }
         /// <summary>
-        /// 存放变量的作用域.
-        /// 变量值类型统一转为 DynmicModel,Each的索引除外
+        /// 存放变量的作用域. 变量值类型统一转为 DynmicModel,Each的索引除外
         /// </summary>
         public Dictionary<string, ParameterExpression> Scope { get; }
         /// <summary>

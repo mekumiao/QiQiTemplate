@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QiQiTemplate.Tool
+﻿namespace QiQiTemplate.Tool
 {
     /// <summary>
     /// 字符转义

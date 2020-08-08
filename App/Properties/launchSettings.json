@@ -1,8 +1,8 @@
 {
-  "profiles": {
-    "App": {
-      "commandName": "Project",
-      "commandLineArgs": "xxx sefs esss"
+    "profiles": {
+        "App": {
+            "commandName": "Project",
+            "commandLineArgs": "xxx sefs esss"
+        }
     }
-  }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace QiQiTemplate.Provide
@@ -61,6 +60,5 @@ namespace QiQiTemplate.Provide
         {
             return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("PrintLine", new Type[0]));
         }
-
     }
 }

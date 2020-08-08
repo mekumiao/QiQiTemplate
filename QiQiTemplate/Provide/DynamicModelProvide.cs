@@ -206,6 +206,5 @@ namespace QiQiTemplate.Provide
                 idx++;
             }
         }
-
     }
 }

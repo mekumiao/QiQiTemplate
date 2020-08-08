@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QiQiTemplate.Model
+﻿namespace QiQiTemplate.Model
 {
     /// <summary>
     /// 变量赋值和计算model
@@ -14,8 +10,7 @@ namespace QiQiTemplate.Model
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 运算符号,
-        /// 暂时只支持++,--
+        /// 运算符号, 暂时只支持++,--
         /// </summary>
         public string Oper { get; set; }
     }
