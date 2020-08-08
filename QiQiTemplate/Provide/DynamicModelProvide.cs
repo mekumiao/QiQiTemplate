@@ -171,9 +171,11 @@ namespace QiQiTemplate.Provide
                         parent.Set(model);
                         break;
                     case JsonValueKind.Number:
-                        model = new DynamicModel(FieldType.Decimal);
-                        model.FdName = idx.ToString();
-                        model.FdValue = item.GetInt32();
+                        model = new DynamicModel(FieldType.Decimal)
+                        {
+                            FdName = idx.ToString(),
+                            FdValue = item.GetInt32()
+                        };
                         parent.Set(model);
                         break;
                     case JsonValueKind.True:
