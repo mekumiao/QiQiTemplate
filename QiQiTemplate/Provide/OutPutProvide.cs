@@ -10,7 +10,6 @@ namespace QiQiTemplate.Provide
     {
         private readonly FilterProvide _filterProvide;
         private readonly StringBuilder _stringBuilder;
-
         /// <summary>
         /// 构造
         /// </summary>

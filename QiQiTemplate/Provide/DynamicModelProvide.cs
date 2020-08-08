@@ -20,7 +20,7 @@ namespace QiQiTemplate.Provide
         public DynamicModel CreateByFilePath(string path)
         {
             using var reader = new StreamReader(path);
-            return CreateByJson(reader.ReadToEnd());
+            return this.CreateByJson(reader.ReadToEnd());
         }
         /// <summary>
         /// 从json字符串加载数据
@@ -38,21 +38,20 @@ namespace QiQiTemplate.Provide
                     {
                         FdName = "_data"
                     };
-                    CreateByJson(doc.RootElement.EnumerateArray(), model);
+                    this.CreateByJson(doc.RootElement.EnumerateArray(), model);
                     break;
                 case JsonValueKind.Object:
                     model = new DynamicModel(FieldType.Object)
                     {
                         FdName = "_data"
                     };
-                    CreateByJson(doc.RootElement.EnumerateObject(), model);
+                    this.CreateByJson(doc.RootElement.EnumerateObject(), model);
                     break;
                 default:
                     throw new Exception("暂不支持除 array object 类型以外的类型");
             }
             return model;
         }
-
         private void CreateByJson(ObjectEnumerator obj, DynamicModel parent)
         {
             foreach (var item in obj)
@@ -73,7 +72,7 @@ namespace QiQiTemplate.Provide
                         {
                             FdName = item.Name
                         };
-                        CreateByJson(item.Value.EnumerateObject(), model);
+                        this.CreateByJson(item.Value.EnumerateObject(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.Array:
@@ -81,7 +80,7 @@ namespace QiQiTemplate.Provide
                         {
                             FdName = item.Name
                         };
-                        CreateByJson(item.Value.EnumerateArray(), model);
+                        this.CreateByJson(item.Value.EnumerateArray(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.String:
@@ -129,7 +128,6 @@ namespace QiQiTemplate.Provide
                 }
             }
         }
-
         private void CreateByJson(ArrayEnumerator arr, DynamicModel parent)
         {
             int idx = 0;
@@ -151,7 +149,7 @@ namespace QiQiTemplate.Provide
                         {
                             FdName = idx.ToString()
                         };
-                        CreateByJson(item.EnumerateObject(), model);
+                        this.CreateByJson(item.EnumerateObject(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.Array:
@@ -159,7 +157,7 @@ namespace QiQiTemplate.Provide
                         {
                             FdName = idx.ToString()
                         };
-                        CreateByJson(item.EnumerateArray(), model);
+                        this.CreateByJson(item.EnumerateArray(), model);
                         parent.Set(model);
                         break;
                     case JsonValueKind.String:

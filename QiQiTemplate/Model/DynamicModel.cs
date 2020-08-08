@@ -131,7 +131,7 @@ namespace QiQiTemplate.Model
             {
                 return new DynamicModel(FieldType.Int) { FdValue = this.Count };
             }
-            if (FdDict?.TryGetValue(fdName, out result) ?? false)
+            if (this.FdDict?.TryGetValue(fdName, out result) ?? false)
             {
                 return result;
             }
@@ -144,8 +144,8 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public DynamicModel Get(int idx)
         {
-            if (idx > FdDict?.Count - 1) throw new Exception("索引超出界限");
-            return FdDict?.Values.ToArray()[idx];
+            if (idx > this.FdDict?.Count - 1) throw new Exception("索引超出界限");
+            return this.FdDict?.Values.ToArray()[idx];
         }
         /// <summary>
         /// 获取子节点
@@ -154,7 +154,7 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public DynamicModel Get(decimal idx)
         {
-            return Get((int)idx);
+            return this.Get((int)idx);
         }
         /// <summary>
         /// 获取子节点
@@ -165,9 +165,9 @@ namespace QiQiTemplate.Model
         {
             return model.FdValue switch
             {
-                object msg when msg is string val => Get(val),
-                object msg when msg is int val => Get(val),
-                object msg when msg is decimal val => Get(val),
+                object msg when msg is string val => this.Get(val),
+                object msg when msg is int val => this.Get(val),
+                object msg when msg is decimal val => this.Get(val),
                 _ => throw new Exception($"{model.FdValue}不是有效类型"),
             };
         }

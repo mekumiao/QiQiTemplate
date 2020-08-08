@@ -62,7 +62,7 @@ namespace QiQiTemplate.Context
         /// </summary>
         protected override void ParsingModel()
         {
-            var mths = ParsingRegex.Matches(FormatCode());
+            var mths = ParsingRegex.Matches(this.FormatCode());
             var lst = new List<IFModel>(10);
             foreach (Match item in mths)
             {

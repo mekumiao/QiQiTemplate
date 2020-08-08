@@ -21,7 +21,6 @@ namespace QiQiTemplate.Context
         {
             this.NdType = NodeType.STRING;
         }
-
         /// <summary>
         /// 转为表达式
         /// </summary>

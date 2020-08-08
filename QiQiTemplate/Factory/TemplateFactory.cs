@@ -43,11 +43,11 @@ namespace QiQiTemplate.Factory
         {
             if (this.tempString != null)
             {
-                this.templateAction = contextProvide.BuildTemplateByString(this.tempString, putProvide).Compile();
+                this.templateAction = this.contextProvide.BuildTemplateByString(this.tempString, this.putProvide).Compile();
             }
             else
             {
-                this.templateAction = contextProvide.BuildTemplateByReader(this.tempReader, putProvide).Compile();
+                this.templateAction = this.contextProvide.BuildTemplateByReader(this.tempReader, this.putProvide).Compile();
             }
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace QiQiTemplate.Factory
         /// <param name="path"></param>
         public void BuildByPath(string path)
         {
-            this.templateAction = contextProvide.BuildTemplateByPath(path, putProvide).Compile();
+            this.templateAction = this.contextProvide.BuildTemplateByPath(path, this.putProvide).Compile();
         }
         /// <summary>
         /// 执行模板
@@ -65,7 +65,7 @@ namespace QiQiTemplate.Factory
         /// <returns></returns>
         public string Invoke(string json)
         {
-            var model = modelProvide.CreateByJson(json);
+            var model = this.modelProvide.CreateByJson(json);
             return this.Invoke(model);
         }
         /// <summary>
@@ -75,9 +75,9 @@ namespace QiQiTemplate.Factory
         /// <returns></returns>
         public string Invoke(DynamicModel model)
         {
-            templateAction?.Invoke(model);
-            var outstring = putProvide.ToString();
-            putProvide.Clear();
+            this.templateAction?.Invoke(model);
+            var outstring = this.putProvide.ToString();
+            this.putProvide.Clear();
             return outstring;
         }
     }

@@ -93,7 +93,7 @@ namespace QiQiTemplate.Context
             var builder = new StringBuilder(this.CodeString);
             var list = new List<PrintModel>(10);
             this.Model = list;
-            MatchPrint(builder, list);
+            this.MatchPrint(builder, list);
         }
         private void MatchPrint(StringBuilder builder, List<PrintModel> prints)
         {
@@ -113,7 +113,7 @@ namespace QiQiTemplate.Context
                         SourcePath = builder.ToString().Substring(0, mth.Index),
                     });
                     builder.Remove(0, mth.Index);
-                    if (builder.Length > 0) MatchPrint(builder, prints);
+                    if (builder.Length > 0) this.MatchPrint(builder, prints);
                     return;
                 }
                 else
@@ -129,7 +129,7 @@ namespace QiQiTemplate.Context
                             Args = CreateModel(mth.Groups["args"].Value),
                         });
                         builder.Remove(0, mth.Length + 4);
-                        if (builder.Length > 0) MatchPrint(builder, prints);
+                        if (builder.Length > 0) this.MatchPrint(builder, prints);
                         return;
                     }
                 }

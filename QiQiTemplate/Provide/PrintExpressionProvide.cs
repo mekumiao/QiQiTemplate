@@ -9,7 +9,6 @@ namespace QiQiTemplate.Provide
     public class PrintExpressionProvide
     {
         private readonly OutPutProvide _outPut;
-
         /// <summary>
         /// 指定输出类创建表达式提供类
         /// </summary>

@@ -24,7 +24,6 @@ namespace QiQiTemplate.Provide
             MatchPath(builder, list);
             return list.ToArray();
         }
-
         private static void MatchPath(StringBuilder builder, List<SourcePathModel> list)
         {
             Match mh = Regex.Match(builder.ToString(), @"^(?<value>[a-zA-Z_][\w]*)");
