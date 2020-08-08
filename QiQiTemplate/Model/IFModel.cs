@@ -9,6 +9,14 @@ namespace QiQiTemplate.Model
     {
         private string _logOper;
         /// <summary>
+        /// 左字段
+        /// </summary>
+        public string Left { get; set; }
+        /// <summary>
+        /// 左字段类型
+        /// </summary>
+        public FieldType LeftType { get; set; }
+        /// <summary>
         /// 逻辑运算符
         /// </summary>
         public string LogOper
@@ -27,24 +35,16 @@ namespace QiQiTemplate.Model
             }
         }
         /// <summary>
-        /// 左字段类型
+        /// 比较符
         /// </summary>
-        public FieldType LeftType { get; set; }
-        /// <summary>
-        /// 左字段
-        /// </summary>
-        public string Left { get; set; }
-        /// <summary>
-        /// 右字段类型
-        /// </summary>
-        public FieldType RightType { get; set; }
+        public string Oper { get; set; }
         /// <summary>
         /// 右字段
         /// </summary>
         public string Right { get; set; }
         /// <summary>
-        /// 比较符
+        /// 右字段类型
         /// </summary>
-        public string Oper { get; set; }
+        public FieldType RightType { get; set; }
     }
 }

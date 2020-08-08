@@ -1,5 +1,4 @@
 ﻿using QiQiTemplate.Factory;
-using QiQiTemplate.Model;
 using QiQiTemplate.Provide;
 using System;
 
@@ -9,26 +8,19 @@ namespace App
     {
         private static void Main(string[] args)
         {
-            var dyProvide = new DynamicModelProvide();
-            var model = dyProvide.CreateByFilePath("folder/data.json");
-            FilterProvide.RegisFilter<QiQiTemplate.Filter.RecorderFilter>();
-            var temp = TemplateFactory.CreateTemplateByPath("folder/eachtemplate.txt");
+            Print("folder/filtertemplate.txt");
+            Print("folder/alltemplate.txt");
+            Print("folder/eachtemplate.txt");
+            Print("folder/iftemplate.txt");
+            Print("folder/nestedtemplate.txt");
+            Print("folder/printtemplate.txt");
+            Print("folder/settemplate.txt");
 
-            //Print("folder/filtertemplate.txt", model);
-            //Print("folder/alltemplate.txt", model);
-            Print("folder/eachtemplate.txt", model);
-            Print("folder/eachtemplate.txt", model);
-            Print("folder/eachtemplate.txt", model);
-            Print("folder/eachtemplate.txt", model);
-            Print("folder/eachtemplate.txt", model);
-            //Print("folder/iftemplate.txt", model);
-            //Print("folder/nestedtemplate.txt", model);
-            //Print("folder/printtemplate.txt", model);
-            //Print("folder/settemplate.txt", model);
-
-            void Print(string temppath, DynamicModel data)
+            static void Print(string temppath)
             {
-                //var temp = TemplateFactory.CreateTemplateByPath(temppath);
+                var dyProvide = new DynamicModelProvide();
+                var data = dyProvide.CreateByFilePath("folder/data.json");
+                var temp = TemplateFactory.CreateTemplateByPath(temppath);
                 var msg = temp.Invoke(data);
                 Console.WriteLine(msg);
             }

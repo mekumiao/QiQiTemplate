@@ -6,54 +6,15 @@ using System.IO;
 namespace QiQiTemplate.Factory
 {
     /// <summary>
-    /// 编译模板
-    /// </summary>
-    public class TemplateFactory
-    {
-        /// <summary>
-        /// 创建并编译模板
-        /// </summary>
-        /// <param name="tempstring"></param>
-        /// <returns></returns>
-        public static Template CreateTemplate(string tempstring)
-        {
-            var temp = new Template(tempstring);
-            temp.Build();
-            return temp;
-        }
-        /// <summary>
-        /// 创建并编译模板
-        /// </summary>
-        /// <param name="temppath"></param>
-        /// <returns></returns>
-        public static Template CreateTemplateByPath(string temppath)
-        {
-            var temp = new Template();
-            temp.BuildByPath(temppath);
-            return temp;
-        }
-        /// <summary>
-        /// 创建并编译模板
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
-        public static Template CreateTemplateByReader(StreamReader reader)
-        {
-            var temp = new Template(reader);
-            temp.Build();
-            return temp;
-        }
-    }
-    /// <summary>
     /// 模板
     /// </summary>
     public class Template
     {
-        private readonly string tempString;
-        private readonly StreamReader tempReader;
-        private readonly DynamicModelProvide modelProvide = new DynamicModelProvide();
         private readonly NodeContextProvide contextProvide = new NodeContextProvide();
+        private readonly DynamicModelProvide modelProvide = new DynamicModelProvide();
         private readonly OutPutProvide putProvide = new OutPutProvide();
+        private readonly StreamReader tempReader;
+        private readonly string tempString;
         private Action<DynamicModel> templateAction;
         /// <summary>
         /// 构造
@@ -118,6 +79,45 @@ namespace QiQiTemplate.Factory
             var outstring = putProvide.ToString();
             putProvide.Clear();
             return outstring;
+        }
+    }
+    /// <summary>
+    /// 编译模板
+    /// </summary>
+    public class TemplateFactory
+    {
+        /// <summary>
+        /// 创建并编译模板
+        /// </summary>
+        /// <param name="tempstring"></param>
+        /// <returns></returns>
+        public static Template CreateTemplate(string tempstring)
+        {
+            var temp = new Template(tempstring);
+            temp.Build();
+            return temp;
+        }
+        /// <summary>
+        /// 创建并编译模板
+        /// </summary>
+        /// <param name="temppath"></param>
+        /// <returns></returns>
+        public static Template CreateTemplateByPath(string temppath)
+        {
+            var temp = new Template();
+            temp.BuildByPath(temppath);
+            return temp;
+        }
+        /// <summary>
+        /// 创建并编译模板
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        public static Template CreateTemplateByReader(StreamReader reader)
+        {
+            var temp = new Template(reader);
+            temp.Build();
+            return temp;
         }
     }
 }

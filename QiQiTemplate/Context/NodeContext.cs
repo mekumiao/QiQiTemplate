@@ -13,30 +13,6 @@ namespace QiQiTemplate.Context
     public abstract class NodeContext
     {
         /// <summary>
-        /// 输出提供类
-        /// </summary>
-        protected PrintExpressionProvide PrintProvide { get; }
-        /// <summary>
-        /// 节点ID
-        /// </summary>
-        public string NodeId { get; }
-        /// <summary>
-        /// 节点类型
-        /// </summary>
-        public NodeType NdType { get; protected set; }
-        /// <summary>
-        /// 节点表达式
-        /// </summary>
-        public Expression NdExpression { get; protected set; }
-        /// <summary>
-        /// 节点代码串
-        /// </summary>
-        public string CodeString { get; }
-        /// <summary>
-        /// 父节点
-        /// </summary>
-        public NodeBlockContext ParentNode { get; }
-        /// <summary>
         /// 构造
         /// </summary>
         /// <param name="code"></param>
@@ -51,33 +27,34 @@ namespace QiQiTemplate.Context
             this.ParsingModel();
         }
         /// <summary>
-        /// 解析Code
+        /// 节点代码串
         /// </summary>
-        protected virtual void ParsingModel() { }
+        public string CodeString { get; }
+        /// <summary>
+        /// 节点表达式
+        /// </summary>
+        public Expression NdExpression { get; protected set; }
+        /// <summary>
+        /// 节点类型
+        /// </summary>
+        public NodeType NdType { get; protected set; }
+        /// <summary>
+        /// 节点ID
+        /// </summary>
+        public string NodeId { get; }
+        /// <summary>
+        /// 父节点
+        /// </summary>
+        public NodeBlockContext ParentNode { get; }
+        /// <summary>
+        /// 输出提供类
+        /// </summary>
+        protected PrintExpressionProvide PrintProvide { get; }
         /// <summary>
         /// 将节点转为Expression
         /// </summary>
         /// <returns></returns>
         public abstract void ConvertToExpression();
-        /// <summary>
-        /// 将int,string,bool,char,decimal转为DynamicModel类型的表达式树
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        protected Expression ConvertToDynamicModel(Expression value, string name = "")
-        {
-            if (value.Type == typeof(DynamicModel))
-            {
-                return value;
-            }
-            else
-            {
-                MemberAssignment bindName = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(name));
-                MemberAssignment bindValue = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(value, typeof(object)));
-                return Expression.MemberInit(Expression.New(typeof(DynamicModel)), bindName, bindValue);
-            }
-        }
         /// <summary>
         /// 根据对象访问路径构建表达式
         /// </summary>
@@ -133,6 +110,25 @@ namespace QiQiTemplate.Context
             }
         }
         /// <summary>
+        /// 将int,string,bool,char,decimal转为DynamicModel类型的表达式树
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected Expression ConvertToDynamicModel(Expression value, string name = "")
+        {
+            if (value.Type == typeof(DynamicModel))
+            {
+                return value;
+            }
+            else
+            {
+                MemberAssignment bindName = Expression.Bind(typeof(DynamicModel).GetProperty("FdName"), Expression.Constant(name));
+                MemberAssignment bindValue = Expression.Bind(typeof(DynamicModel).GetProperty("FdValue"), Expression.Convert(value, typeof(object)));
+                return Expression.MemberInit(Expression.New(typeof(DynamicModel)), bindName, bindValue);
+            }
+        }
+        /// <summary>
         /// 创建常量表达式
         /// </summary>
         /// <param name="fdType"></param>
@@ -150,5 +146,9 @@ namespace QiQiTemplate.Context
                 _ => throw new Exception($"{fdType}是不受支持的字段类型"),
             };
         }
+        /// <summary>
+        /// 解析Code
+        /// </summary>
+        protected virtual void ParsingModel() { }
     }
 }

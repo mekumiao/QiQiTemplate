@@ -28,10 +28,6 @@ namespace QiQiTemplate.Provide
         {
             FilterTypes.Add(typeof(T));
         }
-        private static IFilter CreateFilter(Type type)
-        {
-            return Activator.CreateInstance(type) as IFilter;
-        }
         /// <summary>
         /// 根据名称获取过滤器
         /// </summary>
@@ -58,6 +54,10 @@ namespace QiQiTemplate.Provide
                 var obj = CreateFilter(x);
                 this._filters.Add(name, obj);
             });
+        }
+        private static IFilter CreateFilter(Type type)
+        {
+            return Activator.CreateInstance(type) as IFilter;
         }
         /// <summary>
         /// 注册内置过滤器

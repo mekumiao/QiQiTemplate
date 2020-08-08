@@ -4,36 +4,30 @@ namespace App
 {
     public class ConsolePlus
     {
-        public static void WriterLine(string value, ConsoleColor color = ConsoleColor.Cyan)
-        {
-            ScopeColorWriter(() => Console.WriteLine(value), color);
-        }
-
         public static void Writer(string value, ConsoleColor color = ConsoleColor.Green)
         {
             ScopeColorWriter(() => Console.Write(value), color);
         }
-
-        public static void WriterLineGreen(string value)
-        {
-            ScopeColorWriter(() => Console.WriteLine(value), ConsoleColor.Green);
-        }
-
-        public static void WriterGreen(string value)
-        {
-            ScopeColorWriter(() => Console.Write(value), ConsoleColor.Green);
-        }
-
-        public static void WriterLineCyan(string value)
-        {
-            ScopeColorWriter(() => Console.WriteLine(value), ConsoleColor.Cyan);
-        }
-
         public static void WriterCyan(string value)
         {
             ScopeColorWriter(() => Console.Write(value), ConsoleColor.Cyan);
         }
-
+        public static void WriterGreen(string value)
+        {
+            ScopeColorWriter(() => Console.Write(value), ConsoleColor.Green);
+        }
+        public static void WriterLine(string value, ConsoleColor color = ConsoleColor.Cyan)
+        {
+            ScopeColorWriter(() => Console.WriteLine(value), color);
+        }
+        public static void WriterLineCyan(string value)
+        {
+            ScopeColorWriter(() => Console.WriteLine(value), ConsoleColor.Cyan);
+        }
+        public static void WriterLineGreen(string value)
+        {
+            ScopeColorWriter(() => Console.WriteLine(value), ConsoleColor.Green);
+        }
         protected static void ScopeColorWriter(Action action, ConsoleColor color)
         {
             ConsoleColor defcolor = Console.ForegroundColor;

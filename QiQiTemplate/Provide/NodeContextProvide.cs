@@ -15,53 +15,63 @@ namespace QiQiTemplate.Provide
     public class NodeContextProvide
     {
         /// <summary>
-        /// 行号
+        /// 针对set的匹配
         /// </summary>
-        private int _lineNumber = 0;
-        /// <summary>
-        /// 针对if的匹配
-        /// </summary>
-        protected static readonly Regex IsIFRegex = new Regex(@"^\s*{{#if\s+.+}}\s*$", RegexOptions.Compiled);
-        /// <summary>
-        /// 针对if结束的匹配
-        /// </summary>
-        protected static readonly Regex IsENDIFRegex = new Regex(@"^\s*{{#/if}}\s*$", RegexOptions.Compiled);
-        /// <summary>
-        /// 针对else if的匹配
-        /// </summary>
-        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#elseif\s+.+}}\s*$", RegexOptions.Compiled);
-        /// <summary>
-        /// else if 结束
-        /// </summary>
-        protected static readonly Regex IsENDELSEIFRegex = new Regex(@"^\s*{{#/elseif}}\s*$");
-        /// <summary>
-        /// 针对else的匹配
-        /// </summary>
-        protected static readonly Regex IsELSERegex = new Regex(@"^\s*{{#else}}\s*$", RegexOptions.Compiled);
-        /// <summary>
-        /// else 结束
-        /// </summary>
-        protected static readonly Regex IsENDELSERegex = new Regex(@"^\s*{{#/else}}\s*$");
+        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#set\s[a-zA-Z_][\w]+\s=\s.+?}}\s*$", RegexOptions.Compiled);
         /// <summary>
         /// 针对each循环的匹配
         /// </summary>
         protected static readonly Regex IsEACHRegex = new Regex(@"^\s*{{#each\s+((?!{{|}}).)+}}\s*$", RegexOptions.Compiled);
         /// <summary>
+        /// 针对else if的匹配
+        /// </summary>
+        protected static readonly Regex IsELSEIFRegex = new Regex(@"^\s*{{#elseif\s+.+}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对else的匹配
+        /// </summary>
+        protected static readonly Regex IsELSERegex = new Regex(@"^\s*{{#else}}\s*$", RegexOptions.Compiled);
+        /// <summary>
         /// 针对each结束的匹配
         /// </summary>
         protected static readonly Regex IsENDEACHRegex = new Regex(@"^\s*{{#/each}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// else if 结束
+        /// </summary>
+        protected static readonly Regex IsENDELSEIFRegex = new Regex(@"^\s*{{#/elseif}}\s*$");
+        /// <summary>
+        /// else 结束
+        /// </summary>
+        protected static readonly Regex IsENDELSERegex = new Regex(@"^\s*{{#/else}}\s*$");
+        /// <summary>
+        /// 针对if结束的匹配
+        /// </summary>
+        protected static readonly Regex IsENDIFRegex = new Regex(@"^\s*{{#/if}}\s*$", RegexOptions.Compiled);
+        /// <summary>
+        /// 针对if的匹配
+        /// </summary>
+        protected static readonly Regex IsIFRegex = new Regex(@"^\s*{{#if\s+.+}}\s*$", RegexOptions.Compiled);
         /// <summary>
         /// 针对print的匹配
         /// </summary>
         protected static readonly Regex IsPRINTRegex = new Regex("({{[^{](((?!{{|}}).)+)}})+", RegexOptions.Compiled);
         /// <summary>
-        /// 针对set的匹配
-        /// </summary>
-        protected static readonly Regex IsDEFINERegex = new Regex(@"^\s*{{#set\s[a-zA-Z_][\w]+\s=\s.+?}}\s*$", RegexOptions.Compiled);
-        /// <summary>
         /// 针对oper的匹配
         /// </summary>
         protected static readonly Regex IsSETRegex = new Regex(@"^\s*{{#oper\s[a-zA-Z_][\w]*([+][+]|--)}}\s*$");
+        /// <summary>
+        /// 行号
+        /// </summary>
+        private int _lineNumber = 0;
+        /// <summary>
+        /// 编译模板
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, OutPutProvide output)
+        {
+            return BuildTemplateByReader(new StreamReader(path), output);
+        }
         /// <summary>
         /// 编译模板
         /// </summary>
@@ -75,16 +85,6 @@ namespace QiQiTemplate.Provide
             CreateNodeContextRange(_reader, scope, output);
             scope.ConvertToExpression();
             return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
-        }
-        /// <summary>
-        /// 编译模板
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="output"></param>
-        /// <returns></returns>
-        public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, OutPutProvide output)
-        {
-            return BuildTemplateByReader(new StreamReader(path), output);
         }
         /// <summary>
         /// 编译模板

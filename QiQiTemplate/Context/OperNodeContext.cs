@@ -13,10 +13,6 @@ namespace QiQiTemplate.Context
     {
         private static readonly Regex SetRegex = new Regex(@"^\s*{{#oper\s(?<name>[a-zA-Z_][\w]*)(?<oper>([+][+]|--))}}\s*$", RegexOptions.Compiled);
         /// <summary>
-        /// 节点信息
-        /// </summary>
-        public SetModel Model { get; private set; }
-        /// <summary>
         /// 构造
         /// </summary>
         /// <param name="code"></param>
@@ -27,6 +23,10 @@ namespace QiQiTemplate.Context
         {
             this.NdType = NodeType.OPER;
         }
+        /// <summary>
+        /// 节点信息
+        /// </summary>
+        public SetModel Model { get; private set; }
         /// <summary>
         /// 转换表达式
         /// </summary>

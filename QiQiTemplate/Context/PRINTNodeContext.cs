@@ -14,13 +14,8 @@ namespace QiQiTemplate.Context
     /// </summary>
     public class PRINTNodeContext : NodeContext
     {
-        private static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(?<code>[^\s}]+)(\s+(?<filtername>[\w]+)\((?<args>.*?)\))?(?=}})", RegexOptions.Compiled);
         private static readonly Regex ParsingReges2 = new Regex(@"{{", RegexOptions.Compiled);
-        /// <summary>
-        /// 节点信息
-        /// </summary>
-        public List<PrintModel> Model { get; private set; }
-
+        private static readonly Regex ParsingRegex1 = new Regex(@"(?<={{)(?<code>[^\s}]+)(\s+(?<filtername>[\w]+)\((?<args>.*?)\))?(?=}})", RegexOptions.Compiled);
         /// <summary>
         /// 构造
         /// </summary>
@@ -32,7 +27,74 @@ namespace QiQiTemplate.Context
         {
             this.NdType = NodeType.PRINT;
         }
+        /// <summary>
+        /// 节点信息
+        /// </summary>
+        public List<PrintModel> Model { get; private set; }
+        /// <summary>
+        /// 转换表达式
+        /// </summary>
+        public override void ConvertToExpression()
+        {
+            var blockparames = new List<ParameterExpression>(10);
+            var inits = new List<Expression>(10);
 
+            foreach (var item in this.Model)
+            {
+                switch (item.PtType)
+                {
+                    case PrintType.String:
+                        MethodCallExpression print = this.PrintProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
+                        inits.Add(print);
+                        break;
+                    case PrintType.Variable:
+                        var (param, path) = this.SearchPath(item.SourcePath);
+                        blockparames.Add(param);
+                        inits.Add(path);
+                        if (string.IsNullOrWhiteSpace(item.FilterName))
+                        {
+                            print = this.PrintProvide.ExpressionPrint(param);
+                        }
+                        else
+                        {
+                            var argsexpression = new List<Expression>(5);
+                            foreach (var arg in item.Args)
+                            {
+                                if (arg.FdType == FieldType.SourcePath)
+                                {
+                                    var (parame, init) = this.SearchPath(arg.FdValue);
+                                    blockparames.Add(parame);
+                                    inits.Add(init);
+                                    argsexpression.Add(parame);
+                                }
+                                else
+                                {
+                                    var value = this.CreateConstExpression(arg.FdType, arg.FdValue);
+                                    argsexpression.Add(Expression.Convert(value, typeof(object)));
+                                }
+                            }
+                            print = this.PrintProvide.ExpressionPrint(param, item.FilterName, argsexpression.ToArray());
+                        }
+                        inits.Add(print);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            MethodCallExpression printLine = this.PrintProvide.ExpressionPrintLine();
+            inits.Add(printLine);
+            this.NdExpression = Expression.Block(blockparames, inits);
+        }
+        /// <summary>
+        /// 解析
+        /// </summary>
+        protected override void ParsingModel()
+        {
+            var builder = new StringBuilder(this.CodeString);
+            var list = new List<PrintModel>(10);
+            this.Model = list;
+            MatchPrint(builder, list);
+        }
         private void MatchPrint(StringBuilder builder, List<PrintModel> prints)
         {
             /*
@@ -92,70 +154,6 @@ namespace QiQiTemplate.Context
                 }
                 return fds.ToArray();
             }
-        }
-        /// <summary>
-        /// 解析
-        /// </summary>
-        protected override void ParsingModel()
-        {
-            var builder = new StringBuilder(this.CodeString);
-            var list = new List<PrintModel>(10);
-            this.Model = list;
-            MatchPrint(builder, list);
-        }
-        /// <summary>
-        /// 转换表达式
-        /// </summary>
-        public override void ConvertToExpression()
-        {
-            var blockparames = new List<ParameterExpression>(10);
-            var inits = new List<Expression>(10);
-
-            foreach (var item in this.Model)
-            {
-                switch (item.PtType)
-                {
-                    case PrintType.String:
-                        MethodCallExpression print = this.PrintProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
-                        inits.Add(print);
-                        break;
-                    case PrintType.Variable:
-                        var (param, path) = this.SearchPath(item.SourcePath);
-                        blockparames.Add(param);
-                        inits.Add(path);
-                        if (string.IsNullOrWhiteSpace(item.FilterName))
-                        {
-                            print = this.PrintProvide.ExpressionPrint(param);
-                        }
-                        else
-                        {
-                            var argsexpression = new List<Expression>(5);
-                            foreach (var arg in item.Args)
-                            {
-                                if (arg.FdType == FieldType.SourcePath)
-                                {
-                                    var (parame, init) = this.SearchPath(arg.FdValue);
-                                    blockparames.Add(parame);
-                                    inits.Add(init);
-                                    argsexpression.Add(parame);
-                                }
-                                else
-                                {
-                                    var value = this.CreateConstExpression(arg.FdType, arg.FdValue);
-                                    argsexpression.Add(Expression.Convert(value, typeof(object)));
-                                }
-                            }
-                            print = this.PrintProvide.ExpressionPrint(param, item.FilterName, argsexpression.ToArray());
-                        }
-                        inits.Add(print);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            MethodCallExpression printLine = this.PrintProvide.ExpressionPrintLine();
-            inits.Add(printLine);
-            this.NdExpression = Expression.Block(blockparames, inits);
         }
     }
 }

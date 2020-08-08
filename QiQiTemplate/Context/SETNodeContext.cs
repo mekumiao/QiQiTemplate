@@ -18,10 +18,6 @@ namespace QiQiTemplate.Context
         /// </summary>
         private static readonly Regex ParsingRegex = new Regex(@"{{#set\s(?<name>[a-zA-Z_][\w]+)\s=\s(?<value>.+)}}", RegexOptions.Compiled);
         /// <summary>
-        /// 信息
-        /// </summary>
-        public DeFineModel Model { get; private set; }
-        /// <summary>
         /// 构造
         /// </summary>
         /// <param name="code"></param>
@@ -33,19 +29,9 @@ namespace QiQiTemplate.Context
             this.NdType = NodeType.SET;
         }
         /// <summary>
-        /// 解析
+        /// 信息
         /// </summary>
-        protected override void ParsingModel()
-        {
-            var mth = ParsingRegex.Match(this.CodeString);
-            var value = mth.Groups["value"].Value;
-            this.Model = new DeFineModel
-            {
-                FdType = TypeHelper.GetFieldTypeByValue(ref value),
-                ArgName = mth.Groups["name"].Value,
-                ArgValue = value,
-            };
-        }
+        public DeFineModel Model { get; private set; }
         /// <summary>
         /// 转换表达式
         /// </summary>
@@ -91,6 +77,20 @@ namespace QiQiTemplate.Context
             {
                 throw new Exception($"defind节点的父节点必须是块级节点");
             }
+        }
+        /// <summary>
+        /// 解析
+        /// </summary>
+        protected override void ParsingModel()
+        {
+            var mth = ParsingRegex.Match(this.CodeString);
+            var value = mth.Groups["value"].Value;
+            this.Model = new DeFineModel
+            {
+                FdType = TypeHelper.GetFieldTypeByValue(ref value),
+                ArgName = mth.Groups["name"].Value,
+                ArgValue = value,
+            };
         }
     }
 }

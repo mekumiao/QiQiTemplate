@@ -13,6 +13,14 @@ namespace QiQiTemplate.Context
         /// </summary>
         public readonly string RootName = "_data";
         /// <summary>
+        /// 构造
+        /// </summary>
+        public ScopeBlockContext() :
+            base("_data", null, null)
+        {
+            this.Scope.Add("_data", Expression.Parameter(typeof(DynamicModel), "_data"));
+        }
+        /// <summary>
         /// 根数据
         /// </summary>
         public ParameterExpression Root
@@ -20,16 +28,8 @@ namespace QiQiTemplate.Context
             get
             {
                 this.Scope.TryGetValue(this.RootName, out var val);
-                return val as ParameterExpression;
+                return val;
             }
-        }
-        /// <summary>
-        /// 构造
-        /// </summary>
-        public ScopeBlockContext() :
-            base("_data", null, null)
-        {
-            this.Scope.Add("_data", Expression.Parameter(typeof(DynamicModel), "_data"));
         }
         /// <summary>
         /// 转换表达式

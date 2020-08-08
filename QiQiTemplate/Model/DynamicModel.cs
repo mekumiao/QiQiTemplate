@@ -11,22 +11,6 @@ namespace QiQiTemplate.Model
     public class DynamicModel
     {
         /// <summary>
-        /// 名称
-        /// </summary>
-        public string FdName { get; set; }
-        /// <summary>
-        /// 值
-        /// </summary>
-        public object FdValue { get; set; }
-        /// <summary>
-        /// 子节点数量
-        /// </summary>
-        public int Count { get { return this.FdDict?.Count ?? 0; } }
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public FieldType FdType { get; }
-        /// <summary>
         /// 子节点
         /// </summary>
         private Dictionary<string, DynamicModel> FdDict;
@@ -41,6 +25,99 @@ namespace QiQiTemplate.Model
         public DynamicModel(FieldType fdtype)
         {
             this.FdType = fdtype;
+        }
+        /// <summary>
+        /// 子节点数量
+        /// </summary>
+        public int Count { get { return this.FdDict?.Count ?? 0; } }
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string FdName { get; set; }
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public FieldType FdType { get; }
+        /// <summary>
+        /// 值
+        /// </summary>
+        public object FdValue { get; set; }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public static DynamicModel operator --(DynamicModel field)
+        {
+            field.FdValue = Convert.ToDecimal(field.FdValue) - 1;
+            return field;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() != field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        public static DynamicModel operator ++(DynamicModel field)
+        {
+            field.FdValue = Convert.ToDecimal(field.FdValue) + 1;
+            return field;
+        }
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator <(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) < Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator <=(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) <= Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator ==(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() == field2.FdValue.ToString();
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator >(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) > Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="field1"></param>
+        /// <param name="field2"></param>
+        /// <returns></returns>
+        public static bool operator >=(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) >= Convert.ToDecimal(field2.FdValue);
+        /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is DynamicModel fd)
+            {
+                var str1 = this.FdValue.ToString();
+                var str2 = fd.FdValue.ToString();
+                return str1 == str2;
+            }
+            return false;
         }
         /// <summary>
         /// 根据名称获取子节点
@@ -95,6 +172,11 @@ namespace QiQiTemplate.Model
             };
         }
         /// <summary>
+        /// 重载操作符
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode() => this.FdValue.ToString().GetHashCode();
+        /// <summary>
         /// 获取所有子节点
         /// </summary>
         /// <returns></returns>
@@ -119,88 +201,6 @@ namespace QiQiTemplate.Model
         {
             if (this.FdValue == null && this.Count > 0) return $"[{string.Join(",", this.GetValues().Select(x => x.ToString()))}]";
             return this.FdValue?.ToString() ?? string.Empty;
-        }
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field1"></param>
-        /// <param name="field2"></param>
-        /// <returns></returns>
-        public static bool operator >(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) > Convert.ToDecimal(field2.FdValue);
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field1"></param>
-        /// <param name="field2"></param>
-        /// <returns></returns>
-        public static bool operator <(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) < Convert.ToDecimal(field2.FdValue);
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field1"></param>
-        /// <param name="field2"></param>
-        /// <returns></returns>
-        public static bool operator >=(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) >= Convert.ToDecimal(field2.FdValue);
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field1"></param>
-        /// <param name="field2"></param>
-        /// <returns></returns>
-        public static bool operator <=(DynamicModel field1, DynamicModel field2) => Convert.ToDecimal(field1.FdValue) <= Convert.ToDecimal(field2.FdValue);
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field1"></param>
-        /// <param name="field2"></param>
-        /// <returns></returns>
-        public static bool operator ==(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() == field2.FdValue.ToString();
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field1"></param>
-        /// <param name="field2"></param>
-        /// <returns></returns>
-        public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() != field2.FdValue.ToString();
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field"></param>
-        /// <returns></returns>
-        public static DynamicModel operator ++(DynamicModel field)
-        {
-            field.FdValue = Convert.ToDecimal(field.FdValue) + 1;
-            return field;
-        }
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="field"></param>
-        /// <returns></returns>
-        public static DynamicModel operator --(DynamicModel field)
-        {
-            field.FdValue = Convert.ToDecimal(field.FdValue) - 1;
-            return field;
-        }
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode() => this.FdValue.ToString().GetHashCode();
-        /// <summary>
-        /// 重载操作符
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is DynamicModel fd)
-            {
-                var str1 = this.FdValue.ToString();
-                var str2 = fd.FdValue.ToString();
-                return str1 == str2;
-            }
-            return false;
         }
     }
 }

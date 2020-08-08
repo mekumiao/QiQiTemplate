@@ -16,17 +16,13 @@ namespace QiQiTemplate.Context
         /// </summary>
         protected static readonly Regex ParsingRegex = new Regex(@"{{#each (?<path>[^\s]+) (?<val>[^\s]+) (?<idx>[^\s]+)}}", RegexOptions.Compiled);
         /// <summary>
-        /// 循环值
-        /// </summary>
-        protected ParameterExpression _val;
-        /// <summary>
         /// 循环索引
         /// </summary>
         protected ParameterExpression _idx;
         /// <summary>
-        /// 节点信息
+        /// 循环值
         /// </summary>
-        public EachModel Model { get; private set; }
+        protected ParameterExpression _val;
         /// <summary>
         /// 构造
         /// </summary>
@@ -40,25 +36,9 @@ namespace QiQiTemplate.Context
             this.BuildEachVariable();
         }
         /// <summary>
-        /// 解析节点
+        /// 节点信息
         /// </summary>
-        protected override void ParsingModel()
-        {
-            var mth = ParsingRegex.Match(this.CodeString);
-            this.Model = new EachModel
-            {
-                SourcePath = mth.Groups["path"].Value,
-                ValName = mth.Groups["val"].Value,
-                IdxName = mth.Groups["idx"].Value,
-            };
-        }
-        private void BuildEachVariable()
-        {
-            ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model.ValName);
-            ParameterExpression idx = Expression.Variable(typeof(int), this.Model.IdxName);
-            this.Scope.Add(this.Model.ValName, val);
-            this.Scope.Add(this.Model.IdxName, idx);
-        }
+        public EachModel Model { get; private set; }
         /// <summary>
         /// 转换为表达式
         /// </summary>
@@ -89,6 +69,26 @@ namespace QiQiTemplate.Context
                     label
                 )
             );
+        }
+        /// <summary>
+        /// 解析节点
+        /// </summary>
+        protected override void ParsingModel()
+        {
+            var mth = ParsingRegex.Match(this.CodeString);
+            this.Model = new EachModel
+            {
+                SourcePath = mth.Groups["path"].Value,
+                ValName = mth.Groups["val"].Value,
+                IdxName = mth.Groups["idx"].Value,
+            };
+        }
+        private void BuildEachVariable()
+        {
+            ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model.ValName);
+            ParameterExpression idx = Expression.Variable(typeof(int), this.Model.IdxName);
+            this.Scope.Add(this.Model.ValName, val);
+            this.Scope.Add(this.Model.IdxName, idx);
         }
     }
 }

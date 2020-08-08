@@ -19,14 +19,6 @@ namespace QiQiTemplate.Context
         /// </summary>
         protected static readonly Regex ParsingRegex = new Regex(@"((?<logoper>(\s[&|])?)\s(?<left>[^\s]+)\s(?<oper>>=|>|<|<=|==|!=)\s(?<right>[^|&}]+))+", RegexOptions.Compiled);
         /// <summary>
-        /// 信息
-        /// </summary>
-        public List<IFModel> Model { get; protected set; }
-        /// <summary>
-        /// else 节点
-        /// </summary>
-        public NodeBlockContext ELSENode { get; set; }
-        /// <summary>
         /// 构造
         /// </summary>
         /// <param name="code"></param>
@@ -36,6 +28,26 @@ namespace QiQiTemplate.Context
             : base(code, parent, output)
         {
             this.NdType = NodeType.IF;
+        }
+        /// <summary>
+        /// else 节点
+        /// </summary>
+        public NodeBlockContext ELSENode { get; set; }
+        /// <summary>
+        /// 信息
+        /// </summary>
+        public List<IFModel> Model { get; protected set; }
+        /// <summary>
+        /// 转换表达式
+        /// </summary>
+        public override void ConvertToExpression()
+        {
+            var (parme, init) = this.CreateConditionExpression();
+            BlockExpression exptrue = this.MergeNodes();
+            ConditionalExpression conditiona;
+            if (this.ELSENode != null) conditiona = Expression.IfThenElse(parme, exptrue, this.ELSENode.NdExpression);
+            else conditiona = Expression.IfThen(parme, exptrue);
+            this.NdExpression = Expression.Block(new[] { parme }, init, conditiona);
         }
         /// <summary>
         /// 格式化
@@ -127,18 +139,6 @@ namespace QiQiTemplate.Context
                 }
             }
             return (parme, Expression.Block(parames, inits));
-        }
-        /// <summary>
-        /// 转换表达式
-        /// </summary>
-        public override void ConvertToExpression()
-        {
-            var (parme, init) = this.CreateConditionExpression();
-            BlockExpression exptrue = this.MergeNodes();
-            ConditionalExpression conditiona;
-            if (this.ELSENode != null) conditiona = Expression.IfThenElse(parme, exptrue, this.ELSENode.NdExpression);
-            else conditiona = Expression.IfThen(parme, exptrue);
-            this.NdExpression = Expression.Block(new[] { parme }, init, conditiona);
         }
     }
 }
