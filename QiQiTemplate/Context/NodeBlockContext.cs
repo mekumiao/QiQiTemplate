@@ -44,7 +44,7 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         public Expression SearchVariable(string name)
         {
-            return SearchVariable(name, this) ?? throw new Exception($"作用域中没有找到{name}变量");
+            return this.SearchVariable(name, this) ?? throw new Exception($"作用域中没有找到{name}变量");
         }
         /// <summary>
         /// 尝试递归的在父节点上搜索变量
@@ -54,7 +54,7 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         public bool TrySearchVariable(string name, out ParameterExpression variable)
         {
-            variable = SearchVariable(name, this);
+            variable = this.SearchVariable(name, this);
             return variable != null;
         }
         /// <summary>
@@ -83,7 +83,7 @@ namespace QiQiTemplate.Context
                 }
                 else
                 {
-                    return SearchVariable(name, node.ParentNode);
+                    return this.SearchVariable(name, node.ParentNode);
                 }
             }
             return default;
