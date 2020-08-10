@@ -1,9 +1,9 @@
 
-
 # QiQiTemplate
 
-#### 介绍
-基于lambda表达式树实现的轻量级模板工具
+## 介绍
+
+> 基于lambda表达式树实现的轻量级模板工具
 
 ## 安装
 
@@ -12,9 +12,9 @@
 ## 语法高亮插件
 
 > vscode 插件:tpl-lang
-> 
+>
 > 文件后缀 .tpl
-> 
+>
 > [tpl-lang](https://gitee.com/qiqigouwo/tpl-lang.git)
 
 ## 语法
@@ -48,8 +48,8 @@
 > + touppercase 首字母大写
 > + oper      运算
 > + then      类似于三目运算  例如:{{_data.name then("wyl","好人","坏人")}}   如果name = "wyl" 则输出 好人  否则 输出坏人
-
-> 示例:
+>
+#### 示例
 
 ~~~html
 {{_data.age padleft(3,'0')}}// 022
@@ -255,4 +255,3 @@ outProvide.OutPut(@"output.txt");
 //输出到控制台
 Console.Write(outProvide.ToString());
 ~~~
-
