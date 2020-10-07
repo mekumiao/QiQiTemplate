@@ -32,11 +32,11 @@ namespace QiQiTemplate.Context
         /// <summary>
         /// else 节点
         /// </summary>
-        public NodeBlockContext ELSENode { get; set; }
+        public NodeBlockContext? ELSENode { get; set; }
         /// <summary>
         /// 信息
         /// </summary>
-        public List<IFModel> Model { get; protected set; }
+        public List<IFModel>? Model { get; protected set; }
         /// <summary>
         /// 转换表达式
         /// </summary>
@@ -93,7 +93,7 @@ namespace QiQiTemplate.Context
             {
                 init_comp
             };
-            foreach (var item in this.Model)
+            foreach (var item in this.Model!)
             {
                 BinaryExpression binary = item.Oper switch
                 {

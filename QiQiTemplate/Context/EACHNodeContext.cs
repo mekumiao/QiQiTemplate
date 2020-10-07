@@ -18,11 +18,11 @@ namespace QiQiTemplate.Context
         /// <summary>
         /// 循环索引
         /// </summary>
-        protected ParameterExpression _idx;
+        protected ParameterExpression? _idx;
         /// <summary>
         /// 循环值
         /// </summary>
-        protected ParameterExpression _val;
+        protected ParameterExpression? _val;
         /// <summary>
         /// 构造
         /// </summary>
@@ -38,13 +38,13 @@ namespace QiQiTemplate.Context
         /// <summary>
         /// 节点信息
         /// </summary>
-        public EachModel Model { get; private set; }
+        public EachModel? Model { get; private set; }
         /// <summary>
         /// 转换为表达式
         /// </summary>
         public override void ConvertToExpression()
         {
-            var (param, path) = this.SearchPath(this.Model.SourcePath);
+            var (param, path) = this.SearchPath(this.Model!.SourcePath);
             var block = this.MergeNodes();
 
             var val = this.SearchVariable(this.Model.ValName) as ParameterExpression;
@@ -85,7 +85,7 @@ namespace QiQiTemplate.Context
         }
         private void BuildEachVariable()
         {
-            ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model.ValName);
+            ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model!.ValName);
             ParameterExpression idx = Expression.Variable(typeof(int), this.Model.IdxName);
             this.Scope.Add(this.Model.ValName, val);
             this.Scope.Add(this.Model.IdxName, idx);

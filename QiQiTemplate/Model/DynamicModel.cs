@@ -13,7 +13,7 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 子节点
         /// </summary>
-        private Dictionary<string, DynamicModel> FdDict;
+        private Dictionary<string, DynamicModel>? FdDict;
         /// <summary>
         /// 构造
         /// </summary>
@@ -33,7 +33,7 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 名称
         /// </summary>
-        public string FdName { get; set; }
+        public string FdName { get; set; } = string.Empty;
         /// <summary>
         /// 类型
         /// </summary>
@@ -41,7 +41,7 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 值
         /// </summary>
-        public object FdValue { get; set; }
+        public object? FdValue { get; set; }
         /// <summary>
         /// 重载操作符
         /// </summary>
@@ -58,7 +58,7 @@ namespace QiQiTemplate.Model
         /// <param name="field1"></param>
         /// <param name="field2"></param>
         /// <returns></returns>
-        public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() != field2.FdValue.ToString();
+        public static bool operator !=(DynamicModel field1, DynamicModel field2) => field1.FdValue?.ToString() != field2.FdValue?.ToString();
         /// <summary>
         /// 重载操作符
         /// </summary>
@@ -89,7 +89,7 @@ namespace QiQiTemplate.Model
         /// <param name="field1"></param>
         /// <param name="field2"></param>
         /// <returns></returns>
-        public static bool operator ==(DynamicModel field1, DynamicModel field2) => field1.FdValue.ToString() == field2.FdValue.ToString();
+        public static bool operator ==(DynamicModel field1, DynamicModel field2) => field1.FdValue?.ToString() == field2.FdValue?.ToString();
         /// <summary>
         /// 重载操作符
         /// </summary>
@@ -113,8 +113,8 @@ namespace QiQiTemplate.Model
         {
             if (obj is DynamicModel fd)
             {
-                var str1 = this.FdValue.ToString();
-                var str2 = fd.FdValue.ToString();
+                var str1 = this.FdValue?.ToString();
+                var str2 = fd.FdValue?.ToString();
                 return str1 == str2;
             }
             return false;
@@ -124,9 +124,9 @@ namespace QiQiTemplate.Model
         /// </summary>
         /// <param name="fdName"></param>
         /// <returns></returns>
-        public DynamicModel Get(string fdName)
+        public DynamicModel? Get(string fdName)
         {
-            DynamicModel result = default;
+            DynamicModel? result = default;
             if (fdName == "Count" && this.FdType == FieldType.Array)
             {
                 return new DynamicModel(FieldType.Int) { FdValue = this.Count };
@@ -142,7 +142,7 @@ namespace QiQiTemplate.Model
         /// </summary>
         /// <param name="idx"></param>
         /// <returns></returns>
-        public DynamicModel Get(int idx)
+        public DynamicModel? Get(int idx)
         {
             if (idx > this.FdDict?.Count - 1) throw new Exception("索引超出界限");
             return this.FdDict?.Values.ToArray()[idx];
@@ -152,7 +152,7 @@ namespace QiQiTemplate.Model
         /// </summary>
         /// <param name="idx"></param>
         /// <returns></returns>
-        public DynamicModel Get(decimal idx)
+        public DynamicModel? Get(decimal idx)
         {
             return this.Get((int)idx);
         }
@@ -161,7 +161,7 @@ namespace QiQiTemplate.Model
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public DynamicModel Get(DynamicModel model)
+        public DynamicModel? Get(DynamicModel model)
         {
             return model.FdValue switch
             {
@@ -175,12 +175,12 @@ namespace QiQiTemplate.Model
         /// 重载操作符
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode() => this.FdValue.ToString().GetHashCode();
+        public override int GetHashCode() => this.FdValue?.ToString().GetHashCode() ?? 0;
         /// <summary>
         /// 获取所有子节点
         /// </summary>
         /// <returns></returns>
-        public List<DynamicModel> GetValues()
+        public List<DynamicModel>? GetValues()
         {
             return this.FdDict?.Values.ToList();
         }

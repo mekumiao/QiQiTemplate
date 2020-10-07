@@ -26,7 +26,7 @@ namespace QiQiTemplate.Context
         /// <summary>
         /// 节点信息
         /// </summary>
-        public SetModel Model { get; private set; }
+        public SetModel Model { get; private set; } = default!;
         /// <summary>
         /// 转换表达式
         /// </summary>

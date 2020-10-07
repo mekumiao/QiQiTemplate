@@ -29,11 +29,11 @@ namespace QiQiTemplate.Context
         /// <summary>
         /// 节点代码串
         /// </summary>
-        public string CodeString { get; }
+        public string CodeString { get; } = string.Empty;
         /// <summary>
         /// 节点表达式
         /// </summary>
-        public Expression NdExpression { get; protected set; }
+        public Expression? NdExpression { get; protected set; }
         /// <summary>
         /// 节点类型
         /// </summary>
@@ -61,7 +61,7 @@ namespace QiQiTemplate.Context
         /// <param name="sourcePath"></param>
         /// <param name="param_out"></param>
         /// <returns></returns>
-        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath, ParameterExpression param_out = null)
+        public (ParameterExpression param, BlockExpression init) SearchPath(string sourcePath, ParameterExpression? param_out = default)
         {
             var blockparams = new List<ParameterExpression>(10);
             var inits = new List<Expression>(10);

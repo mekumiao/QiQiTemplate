@@ -18,7 +18,7 @@ namespace QiQiTemplate.Context
         /// <param name="code">代码串</param>
         /// <param name="parent">父节点</param>
         /// <param name="output">输出类</param>
-        public NodeBlockContext(string code, NodeBlockContext parent, OutPutProvide output)
+        public NodeBlockContext(string code, NodeBlockContext? parent, OutPutProvide? output)
             : base(code, parent, output)
         {
             this.Scope = new Dictionary<string, ParameterExpression>(10);
@@ -52,7 +52,7 @@ namespace QiQiTemplate.Context
         /// <param name="name"></param>
         /// <param name="variable"></param>
         /// <returns></returns>
-        public bool TrySearchVariable(string name, out ParameterExpression variable)
+        public bool TrySearchVariable(string name, out ParameterExpression? variable)
         {
             variable = this.SearchVariable(name, this);
             return variable != null;
@@ -73,7 +73,7 @@ namespace QiQiTemplate.Context
         /// <param name="name"></param>
         /// <param name="node"></param>
         /// <returns></returns>
-        private ParameterExpression SearchVariable(string name, NodeContext node)
+        private ParameterExpression? SearchVariable(string name, NodeContext node)
         {
             if (node != null && node is NodeBlockContext block)
             {
