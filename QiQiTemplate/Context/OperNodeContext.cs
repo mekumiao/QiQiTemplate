@@ -21,7 +21,7 @@ namespace QiQiTemplate.Context
         public OperNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.NdType = NodeType.OPER;
+            NdType = NodeType.OPER;
         }
         /// <summary>
         /// 节点信息
@@ -32,14 +32,14 @@ namespace QiQiTemplate.Context
         /// </summary>
         public override void ConvertToExpression()
         {
-            var name = this.ParentNode.SearchVariable(this.Model.Name);
-            if (this.Model.Oper == "++")
+            var name = ParentNode.SearchVariable(Model.Name);
+            if (Model.Oper == "++")
             {
-                this.NdExpression = Expression.PostIncrementAssign(name);
+                NdExpression = Expression.PostIncrementAssign(name);
             }
             else
             {
-                this.NdExpression = Expression.PostDecrementAssign(name);
+                NdExpression = Expression.PostDecrementAssign(name);
             }
         }
         /// <summary>
@@ -47,8 +47,8 @@ namespace QiQiTemplate.Context
         /// </summary>
         protected override void ParsingModel()
         {
-            var gp = SetRegex.Match(this.CodeString);
-            this.Model = new SetModel
+            var gp = SetRegex.Match(CodeString);
+            Model = new SetModel
             {
                 Name = gp.Groups["name"].Value,
                 Oper = gp.Groups["oper"].Value,

@@ -8,3 +8,5 @@
 {{name toupper()}}
 {{name touppercase()}}
 {{name then("x","V","U")}}
+{{#set name = "wyl_wyl_wyj"}}
+{{name topascalcase()}}

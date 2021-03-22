@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 namespace QiQiTemplate.Provide
 {
     /// <summary>
-    /// 几点解析提供类
+    /// 节点解析提供类
     /// </summary>
     public class NodeContextProvide
     {
@@ -65,40 +65,20 @@ namespace QiQiTemplate.Provide
         /// <summary>
         /// 编译模板
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="output"></param>
-        /// <returns></returns>
-        public Expression<Action<DynamicModel>> BuildTemplateByPath(string path, OutPutProvide output)
-        {
-            return this.BuildTemplateByReader(new StreamReader(path), output);
-        }
-        /// <summary>
-        /// 编译模板
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="output"></param>
-        /// <returns></returns>
-        public Expression<Action<DynamicModel>> BuildTemplateByReader(StreamReader reader, OutPutProvide output)
-        {
-            var scope = new ScopeBlockContext();
-            using var _reader = reader;
-            this.CreateNodeContextRange(_reader, scope, output);
-            scope.ConvertToExpression();
-            return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
-        }
-        /// <summary>
-        /// 编译模板
-        /// </summary>
         /// <param name="template"></param>
         /// <param name="output"></param>
         /// <returns></returns>
-        public Expression<Action<DynamicModel>> BuildTemplateByString(string template, OutPutProvide output)
+        public Expression<Action<DynamicModel>> Build(string template, OutPutProvide output)
         {
             using var memory = new MemoryStream();
             using var writer = new StreamWriter(memory);
             writer.Write(template);
             memory.Seek(0, SeekOrigin.Begin);
-            return this.BuildTemplateByReader(new StreamReader(memory), output);
+            var scope = new ScopeBlockContext();
+            using var _reader = new StreamReader(memory);
+            CreateNodeContextRange(_reader, scope, output);
+            scope.ConvertToExpression();
+            return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
         }
         /// <summary>
         /// 将语法解析为节点树
@@ -112,8 +92,8 @@ namespace QiQiTemplate.Provide
             {
                 string line = reader.ReadLine();
                 if (line == null) return;
-                this._lineNumber++;
-                NodeType type = this.GetNodeType(line);
+                _lineNumber++;
+                NodeType type = GetNodeType(line);
                 NodeContext last = ParentNode.Nodes.LastOrDefault();
                 if (last?.NdType == NodeType.IF || last?.NdType == NodeType.ELSEIF)
                 {
@@ -132,12 +112,12 @@ namespace QiQiTemplate.Provide
                 {
                     case NodeType.IF:
                         NodeBlockContext block = new IFNodeContext(line, ParentNode, output);
-                        this.CreateNodeContextRange(reader, block, output);
+                        CreateNodeContextRange(reader, block, output);
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSEIF:
                         block = new ELSEIFNodeContext(line, ParentNode, output);
-                        this.CreateNodeContextRange(reader, block, output);
+                        CreateNodeContextRange(reader, block, output);
                         if (last is IFNodeContext ifnd1)
                         {
                             ifnd1.ELSENode = block;
@@ -148,13 +128,13 @@ namespace QiQiTemplate.Provide
                         }
                         else
                         {
-                            throw new Exception($"第{this._lineNumber}行语法错误,elseif必须在 if 或 elseif 之后");
+                            throw new Exception($"第{_lineNumber}行语法错误,elseif必须在 if 或 elseif 之后");
                         }
                         ParentNode.Nodes.Add(block);
                         break;
                     case NodeType.ELSE:
                         block = new ELSENodeContext(line, ParentNode, output);
-                        this.CreateNodeContextRange(reader, block, output);
+                        CreateNodeContextRange(reader, block, output);
                         block.ConvertToExpression();
                         if (last is IFNodeContext ifnd)
                         {
@@ -166,7 +146,7 @@ namespace QiQiTemplate.Provide
                         }
                         else
                         {
-                            throw new Exception($"第{this._lineNumber}行语法错误,else 必须在 if 或 elseif之后");
+                            throw new Exception($"第{_lineNumber}行语法错误,else 必须在 if 或 elseif之后");
                         }
                         for (int i = ParentNode.Nodes.Count - 1; i >= 0; i--)
                         {
@@ -179,7 +159,7 @@ namespace QiQiTemplate.Provide
                         break;
                     case NodeType.EACH:
                         block = new EACHNodeContext(line, ParentNode, output);
-                        this.CreateNodeContextRange(reader, block, output);
+                        CreateNodeContextRange(reader, block, output);
                         block.ConvertToExpression();
                         ParentNode.Nodes.Add(block);
                         break;

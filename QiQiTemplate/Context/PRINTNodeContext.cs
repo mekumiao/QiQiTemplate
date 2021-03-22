@@ -25,7 +25,7 @@ namespace QiQiTemplate.Context
         public PRINTNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.NdType = NodeType.PRINT;
+            NdType = NodeType.PRINT;
         }
         /// <summary>
         /// 节点信息
@@ -39,21 +39,21 @@ namespace QiQiTemplate.Context
             var blockparames = new List<ParameterExpression>(10);
             var inits = new List<Expression>(10);
 
-            foreach (var item in this.Model)
+            foreach (var item in Model)
             {
                 switch (item.PtType)
                 {
                     case PrintType.String:
-                        MethodCallExpression print = this.PrintProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
+                        MethodCallExpression print = PrintProvide.ExpressionPrint(Expression.Constant(StringConvert.Convert1(item.SourcePath)));
                         inits.Add(print);
                         break;
                     case PrintType.Variable:
-                        var (param, path) = this.SearchPath(item.SourcePath);
+                        var (param, path) = SearchPath(item.SourcePath);
                         blockparames.Add(param);
                         inits.Add(path);
                         if (string.IsNullOrWhiteSpace(item.FilterName))
                         {
-                            print = this.PrintProvide.ExpressionPrint(param);
+                            print = PrintProvide.ExpressionPrint(param);
                         }
                         else
                         {
@@ -62,18 +62,18 @@ namespace QiQiTemplate.Context
                             {
                                 if (arg.FdType == FieldType.SourcePath)
                                 {
-                                    var (parame, init) = this.SearchPath(arg.FdValue);
+                                    var (parame, init) = SearchPath(arg.FdValue);
                                     blockparames.Add(parame);
                                     inits.Add(init);
                                     argsexpression.Add(parame);
                                 }
                                 else
                                 {
-                                    var value = this.CreateConstExpression(arg.FdType, arg.FdValue);
+                                    var value = CreateConstExpression(arg.FdType, arg.FdValue);
                                     argsexpression.Add(Expression.Convert(value, typeof(object)));
                                 }
                             }
-                            print = this.PrintProvide.ExpressionPrint(param, item.FilterName, argsexpression.ToArray());
+                            print = PrintProvide.ExpressionPrint(param, item.FilterName, argsexpression.ToArray());
                         }
                         inits.Add(print);
                         break;
@@ -81,19 +81,19 @@ namespace QiQiTemplate.Context
                         break;
                 }
             }
-            MethodCallExpression printLine = this.PrintProvide.ExpressionPrintLine();
+            MethodCallExpression printLine = PrintProvide.ExpressionPrintLine();
             inits.Add(printLine);
-            this.NdExpression = Expression.Block(blockparames, inits);
+            NdExpression = Expression.Block(blockparames, inits);
         }
         /// <summary>
         /// 解析
         /// </summary>
         protected override void ParsingModel()
         {
-            var builder = new StringBuilder(this.CodeString);
+            var builder = new StringBuilder(CodeString);
             var list = new List<PrintModel>(10);
-            this.Model = list;
-            this.MatchPrint(builder, list);
+            Model = list;
+            MatchPrint(builder, list);
         }
         private void MatchPrint(StringBuilder builder, List<PrintModel> prints)
         {
@@ -113,7 +113,7 @@ namespace QiQiTemplate.Context
                         SourcePath = builder.ToString().Substring(0, mth.Index),
                     });
                     builder.Remove(0, mth.Index);
-                    if (builder.Length > 0) this.MatchPrint(builder, prints);
+                    if (builder.Length > 0) MatchPrint(builder, prints);
                     return;
                 }
                 else
@@ -129,7 +129,7 @@ namespace QiQiTemplate.Context
                             Args = CreateModel(mth.Groups["args"].Value),
                         });
                         builder.Remove(0, mth.Length + 4);
-                        if (builder.Length > 0) this.MatchPrint(builder, prints);
+                        if (builder.Length > 0) MatchPrint(builder, prints);
                         return;
                     }
                 }

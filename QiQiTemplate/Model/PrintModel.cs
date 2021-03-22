@@ -1,4 +1,5 @@
-﻿using QiQiTemplate.Enums;
+﻿using System;
+using QiQiTemplate.Enums;
 
 namespace QiQiTemplate.Model
 {
@@ -10,11 +11,11 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 参数
         /// </summary>
-        public FieldModel[] Args { get; set; }
+        public FieldModel[] Args { get; set; } = Array.Empty<FieldModel>();
         /// <summary>
         /// 过滤器名称
         /// </summary>
-        public string FilterName { get; set; }
+        public string FilterName { get; set; } = string.Empty;
         /// <summary>
         /// 类型
         /// </summary>
@@ -22,6 +23,6 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 值
         /// </summary>
-        public string SourcePath { get; set; }
+        public string SourcePath { get; set; } = string.Empty;
     }
 }

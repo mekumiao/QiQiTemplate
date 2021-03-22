@@ -15,7 +15,7 @@ namespace QiQiTemplate.Provide
         /// <param name="outPut"></param>
         public PrintExpressionProvide(OutPutProvide outPut)
         {
-            this._outPut = outPut;
+            _outPut = outPut;
         }
         /// <summary>
         /// 不换行输出
@@ -24,7 +24,7 @@ namespace QiQiTemplate.Provide
         /// <returns></returns>
         public MethodCallExpression ExpressionPrint(Expression code)
         {
-            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("Print", new[] { typeof(object) }), code);
+            return Expression.Call(Expression.Constant(_outPut), typeof(OutPutProvide).GetMethod("Print", new[] { typeof(object) }), code);
         }
         /// <summary>
         /// 不换行输出,带过滤器
@@ -35,7 +35,7 @@ namespace QiQiTemplate.Provide
         /// <returns></returns>
         public MethodCallExpression ExpressionPrint(Expression code, string filterName, Expression[] args)
         {
-            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("Print", new[] { typeof(object), typeof(string), typeof(object[]) }), new[]
+            return Expression.Call(Expression.Constant(_outPut), typeof(OutPutProvide).GetMethod("Print", new[] { typeof(object), typeof(string), typeof(object[]) }), new[]
             {
                 code,
                 Expression.Constant(filterName),
@@ -49,7 +49,7 @@ namespace QiQiTemplate.Provide
         /// <returns></returns>
         public MethodCallExpression ExpressionPrintLine(Expression code)
         {
-            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("PrintLine", new[] { typeof(object) }), code);
+            return Expression.Call(Expression.Constant(_outPut), typeof(OutPutProvide).GetMethod("PrintLine", new[] { typeof(object) }), code);
         }
         /// <summary>
         /// 空行
@@ -57,7 +57,7 @@ namespace QiQiTemplate.Provide
         /// <returns></returns>
         public MethodCallExpression ExpressionPrintLine()
         {
-            return Expression.Call(Expression.Constant(this._outPut), typeof(OutPutProvide).GetMethod("PrintLine", new Type[0]));
+            return Expression.Call(Expression.Constant(_outPut), typeof(OutPutProvide).GetMethod("PrintLine", new Type[0]));
         }
     }
 }

@@ -17,8 +17,8 @@ namespace QiQiTemplate.Provide
         /// </summary>
         public FilterProvide()
         {
-            this._filters = new Dictionary<string, IFilter>(10);
-            this.RegisFilter();
+            _filters = new Dictionary<string, IFilter>(10);
+            RegisFilter();
         }
         /// <summary>
         /// 注册过滤器
@@ -35,7 +35,7 @@ namespace QiQiTemplate.Provide
         /// <returns></returns>
         public IFilter GetFilter(string filterName)
         {
-            this._filters.TryGetValue(filterName.ToLower(), out var filter);
+            _filters.TryGetValue(filterName.ToLower(), out var filter);
             return filter;
         }
         /// <summary>
@@ -43,7 +43,7 @@ namespace QiQiTemplate.Provide
         /// </summary>
         public void Reset()
         {
-            this._filters.Clear();
+            _filters.Clear();
             FilterTypes.ToList().ForEach(x =>
             {
                 var name = x.Name;
@@ -52,12 +52,16 @@ namespace QiQiTemplate.Provide
                     name = name.Remove(name.Length - 6, 6).ToLower();
                 }
                 var obj = CreateFilter(x);
-                this._filters.Add(name, obj);
+                _filters.Add(name, obj);
             });
         }
         private static IFilter CreateFilter(Type type)
         {
-            return Activator.CreateInstance(type) as IFilter;
+            if (Activator.CreateInstance(type) is IFilter filter)
+            {
+                return filter;
+            }
+            throw new ArgumentNullException($"{type.Name}不是过滤器类型");
         }
         /// <summary>
         /// 注册内置过滤器
@@ -74,7 +78,8 @@ namespace QiQiTemplate.Provide
             RegisFilter<ToUpperCaseFilter>();
             RegisFilter<ThenFilter>();
             RegisFilter<RecorderFilter>();
-            this.Reset();
+            RegisFilter<ToPascalCaseFilter>();
+            Reset();
         }
     }
 }

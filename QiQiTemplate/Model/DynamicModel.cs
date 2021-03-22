@@ -24,12 +24,12 @@ namespace QiQiTemplate.Model
         /// <param name="fdtype"></param>
         public DynamicModel(FieldType fdtype)
         {
-            this.FdType = fdtype;
+            FdType = fdtype;
         }
         /// <summary>
         /// 子节点数量
         /// </summary>
-        public int Count { get { return this.FdDict?.Count ?? 0; } }
+        public int Count { get { return FdDict?.Count ?? 0; } }
         /// <summary>
         /// 名称
         /// </summary>
@@ -113,7 +113,7 @@ namespace QiQiTemplate.Model
         {
             if (obj is DynamicModel fd)
             {
-                var str1 = this.FdValue?.ToString();
+                var str1 = FdValue?.ToString();
                 var str2 = fd.FdValue?.ToString();
                 return str1 == str2;
             }
@@ -127,11 +127,11 @@ namespace QiQiTemplate.Model
         public DynamicModel? Get(string fdName)
         {
             DynamicModel? result = default;
-            if (fdName == "Count" && this.FdType == FieldType.Array)
+            if (fdName == "Count" && FdType == FieldType.Array)
             {
-                return new DynamicModel(FieldType.Int) { FdValue = this.Count };
+                return new DynamicModel(FieldType.Int) { FdValue = Count };
             }
-            if (this.FdDict?.TryGetValue(fdName, out result) ?? false)
+            if (FdDict?.TryGetValue(fdName, out result) ?? false)
             {
                 return result;
             }
@@ -144,8 +144,8 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public DynamicModel? Get(int idx)
         {
-            if (idx > this.FdDict?.Count - 1) throw new Exception("索引超出界限");
-            return this.FdDict?.Values.ToArray()[idx];
+            if (idx > FdDict?.Count - 1) throw new Exception("索引超出界限");
+            return FdDict?.Values.ToArray()[idx];
         }
         /// <summary>
         /// 获取子节点
@@ -154,7 +154,7 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public DynamicModel? Get(decimal idx)
         {
-            return this.Get((int)idx);
+            return Get((int)idx);
         }
         /// <summary>
         /// 获取子节点
@@ -165,9 +165,9 @@ namespace QiQiTemplate.Model
         {
             return model.FdValue switch
             {
-                object msg when msg is string val => this.Get(val),
-                object msg when msg is int val => this.Get(val),
-                object msg when msg is decimal val => this.Get(val),
+                object msg when msg is string val => Get(val),
+                object msg when msg is int val => Get(val),
+                object msg when msg is decimal val => Get(val),
                 _ => throw new Exception($"{model.FdValue}不是有效类型"),
             };
         }
@@ -175,14 +175,14 @@ namespace QiQiTemplate.Model
         /// 重载操作符
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode() => this.FdValue?.ToString().GetHashCode() ?? 0;
+        public override int GetHashCode() => FdValue?.ToString().GetHashCode() ?? 0;
         /// <summary>
         /// 获取所有子节点
         /// </summary>
         /// <returns></returns>
         public List<DynamicModel>? GetValues()
         {
-            return this.FdDict?.Values.ToList();
+            return FdDict?.Values.ToList();
         }
         /// <summary>
         /// 添加节点
@@ -190,8 +190,8 @@ namespace QiQiTemplate.Model
         /// <param name="model"></param>
         public void Set(DynamicModel model)
         {
-            if (this.FdDict == null) this.FdDict = new Dictionary<string, DynamicModel>(20);
-            this.FdDict.TryAdd(model.FdName, model);
+            if (FdDict == null) FdDict = new Dictionary<string, DynamicModel>(20);
+            FdDict.TryAdd(model.FdName, model);
         }
         /// <summary>
         /// 将值转为String
@@ -199,8 +199,8 @@ namespace QiQiTemplate.Model
         /// <returns></returns>
         public override string ToString()
         {
-            if (this.FdValue == null && this.Count > 0) return $"[{string.Join(",", this.GetValues().Select(x => x.ToString()))}]";
-            return this.FdValue?.ToString() ?? string.Empty;
+            if (FdValue == null && Count > 0) return $"[{string.Join(",", GetValues().Select(x => x.ToString()))}]";
+            return FdValue?.ToString() ?? string.Empty;
         }
     }
 }

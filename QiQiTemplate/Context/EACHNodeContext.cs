@@ -32,8 +32,8 @@ namespace QiQiTemplate.Context
         public EACHNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.NdType = NodeType.EACH;
-            this.BuildEachVariable();
+            NdType = NodeType.EACH;
+            BuildEachVariable();
         }
         /// <summary>
         /// 节点信息
@@ -44,19 +44,19 @@ namespace QiQiTemplate.Context
         /// </summary>
         public override void ConvertToExpression()
         {
-            var (param, path) = this.SearchPath(this.Model!.SourcePath);
-            var block = this.MergeNodes();
+            var (param, path) = SearchPath(Model!.SourcePath);
+            var block = MergeNodes();
 
-            var val = this.SearchVariable(this.Model.ValName) as ParameterExpression;
-            var idx = this.SearchVariable(this.Model.IdxName) as ParameterExpression;
+            var val = SearchVariable(Model.ValName) as ParameterExpression;
+            var idx = SearchVariable(Model.IdxName) as ParameterExpression;
 
-            BinaryExpression init_idx = Expression.Assign(this.SearchVariable(this.Model.IdxName), Expression.Constant(0));
+            BinaryExpression init_idx = Expression.Assign(SearchVariable(Model.IdxName), Expression.Constant(0));
             MethodCallExpression init_arr = Expression.Call(param, typeof(DynamicModel).GetMethod("Get", new[] { typeof(int) }), idx);
             BinaryExpression init_val = Expression.Assign(val, init_arr);
 
             LabelTarget label = Expression.Label();
             MemberExpression count = Expression.Property(param, "Count");
-            this.NdExpression = Expression.Block(
+            NdExpression = Expression.Block(
                 new[] { param, val, idx },
                 init_idx,
                 path,
@@ -75,8 +75,8 @@ namespace QiQiTemplate.Context
         /// </summary>
         protected override void ParsingModel()
         {
-            var mth = ParsingRegex.Match(this.CodeString);
-            this.Model = new EachModel
+            var mth = ParsingRegex.Match(CodeString);
+            Model = new EachModel
             {
                 SourcePath = mth.Groups["path"].Value,
                 ValName = mth.Groups["val"].Value,
@@ -85,10 +85,10 @@ namespace QiQiTemplate.Context
         }
         private void BuildEachVariable()
         {
-            ParameterExpression val = Expression.Variable(typeof(DynamicModel), this.Model!.ValName);
-            ParameterExpression idx = Expression.Variable(typeof(int), this.Model.IdxName);
-            this.Scope.Add(this.Model.ValName, val);
-            this.Scope.Add(this.Model.IdxName, idx);
+            ParameterExpression val = Expression.Variable(typeof(DynamicModel), Model!.ValName);
+            ParameterExpression idx = Expression.Variable(typeof(int), Model.IdxName);
+            Scope.Add(Model.ValName, val);
+            Scope.Add(Model.IdxName, idx);
         }
     }
 }

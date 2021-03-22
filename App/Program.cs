@@ -20,7 +20,7 @@ namespace App
             {
                 var dyProvide = new DynamicModelProvide();
                 var data = dyProvide.CreateByFilePath("folder/data.json");
-                var temp = TemplateFactory.CreateTemplateByPath(temppath);
+                var temp = TemplateFactory.CreateByPath(temppath);
                 var msg = temp.Invoke(data);
                 Console.WriteLine(msg);
             }

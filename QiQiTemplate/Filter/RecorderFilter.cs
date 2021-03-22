@@ -17,13 +17,13 @@ namespace QiQiTemplate.Filter
         public string Filter(object code, object[] args)
         {
             var key = code.ToString();
-            if (this.recorderdict.TryAdd(key, 0))
+            if (recorderdict.TryAdd(key, 0))
             {
                 return key;
             }
             else
             {
-                return $"{key}{++this.recorderdict[key]}";
+                return $"{key}{++recorderdict[key]}";
             }
         }
     }

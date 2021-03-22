@@ -16,9 +16,9 @@ namespace QiQiTemplate.Context
         /// 构造
         /// </summary>
         public ScopeBlockContext() :
-            base("_data", null, null)
+            base("_data", null!, null!)
         {
-            this.Scope.Add("_data", Expression.Parameter(typeof(DynamicModel), "_data"));
+            Scope.Add("_data", Expression.Parameter(typeof(DynamicModel), "_data"));
         }
         /// <summary>
         /// 根数据
@@ -27,7 +27,7 @@ namespace QiQiTemplate.Context
         {
             get
             {
-                this.Scope.TryGetValue(this.RootName, out var val);
+                Scope.TryGetValue(RootName, out var val);
                 return val;
             }
         }
@@ -36,7 +36,7 @@ namespace QiQiTemplate.Context
         /// </summary>
         public override void ConvertToExpression()
         {
-            this.NdExpression = this.MergeNodes();
+            NdExpression = MergeNodes();
         }
     }
 }

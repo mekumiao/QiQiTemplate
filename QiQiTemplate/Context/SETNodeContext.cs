@@ -26,50 +26,51 @@ namespace QiQiTemplate.Context
         public SETNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.NdType = NodeType.SET;
+            NdType = NodeType.SET;
         }
         /// <summary>
         /// 信息
         /// </summary>
-        public DeFineModel Model { get; private set; }
+        public DeFineModel? Model { get; private set; }
         /// <summary>
         /// 转换表达式
         /// </summary>
         public override void ConvertToExpression()
         {
-            if (this.ParentNode is NodeBlockContext block)
+            if (Model == default) throw new ArgumentNullException("未能解析到set变量信息");
+            if (ParentNode is NodeBlockContext block)
             {
-                if (block.TrySearchVariable(this.Model.ArgName, out var paramExpression))
+                if (block.TrySearchVariable(Model.ArgName, out var paramExpression))
                 {
-                    if (this.Model.FdType == FieldType.SourcePath)
+                    if (Model.FdType == FieldType.SourcePath)
                     {
-                        var (_, init) = this.SearchPath(this.Model.ArgValue, paramExpression);
-                        this.NdExpression = init;
+                        var (_, init) = SearchPath(Model.ArgValue, paramExpression);
+                        NdExpression = init;
                     }
                     else
                     {
-                        var value = this.CreateConstExpression(this.Model.FdType, this.Model.ArgValue);
-                        this.NdExpression = Expression.Assign(paramExpression, this.ConvertToDynamicModel(value));
+                        var value = CreateConstExpression(Model.FdType, Model.ArgValue);
+                        NdExpression = Expression.Assign(paramExpression, ConvertToDynamicModel(value));
                     }
                 }
                 else
                 {
                     //将变量表达式加入到作用域中
-                    if (this.Model.FdType == FieldType.SourcePath)
+                    if (Model.FdType == FieldType.SourcePath)
                     {
-                        ParameterExpression param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
-                        var (_, init) = this.SearchPath(this.Model.ArgValue, param);
+                        ParameterExpression param = Expression.Variable(typeof(DynamicModel), Model.ArgName);
+                        var (_, init) = SearchPath(Model.ArgValue, param);
                         block.DefineParams.Add(param);
-                        this.NdExpression = init;
-                        block.Scope.Add(this.Model.ArgName, param);
+                        NdExpression = init;
+                        block.Scope.Add(Model.ArgName, param);
                     }
                     else
                     {
-                        var value = this.CreateConstExpression(this.Model.FdType, this.Model.ArgValue);
-                        ParameterExpression param = Expression.Variable(typeof(DynamicModel), this.Model.ArgName);
+                        var value = CreateConstExpression(Model.FdType, Model.ArgValue);
+                        ParameterExpression param = Expression.Variable(typeof(DynamicModel), Model.ArgName);
                         block.DefineParams.Add(param);
-                        this.NdExpression = Expression.Assign(param, this.ConvertToDynamicModel(value));
-                        block.Scope.Add(this.Model.ArgName, param);
+                        NdExpression = Expression.Assign(param, ConvertToDynamicModel(value));
+                        block.Scope.Add(Model.ArgName, param);
                     }
                 }
             }
@@ -83,9 +84,9 @@ namespace QiQiTemplate.Context
         /// </summary>
         protected override void ParsingModel()
         {
-            var mth = ParsingRegex.Match(this.CodeString);
+            var mth = ParsingRegex.Match(CodeString);
             var value = mth.Groups["value"].Value;
-            this.Model = new DeFineModel
+            Model = new DeFineModel
             {
                 FdType = TypeHelper.GetFieldTypeByValue(ref value),
                 ArgName = mth.Groups["name"].Value,

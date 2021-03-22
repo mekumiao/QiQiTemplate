@@ -7,11 +7,11 @@ namespace QiQiTemplate.Model
     /// </summary>
     public class IFModel
     {
-        private string _logOper;
+        private string? _logOper;
         /// <summary>
         /// 左字段
         /// </summary>
-        public string Left { get; set; }
+        public string Left { get; set; } = string.Empty;
         /// <summary>
         /// 左字段类型
         /// </summary>
@@ -21,27 +21,27 @@ namespace QiQiTemplate.Model
         /// </summary>
         public string LogOper
         {
-            get { return this._logOper; }
+            get { return _logOper ?? "&"; }
             set
             {
                 if (value != "&" || value != "|")
                 {
-                    this._logOper = "&";
+                    _logOper = "&";
                 }
                 else
                 {
-                    this._logOper = value;
+                    _logOper = value;
                 }
             }
         }
         /// <summary>
         /// 比较符
         /// </summary>
-        public string Oper { get; set; }
+        public string Oper { get; set; } = string.Empty;
         /// <summary>
         /// 右字段
         /// </summary>
-        public string Right { get; set; }
+        public string Right { get; set; } = string.Empty;
         /// <summary>
         /// 右字段类型
         /// </summary>

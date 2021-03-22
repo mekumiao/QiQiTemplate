@@ -21,7 +21,7 @@ namespace QiQiTemplate.Filter
             _ = args.Length != 1 ? throw new ArgumentException(nameof(args)) : string.Empty;
             if (code is DynamicModel obj)
             {
-                var arr = obj.GetValues().Select(x => x.FdValue.ToString());
+                var arr = obj.GetValues().Select(x => x.FdValue?.ToString() ?? string.Empty);
                 return string.Join(args[0].ToString(), arr);
             }
             return code?.ToString() ?? string.Empty;

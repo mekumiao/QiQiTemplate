@@ -18,12 +18,12 @@ namespace QiQiTemplate.Context
         /// <param name="code">代码串</param>
         /// <param name="parent">父节点</param>
         /// <param name="output">输出类</param>
-        public NodeBlockContext(string code, NodeBlockContext? parent, OutPutProvide? output)
+        public NodeBlockContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.Scope = new Dictionary<string, ParameterExpression>(10);
-            this.Nodes = new List<NodeContext>(10);
-            this.DefineParams = new List<ParameterExpression>(10);
+            Scope = new Dictionary<string, ParameterExpression>(10);
+            Nodes = new List<NodeContext>(10);
+            DefineParams = new List<ParameterExpression>(10);
         }
         /// <summary>
         /// 存放范围内需要声明的变量
@@ -44,7 +44,7 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         public Expression SearchVariable(string name)
         {
-            return this.SearchVariable(name, this) ?? throw new Exception($"作用域中没有找到{name}变量");
+            return SearchVariable(name, this) ?? throw new Exception($"作用域中没有找到{name}变量");
         }
         /// <summary>
         /// 尝试递归的在父节点上搜索变量
@@ -54,7 +54,7 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         public bool TrySearchVariable(string name, out ParameterExpression? variable)
         {
-            variable = this.SearchVariable(name, this);
+            variable = SearchVariable(name, this);
             return variable != null;
         }
         /// <summary>
@@ -63,9 +63,9 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         protected BlockExpression MergeNodes()
         {
-            var lst = this.Nodes.Where(x => x.NdType != NodeType.ELSEIF && x.NdType != NodeType.ELSE && x.NdExpression != null)
+            var lst = Nodes.Where(x => x.NdType != NodeType.ELSEIF && x.NdType != NodeType.ELSE && x.NdExpression != null)
                 .Select(x => x.NdExpression);
-            return Expression.Block(this.DefineParams, lst);
+            return Expression.Block(DefineParams, lst);
         }
         /// <summary>
         /// 递归的在父节点上搜索变量
@@ -83,7 +83,7 @@ namespace QiQiTemplate.Context
                 }
                 else
                 {
-                    return this.SearchVariable(name, node.ParentNode);
+                    return SearchVariable(name, node.ParentNode);
                 }
             }
             return default;

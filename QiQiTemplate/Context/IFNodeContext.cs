@@ -27,7 +27,7 @@ namespace QiQiTemplate.Context
         public IFNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.NdType = NodeType.IF;
+            NdType = NodeType.IF;
         }
         /// <summary>
         /// else 节点
@@ -42,12 +42,12 @@ namespace QiQiTemplate.Context
         /// </summary>
         public override void ConvertToExpression()
         {
-            var (parme, init) = this.CreateConditionExpression();
-            BlockExpression exptrue = this.MergeNodes();
+            var (parme, init) = CreateConditionExpression();
+            BlockExpression exptrue = MergeNodes();
             ConditionalExpression conditiona;
-            if (this.ELSENode != null) conditiona = Expression.IfThenElse(parme, exptrue, this.ELSENode.NdExpression);
+            if (ELSENode != null) conditiona = Expression.IfThenElse(parme, exptrue, ELSENode.NdExpression);
             else conditiona = Expression.IfThen(parme, exptrue);
-            this.NdExpression = Expression.Block(new[] { parme }, init, conditiona);
+            NdExpression = Expression.Block(new[] { parme }, init, conditiona);
         }
         /// <summary>
         /// 格式化
@@ -55,14 +55,14 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         protected virtual string FormatCode()
         {
-            return this.CodeString.Trim().Replace("{{#if", "");
+            return CodeString.Trim().Replace("{{#if", "");
         }
         /// <summary>
         /// 解析
         /// </summary>
         protected override void ParsingModel()
         {
-            var mths = ParsingRegex.Matches(this.FormatCode());
+            var mths = ParsingRegex.Matches(FormatCode());
             var lst = new List<IFModel>(10);
             foreach (Match item in mths)
             {
@@ -78,7 +78,7 @@ namespace QiQiTemplate.Context
                     Right = right
                 });
             }
-            this.Model = lst;
+            Model = lst;
         }
         /// <summary>
         /// 创建条件表达式
@@ -93,7 +93,7 @@ namespace QiQiTemplate.Context
             {
                 init_comp
             };
-            foreach (var item in this.Model!)
+            foreach (var item in Model!)
             {
                 BinaryExpression binary = item.Oper switch
                 {
@@ -126,15 +126,15 @@ namespace QiQiTemplate.Context
                 {
                     if (type == FieldType.SourcePath)
                     {
-                        var (param, init) = this.SearchPath(value);
+                        var (param, init) = SearchPath(value);
                         parames.Add(param);
                         inits.Add(init);
                         return param;
                     }
                     else
                     {
-                        var expressValue = this.CreateConstExpression(type, value);
-                        return this.ConvertToDynamicModel(expressValue);
+                        var expressValue = CreateConstExpression(type, value);
+                        return ConvertToDynamicModel(expressValue);
                     }
                 }
             }

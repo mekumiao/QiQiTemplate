@@ -19,14 +19,14 @@ namespace QiQiTemplate.Context
         public STRINGNodeContext(string code, NodeBlockContext parent, OutPutProvide output) :
             base(code, parent, output)
         {
-            this.NdType = NodeType.STRING;
+            NdType = NodeType.STRING;
         }
         /// <summary>
         /// 转为表达式
         /// </summary>
         public override void ConvertToExpression()
         {
-            this.NdExpression = this.PrintProvide.ExpressionPrintLine(Expression.Constant(StringConvert.Convert1(this.CodeString)));
+            NdExpression = PrintProvide.ExpressionPrintLine(Expression.Constant(StringConvert.Convert1(CodeString)));
         }
     }
 }

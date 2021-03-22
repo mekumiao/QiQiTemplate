@@ -17,14 +17,14 @@ namespace QiQiTemplate.Context
         public ELSENodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.NdType = NodeType.ELSE;
+            NdType = NodeType.ELSE;
         }
         /// <summary>
         /// 转换表达式
         /// </summary>
         public override void ConvertToExpression()
         {
-            this.NdExpression = this.MergeNodes();
+            NdExpression = MergeNodes();
         }
     }
 }

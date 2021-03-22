@@ -1,4 +1,5 @@
-﻿using QiQiTemplate.Enums;
+﻿using System;
+using QiQiTemplate.Enums;
 
 namespace QiQiTemplate.Model
 {
@@ -12,7 +13,7 @@ namespace QiQiTemplate.Model
         /// 1._data.people[arr[0].value].name.
         /// 2.其中arr[0].value就是变量节点. 3.这样的情况还能无限的嵌套下去.
         /// </summary>
-        public SourcePathModel[] ChildSourcePathModel { get; set; }
+        public SourcePathModel[] ChildSourcePathModel { get; set; } = Array.Empty<SourcePathModel>();
         /// <summary>
         /// 类型
         /// </summary>
@@ -20,6 +21,6 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 值
         /// </summary>
-        public string SourcePath { get; set; }
+        public string SourcePath { get; set; } = string.Empty;
     }
 }

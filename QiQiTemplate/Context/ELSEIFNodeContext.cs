@@ -17,7 +17,7 @@ namespace QiQiTemplate.Context
         public ELSEIFNodeContext(string code, NodeBlockContext parent, OutPutProvide output)
             : base(code, parent, output)
         {
-            this.NdType = NodeType.ELSEIF;
+            NdType = NodeType.ELSEIF;
         }
         /// <summary>
         /// 格式化code
@@ -25,7 +25,7 @@ namespace QiQiTemplate.Context
         /// <returns></returns>
         protected override string FormatCode()
         {
-            return this.CodeString.Trim().Replace("{{#elseif", "");
+            return CodeString.Trim().Replace("{{#elseif", "");
         }
     }
 }

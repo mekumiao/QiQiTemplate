@@ -14,6 +14,6 @@ namespace QiQiTemplate.Model
         /// <summary>
         /// 字段值
         /// </summary>
-        public string FdValue { get; set; }
+        public string FdValue { get; set; } = string.Empty;
     }
 }

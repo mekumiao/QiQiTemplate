@@ -20,11 +20,11 @@ namespace QiQiTemplate.Context
         /// <param name="output"></param>
         public NodeContext(string code, NodeBlockContext parent, OutPutProvide output)
         {
-            this.PrintProvide = new PrintExpressionProvide(output);
-            this.NodeId = Guid.NewGuid().ToString("N");
-            this.CodeString = code;
-            this.ParentNode = parent;
-            this.ParsingModel();
+            PrintProvide = new PrintExpressionProvide(output);
+            NodeId = Guid.NewGuid().ToString("N");
+            CodeString = code;
+            ParentNode = parent;
+            ParsingModel();
         }
         /// <summary>
         /// 节点代码串
@@ -82,8 +82,8 @@ namespace QiQiTemplate.Context
                     switch (item.PathType)
                     {
                         case SourcePathType.Variable:
-                            Expression exppath = this.ParentNode.SearchVariable(item.SourcePath);
-                            Expression getCall = this.ConvertToDynamicModel(exppath);
+                            Expression exppath = ParentNode.SearchVariable(item.SourcePath);
+                            Expression getCall = ConvertToDynamicModel(exppath);
                             inits.Add(Expression.Assign(param_bk, getCall));
                             break;
                         case SourcePathType.Index:
