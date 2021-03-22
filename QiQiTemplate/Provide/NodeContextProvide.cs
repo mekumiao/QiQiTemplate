@@ -1,4 +1,5 @@
-﻿using QiQiTemplate.Context;
+﻿using System.Text;
+using QiQiTemplate.Context;
 using QiQiTemplate.Enums;
 using QiQiTemplate.Model;
 using System;
@@ -70,13 +71,11 @@ namespace QiQiTemplate.Provide
         /// <returns></returns>
         public Expression<Action<DynamicModel>> Build(string template, OutPutProvide output)
         {
-            using var memory = new MemoryStream();
-            using var writer = new StreamWriter(memory);
-            writer.Write(template);
-            memory.Seek(0, SeekOrigin.Begin);
+            var buffer = Encoding.UTF8.GetBytes(template);
+            using var memory = new MemoryStream(buffer);
+            using var reader = new StreamReader(memory);
             var scope = new ScopeBlockContext();
-            using var _reader = new StreamReader(memory);
-            CreateNodeContextRange(_reader, scope, output);
+            CreateNodeContextRange(reader, scope, output);
             scope.ConvertToExpression();
             return Expression.Lambda<Action<DynamicModel>>(scope.NdExpression, scope.Root);
         }

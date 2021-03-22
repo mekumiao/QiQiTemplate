@@ -25,8 +25,11 @@ namespace QiQiTemplate.Factory
         /// <returns></returns>
         public static Template CreateByPath(string path)
         {
-            using var reader = new StreamReader(path);
-            var code = reader.ReadToEnd();
+            string code = string.Empty;
+            using (var reader = new StreamReader(path))
+            {
+                code = reader.ReadToEnd();
+            }
             var temp = new Template(code);
             temp.Build();
             return temp;
@@ -38,8 +41,11 @@ namespace QiQiTemplate.Factory
         /// <returns></returns>
         public static Template CreateByReader(StreamReader reader)
         {
-            using var _reader = reader;
-            var code = _reader.ReadToEnd();
+            string code = string.Empty;
+            using (var _reader = reader)
+            {
+                code = _reader.ReadToEnd();
+            }
             var temp = new Template(code);
             temp.Build();
             return temp;
