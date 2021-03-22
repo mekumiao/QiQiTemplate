@@ -16,12 +16,15 @@ namespace App
             Print("folder/printtemplate.txt");
             Print("folder/settemplate.txt");
 
-            static void Print(string temppath)
+            static void Print(string tempPath)
             {
-                var dyProvide = new DynamicModelProvide();
-                var data = dyProvide.CreateByFilePath("folder/data.json");
-                var temp = TemplateFactory.CreateByPath(temppath);
+                //创建模板
+                var temp = TemplateFactory.CreateByPath(tempPath);
+                //创建数据
+                var data = new DynamicModelProvide().CreateByPath("folder/data.json");
+                //执行模板
                 var msg = temp.Invoke(data);
+                //打印结果
                 Console.WriteLine(msg);
             }
         }

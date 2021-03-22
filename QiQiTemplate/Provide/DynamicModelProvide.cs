@@ -17,7 +17,7 @@ namespace QiQiTemplate.Provide
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public DynamicModel CreateByFilePath(string path)
+        public DynamicModel CreateByPath(string path)
         {
             using var reader = new StreamReader(path);
             return CreateByJson(reader.ReadToEnd());
