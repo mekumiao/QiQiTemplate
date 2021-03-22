@@ -5,7 +5,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
 
-        <Version>1.1.4</Version>
+        <Version>1.1.5</Version>
         <PackageOutputPath>E:/nuget</PackageOutputPath>
         <PackageId>QiQiTemplate</PackageId>
         <Title>QiQiTemplate</Title>

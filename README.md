@@ -26,69 +26,72 @@
 
 > 普通输出
 
-```html
+```txt
 {{_data.name}}
 ```
 
 > 带过滤器的输出
 
-```html
+```txt
 {{_data.name isnull("***")}} //空值过滤器.如果为空则输出 ***
 ```
 
-> 支持的过滤器有
->
-> - isnull 空值过滤器
-> - join 连接过滤器
-> - padleft 左侧补位过滤器
-> - padright 右侧补位过滤器
-> - toupper 转为大写
-> - tolower 转为小写
-> - touppercase 首字母大写
-> - oper 运算
-> - then 类似于三目运算 例如:{{_data.name then("wyl","好人","坏人")}} 如果 name = "wyl" 则输出 好人 否则 输出坏人
-> - topascalcase 帕斯卡命名
+| 过滤器名称   | 描述           | 调用示例                                                                                  |
+| ------------ | -------------- | ----------------------------------------------------------------------------------------- |
+| isnull       | 空值过滤器     | {{_data.tag isnull('-')}}                                                                 |
+| join         | 连接过滤器     | {{_data.tags join(';')}} .输出 程序员;码畜                                                |
+| padleft      | 左侧补位过滤器 | {{_data.age padleft(3,'0')}} .输出 022                                                    |
+| padright     | 右侧补位过滤器 |                                                                                           |
+| toupper      | 转为大写       | {{_data.name toupper()}} .输出 WYL                                                        |
+| tolower      | 转为小写       | {{_data.tag toupper()}} .输出 wyl                                                         |
+| touppercase  | 首字母大写     |                                                                                           |
+| oper         | 运算           | {{index oper('+',10)}} .将变量 index 加 10                                                |
+| then         | 类似于三目运算 | {{_data.name then("wyl","好人","坏人")}}.</br>如果 name = "wyl" 则输出 好人 否则 输出坏人 |
+| topascalcase | 帕斯卡命名     |                                                                                           |
 
-#### 示例
+?> 小技巧  
+在使用 join 过滤器时不能使用 ','作为分隔字符.  
+但可以间接的使用
 
-```html
-{{_data.age padleft(3,'0')}}// 022 {{_data.tags join(';')}} //程序员;码畜
-```
-
-> 小技巧
->
-> 在使用 join 过滤器时不能使用 ','作为分隔字符.
->
-> 但可以间接的使用,例如:
-
-```html
-{{#set tag = ','}} {{_data.tags join(tag)}}
+```txt
+{{#set tag = ','}}
+{{_data.tags join(tag)}}
 ```
 
 ### if 判断
 
-```html
-{{#if 1 > 2}} 我是一只额. {{#/if}} {{#elseif 2 > 3}} 我是一只猪. {{#/elseif}}
-{{#else}} 我可能不是人. {{#/else}}
+```txt
+{{#if 1 > 2}}
+我是一只额.
+{{#/if}}
+{{#elseif 2 > 3}}
+我是一只猪.
+{{#/elseif}}
+{{#else}}
+我可能不是人.
+{{#/else}}
+~~~
 ```
 
 ### each 循环
 
-```html
-{{#each _data.names val idx}} {{idx}}.我叫{{val}} {{#/each}}
+```txt
+{{#each _data.names val idx}}
+{{idx}}.我叫{{val}}
+{{#/each}}
 ```
 
 ### set 定义\赋值
 
 > 如果作用域中不存在变量,则声明变量并且赋值
 
-```html
+```txt
 {{#set index = 1}}
 ```
 
 > 小技巧
 
-```html
+```txt
 {{#set str = """}} {{str}} // 将输出 "
 ```
 
@@ -98,7 +101,7 @@
 >
 > 注: 以后有需要在扩展
 
-```html
+```txt
 {{#oper num++}} {{#oper num--}}
 ```
 
@@ -106,7 +109,7 @@
 
 > `_data`
 
-```html
+```txt
 {{_data.name}} {{#set name = _data.name}}
 ```
 
@@ -123,9 +126,12 @@
 
 > 使用 \ 来进行转义
 
-```html
-{{#each _data.names val idx}} \{\{ 我是{{val}} \}\} {{#/each}} //将输出 {{
-我是wyl }}
+```txt
+{{#each _data.names val idx}}
+\{\{ 我是{{val}} \}\}
+{{#/each}}
+
+//将输出 {{ 我是wyl }}
 ```
 
 ### 关于属性的嵌套访问
@@ -134,8 +140,10 @@
 >
 > 例如:
 
-```html
-{{#set index = 2}} {{#set obj = _data.people[0]}} {{obj.tel[index]}} //xxx
+```txt
+{{#set index = 2}}
+{{#set obj = _data.people[0]}}
+{{obj.tel[index]}} //xxx
 {{obj["name"]}}//wyl
 ```
 
@@ -145,12 +153,23 @@
 
 > 模板 => temp.txt
 
-```html
-{{#set index = 1}} {{#each _data.people val idx}} {{#if val.age > 0 & val.age <=
-10}} {{idx}}.{{val.name}} 儿童 {{val.age}} {{#/if}} {{#elseif val.age > 10 &
-val.age < 25}} {{idx}}.{{val.name}} 青少年 {{val.age}} {{#/elseif}} {{#else}}
-{{idx}}.{{val.name}} 中年 {{val.age}} {{#/else}} {{#each val.tel tl idx2}}
-{{index}}.{{tl}} {{#oper index++}} {{#/each}} {{#/each}}
+```txt
+{{#set index = 1}}
+{{#each _data.people val idx}}
+    {{#if val.age > 0 & val.age <= 10}}
+    {{idx}}.{{val.name}} 儿童 {{val.age}}
+    {{#/if}}
+    {{#elseif val.age > 10 & val.age < 25}}
+    {{idx}}.{{val.name}} 青少年 {{val.age}}
+    {{#/elseif}}
+    {{#else}}
+    {{idx}}.{{val.name}} 中年 {{val.age}}
+    {{#/else}}
+    {{#each val.tel tl idx2}}
+        {{index}}.{{tl}}
+        {{#oper index++}}
+    {{#/each}}
+{{#/each}}
 ```
 
 > json => temp.json
